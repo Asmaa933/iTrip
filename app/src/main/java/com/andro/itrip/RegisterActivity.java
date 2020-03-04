@@ -52,6 +52,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                     //check if user has a company email address
 
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    if (!(emailTxt.getText().toString().matches(emailPattern))) {
+                        emailTxt.setError("Invalid email address");
+                        return;
+                    }
                         //check if passwords match
                         if(doStringsMatch(passwordTxt.getText().toString(), confirmPasswordTxt.getText().toString())){
 
