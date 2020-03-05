@@ -18,13 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 //import androidx.lifecycle.ViewModelProviders;
 
 import com.andro.itrip.R;
+import com.andro.itrip.Trip;
+
+import java.util.List;
 
 public class UpcomingFragment extends Fragment implements UpcomingContract.ViewInterface {
 
     TextView textView;
     UpcomingContract.PresenterInterface upcomingPresenter;
     private RecyclerView recyclerView;
-    //private TripAdapter adapter;
+    private TripAdapter adapter;
     private LinearLayout empty;
 
     @Nullable
@@ -47,9 +50,20 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //adapter = new TripAdapter(getContext(), empty);
+      //  adapter = new TripAdapter(,getContext());
 
     }
+
+    @Override
+    public void displayTrips(List<Trip> tripList) {
+
+    }
+
+    @Override
+    public void displayNoTrips() {
+
+    }
+
     public void displayMessage(String message) {
         textView.setText(message);
     }
