@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         private Button notesButton;
         private TextView tripTitle;
         private TextView tripTime;
-        private Button startButton;
+        private ImageButton startButton;
 
 
         public ViewHolder(View view) {
@@ -47,7 +48,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData , Context context) {
+    public TripAdapter(List<Trip> tripData, Context context) {
         this.tripData = tripData;
         this.context = context;
     }
@@ -68,25 +69,25 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
         holder.statusText.setText(tripData.get(position).getStatus());
 
-        holder.startButton.setOnClickListener(new View.OnClickListener(){
+        holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-        holder.notesButton.setOnClickListener(new View.OnClickListener(){
+        holder.notesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-        holder.deleteButton.setOnClickListener(new View.OnClickListener(){
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-        holder.recyclerRow.setOnClickListener(new View.OnClickListener(){
+        holder.recyclerRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -98,7 +99,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     public int getItemCount() {
         return tripData.size();
     }
-
 
 
 }
