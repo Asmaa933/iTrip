@@ -11,10 +11,10 @@ public class UpcomingContract {
 
         void updateTripList(List<Trip> trips);
 
-        void onDelete(Trip selectedTrip);
+        void onDelete(String tripId);
 
-        void onUpdate(Trip updatedTrip);
-
+        void onUpdate(Trip trip);
+        void addTrip(Trip trip);
     }
 
     public interface ViewInterface {

@@ -16,10 +16,15 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         this.viewInterface = viewInterface;
     }
 
+    @Override
+    public void addTrip(Trip trip) {
+        FireBaseHandler.getInstance().addTrip(trip);
+
+    }
 
     @Override
     public void getTripList() {
-        trips = FireBaseHandler.getInstance().getAllTrips(this);
+        FireBaseHandler.getInstance().getAllTrips(this);
     }
 
     @Override
@@ -33,12 +38,15 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
 
 
     @Override
-    public void onDelete(Trip selectedTrip) {
-
+    public void onDelete(String tripId) {
+        FireBaseHandler.getInstance().deleteTrip(tripId, this);
     }
 
     @Override
-    public void onUpdate(Trip updatedTrip) {
+    public void onUpdate(Trip trip) {
+        FireBaseHandler.getInstance().updateTrip(trip);
 
     }
+
+
 }

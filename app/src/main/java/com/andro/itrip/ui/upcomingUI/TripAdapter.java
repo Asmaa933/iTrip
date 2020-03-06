@@ -1,6 +1,8 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,8 @@ import java.util.List;
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private Context context;
     private List<Trip> tripData;
+    private UpcomingContract.PresenterInterface presenterInterface;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout recyclerRow;
@@ -48,9 +52,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData, Context context) {
+    public TripAdapter(List<Trip> tripData, Context context, UpcomingContract.PresenterInterface presenterInterface) {
         this.tripData = tripData;
         this.context = context;
+        this.presenterInterface = presenterInterface;
     }
 
     @NonNull
@@ -64,14 +69,20 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
         holder.statusText.setText(tripData.get(position).getStatus());
+        final int positionOfTrip = position;
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Trip trip = new Trip("updateddd","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
+             "33","34","ismailia","43","45");
+                trip.setTripID(tripData.get(positionOfTrip).getTripID());
+                presenterInterface.onUpdate(trip);
 
             }
         });
@@ -84,7 +95,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+           showDeleteAlert(positionOfTrip);
             }
         });
         holder.recyclerRow.setOnClickListener(new View.OnClickListener() {
@@ -100,5 +111,27 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         return tripData.size();
     }
 
+    public void showDeleteAlert(final int position){
+        AlertDialog.Builder Builder = new AlertDialog.Builder(context)
+                .setMessage(R.string.delete_trip)
+                .setCancelable(false)
+                .setPositiveButton(R.string.card_delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenterInterface.onDelete(tripData.get(position).getTripID());
+                        presenterInterface.getTripList();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                        dialog.dismiss();
+
+                    }
+                });
+
+        AlertDialog alertDialog = Builder.create();
+        alertDialog.show();
+    }
 }

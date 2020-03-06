@@ -20,8 +20,7 @@ public class Trip {
 
     }
 
-    public Trip(String tripID, String tripTitle, String startDateTime, String status, String isRounded, String repeat, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang) {
-        this.tripID=tripID;
+    public Trip( String tripTitle, String startDateTime, String status, String isRounded, String repeat, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang) {
         this.tripTitle=tripTitle;
         this.startDateTime=startDateTime;
         this.status=status;

@@ -21,7 +21,7 @@ import java.util.List;
 public class FireBaseHandler {
     private static FireBaseHandler instance;
     DatabaseReference databaseTrips;
-    List<Trip> trips;
+    List<Trip> trips ;
 
     private FireBaseHandler() {
         //userID mn shared
@@ -40,9 +40,8 @@ public class FireBaseHandler {
         return instance;
     }
 
-    public List<Trip> getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
+    public void getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
         trips = new ArrayList<>();
-
         databaseTrips.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,14 +58,26 @@ public class FireBaseHandler {
 
             }
         });
-        return trips;
+        presenterInterface.updateTripList(trips);
+
+
     }
 
-    public void addTrip(Trip trip, String userID) {
+    public void addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
         trip.setTripID(tripId);
         databaseTrips.child(tripId).setValue(trip);
     }
+    public void updateTrip(Trip trip) {
+      databaseTrips.child(trip.getTripID()).setValue(trip);
 
+    }
+
+    public  void deleteTrip(String tripId,final UpcomingContract.PresenterInterface presenterInterface){
+        databaseTrips.child(tripId).removeValue();
+
+
+    }
 
 }
+

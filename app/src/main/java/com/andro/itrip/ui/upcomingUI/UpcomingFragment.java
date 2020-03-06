@@ -1,5 +1,7 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,9 +50,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        Trip tr = new Trip("1","First","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
-//                "33","34","ismailia","43","45");
-//        FireBaseHandler.getInstance().addTrip(tr,userId);
+
 
     }
 
@@ -59,13 +59,16 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     public void onStart() {
         super.onStart();
         upcomingPresenter.getTripList();
+//        Trip tr = new Trip("First","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
+//                "33","34","ismailia","43","45");
+//        upcomingPresenter.addTrip(tr);
     }
 
     @Override
     public void displayTrips(List<Trip> tripList) {
         recyclerView.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.INVISIBLE);
-        adapter = new TripAdapter(tripList, getContext());
+        adapter = new TripAdapter(tripList, getContext(),upcomingPresenter);
         recyclerView.setAdapter(adapter);
 
     }
@@ -77,10 +80,14 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     }
 
+    @Override
     public void displayMessage(String message) {
 
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
+
+
+
 
 }
 
