@@ -2,10 +2,10 @@ package com.andro.itrip.ui.upcomingUI;
 
 public class UpcomingContract {
     interface PresenterInterface {
-        public void sendMessage();
+        void sendMessage();
     }
 
     interface ViewInterface {
-        public void displayMessage(String message);
+        void displayMessage(String message);
     }
 }

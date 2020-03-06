@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "250610725598",
+    "firebase_url": "https://itrip-c395f.firebaseio.com",
+    "project_id": "itrip-c395f",
+    "storage_bucket": "itrip-c395f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250610725598:android:3357442c275d54714f884f",
+        "android_client_info": {
+          "package_name": "com.andro.itrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250610725598-pfbirkk2gljjeq4eqsq3dct4fbu0nun3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andro.itrip",
+            "certificate_hash": "a224dce2a24a25478c828fe064fb0cc8e8b59a80"
+          }
+        },
+        {
+          "client_id": "250610725598-h1rhejaq934fjep7p53l5nepf1a5et7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkV6CikjmCU6bfslMrZgSWuyR5NxsHUiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250610725598-h1rhejaq934fjep7p53l5nepf1a5et7n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
