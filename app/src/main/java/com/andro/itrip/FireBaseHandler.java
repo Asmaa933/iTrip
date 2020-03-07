@@ -23,9 +23,12 @@ public class FireBaseHandler {
     DatabaseReference databaseTrips;
     List<Trip> trips ;
 
-    private FireBaseHandler() {
-        //userID mn shared
-        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child("Cx4XpQrM06S9doN2mLH0cUustHj2");
+
+    private FireBaseHandler(){
+        if (SavedPreferences.getInstance()!=null){
+            databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+
+        }
     }
 
     public static FireBaseHandler getInstance() {
@@ -73,7 +76,7 @@ public class FireBaseHandler {
 
     }
 
-    public  void deleteTrip(String tripId,final UpcomingContract.PresenterInterface presenterInterface){
+    public  void deleteTrip(String tripId){
         databaseTrips.child(tripId).removeValue();
 
 

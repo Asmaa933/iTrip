@@ -78,7 +78,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//check update
                 Trip trip = new Trip("updateddd","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
              "33","34","ismailia","43","45");
                 trip.setTripID(tripData.get(positionOfTrip).getTripID());
@@ -119,7 +119,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenterInterface.onDelete(tripData.get(position).getTripID());
-                        presenterInterface.getTripList();
+                      presenterInterface.getTripList();
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

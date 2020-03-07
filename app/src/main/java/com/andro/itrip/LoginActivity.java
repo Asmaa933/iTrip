@@ -92,9 +92,12 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Faild", Toast.LENGTH_LONG).show();
                                 } else {
                                     String user_id=auth.getCurrentUser().getUid();
+                                    SavedPreferences.getInstance(getApplicationContext()).writeUserID(user_id);
+
+
 
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra("userId",user_id);
+                                //    intent.putExtra("userId",user_id);
                                     startActivity(intent);
                                     finish();
                                 }

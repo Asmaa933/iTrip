@@ -1,6 +1,8 @@
 package com.andro.itrip.ui.upcomingUI;
 
 
+import android.content.Context;
+
 import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.Trip;
 
@@ -8,8 +10,8 @@ import com.andro.itrip.Trip;
 import java.util.List;
 
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
-    UpcomingContract.ViewInterface viewInterface;
-    List<Trip> trips;
+   private UpcomingContract.ViewInterface viewInterface;
+   private List<Trip> trips;
 
 
     public UpcomingPresenter(UpcomingContract.ViewInterface viewInterface) {
@@ -39,7 +41,7 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
 
     @Override
     public void onDelete(String tripId) {
-        FireBaseHandler.getInstance().deleteTrip(tripId, this);
+        FireBaseHandler.getInstance().deleteTrip(tripId);
     }
 
     @Override
