@@ -29,7 +29,6 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     private RecyclerView recyclerView;
     private TripAdapter adapter;
     private LinearLayout emptyView;
-    String userId = "Cx4XpQrM06S9doN2mLH0cUustHj2";
 
     @Nullable
     @Override
@@ -59,9 +58,6 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     public void onStart() {
         super.onStart();
         upcomingPresenter.getTripList();
-//        Trip tr = new Trip("First","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
-//                "33","34","ismailia","43","45");
-//        upcomingPresenter.addTrip(tr);
     }
 
     @Override

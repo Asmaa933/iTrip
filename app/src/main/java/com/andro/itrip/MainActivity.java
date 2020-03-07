@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Trip tr = new Trip("First","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
+                "33","34","ismailia","43","45");
+        FireBaseHandler.getInstance().addTrip(tr);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
