@@ -28,5 +28,36 @@
 
     <string name="confirm">Confirm Password</string>
 
+    <string name="tripName">trip</string>
+    <string name="startpoint">startpoint</string>
+    <string name="StartPoint">Start point</string>
+    <string name="endpoint">End point</string>
+    <string name="Tripname">Trip name</string>
+    <string name="addaNewTrip">Add a new TRIP</string>
+    <string name="add_trip">Add Trip</string>
+    <string name="Type_trip">Type of trip</string>
+    <string name="Repetition">Repetition</string>
+    <string name="time">00:00 AM</string>
+
+
+    <string name="Time">Time</string>
+    <string name="Date">Date</string>
+    <string name="DateTime">Date-Time</string>
+    <string name="Add">Add</string>
+    <string name="Cancel">Cancel</string>
+    <string name="date">m/dd/yyyy</string>
+    <string name="datetime">m/dd/yyyy---00:00 AM</string>
+
+    <string-array name="typeoftrip">
+        <item>One Direction</item>
+        <item>Round Trip</item>
+    </string-array>
+
+    <string-array name="repetition">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
 
 </resources>
