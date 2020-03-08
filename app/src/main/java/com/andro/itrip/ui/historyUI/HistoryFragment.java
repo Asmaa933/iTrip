@@ -9,12 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.andro.itrip.R;
-import com.andro.itrip.ui.upcomingUI.UpcomingContract;
-import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 
 public class HistoryFragment extends Fragment implements HistoryContract.ViewInterface {
 

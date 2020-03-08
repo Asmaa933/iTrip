@@ -1,6 +1,5 @@
 package com.andro.itrip.registerActivity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,13 +14,8 @@ import android.widget.Toast;
 
 import com.andro.itrip.R;
 import com.andro.itrip.mainActivity.MainActivity;
-import com.andro.itrip.ui.loginActivity.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.andro.itrip.loginActivity.LoginActivity;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 

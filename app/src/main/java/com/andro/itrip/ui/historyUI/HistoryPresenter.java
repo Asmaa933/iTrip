@@ -1,7 +1,5 @@
 package com.andro.itrip.ui.historyUI;
 
-import com.andro.itrip.ui.upcomingUI.UpcomingContract;
-
 public class HistoryPresenter implements HistoryContract.PresenterInterface {
     HistoryContract.ViewInterface viewInterface;
 

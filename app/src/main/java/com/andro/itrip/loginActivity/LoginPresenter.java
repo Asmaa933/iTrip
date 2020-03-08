@@ -1,4 +1,4 @@
-package com.andro.itrip.ui.loginActivity;
+package com.andro.itrip.loginActivity;
 
 import android.app.Activity;
 

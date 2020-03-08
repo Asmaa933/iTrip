@@ -1,20 +1,12 @@
 package com.andro.itrip;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.andro.itrip.registerActivity.RegisterActivity;
 import com.andro.itrip.registerActivity.RegisterContract;
-import com.andro.itrip.ui.loginActivity.LoginActivity;
-import com.andro.itrip.ui.loginActivity.LoginContract;
-import com.andro.itrip.ui.loginActivity.LoginPresenter;
+import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.upcomingUI.UpcomingContract;
-import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -140,7 +132,7 @@ public class FireBaseHandler {
 
     private void saveUserID() {
         String user_id = auth.getCurrentUser().getUid();
-        if(user_id!= null){
+        if(user_id!= null) {
             SavedPreferences.getInstance().writeUserID(user_id);
             databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         }

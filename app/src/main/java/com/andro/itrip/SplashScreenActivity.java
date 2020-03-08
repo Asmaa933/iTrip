@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
-import com.andro.itrip.ui.loginActivity.LoginActivity;
+import com.andro.itrip.loginActivity.LoginActivity;
 
 import gr.net.maroulis.library.EasySplashScreen;
 

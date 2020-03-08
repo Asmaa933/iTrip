@@ -1,7 +1,5 @@
 package com.andro.itrip.ui.upcomingUI;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import androidx.lifecycle.ViewModelProviders;
 
-import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
 

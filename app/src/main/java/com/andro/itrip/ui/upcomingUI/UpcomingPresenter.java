@@ -1,8 +1,6 @@
 package com.andro.itrip.ui.upcomingUI;
 
 
-import android.content.Context;
-
 import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.Trip;
 

@@ -1,4 +1,4 @@
-package com.andro.itrip.ui.loginActivity;
+package com.andro.itrip.loginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,8 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
-//Ramzy id
-//OdruFKPDG1QxGuZy2cZxE408IYI3
+
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.ViewInterface {
 
@@ -69,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             public void onClick(View v) {
                 String email = emailTxt.getText().toString().trim();
                 String password = passwordTxt.getText().toString().trim();
-                if (validateEmail() && validatePassword()) {
+                if (validateEmail() & validatePassword()) {
                     loginPresenter.verifyCredentials(email, password, LoginActivity.this);
                     progressBar.setVisibility(View.VISIBLE);
                 }

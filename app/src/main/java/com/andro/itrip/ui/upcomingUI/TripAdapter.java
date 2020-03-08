@@ -90,6 +90,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
+
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +112,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         return tripData.size();
     }
 
-    public void showDeleteAlert(final int position){
+    private void showDeleteAlert(final int position){
         AlertDialog.Builder Builder = new AlertDialog.Builder(context)
                 .setMessage(R.string.delete_trip)
                 .setCancelable(false)
