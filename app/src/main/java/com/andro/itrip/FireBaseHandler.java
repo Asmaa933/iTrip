@@ -81,8 +81,11 @@ public class FireBaseHandler {
 
     public void addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
-        trip.setTripID(tripId);
-        databaseTrips.child(tripId).setValue(trip);
+        if(tripId!=null){
+            trip.setTripID(tripId);
+            databaseTrips.child(tripId).setValue(trip);
+        }
+
     }
 
     public void updateTrip(Trip trip) {
@@ -137,8 +140,10 @@ public class FireBaseHandler {
 
     private void saveUserID() {
         String user_id = auth.getCurrentUser().getUid();
-        SavedPreferences.getInstance().writeUserID(user_id);
-        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+        if(user_id!= null){
+            SavedPreferences.getInstance().writeUserID(user_id);
+            databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+        }
 
     }
 }
