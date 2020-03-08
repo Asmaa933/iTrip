@@ -24,6 +24,7 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
 
     }
 
+
     @Override
     public void getTripList() {
         FireBaseHandler.getInstance().getAllTrips(this);

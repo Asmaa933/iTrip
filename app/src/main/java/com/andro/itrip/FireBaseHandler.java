@@ -1,13 +1,25 @@
 package com.andro.itrip;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.andro.itrip.registerActivity.RegisterActivity;
+import com.andro.itrip.registerActivity.RegisterContract;
+import com.andro.itrip.ui.loginActivity.LoginActivity;
+import com.andro.itrip.ui.loginActivity.LoginContract;
+import com.andro.itrip.ui.loginActivity.LoginPresenter;
 import com.andro.itrip.ui.upcomingUI.UpcomingContract;
 import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,16 +32,16 @@ import java.util.List;
 
 public class FireBaseHandler {
     private static FireBaseHandler instance;
-    DatabaseReference databaseTrips;
-    List<Trip> trips ;
+    private DatabaseReference databaseTrips;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth auth;
+    private List<Trip> trips;
 
 
-    private FireBaseHandler(){
-        if (SavedPreferences.getInstance()!=null){
-            databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
-
-        }
+    private FireBaseHandler() {
+        auth = FirebaseAuth.getInstance();
     }
+
 
     public static FireBaseHandler getInstance() {
 
@@ -42,6 +54,7 @@ public class FireBaseHandler {
         }
         return instance;
     }
+
 
     public void getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
         trips = new ArrayList<>();
@@ -71,16 +84,64 @@ public class FireBaseHandler {
         trip.setTripID(tripId);
         databaseTrips.child(tripId).setValue(trip);
     }
+
     public void updateTrip(Trip trip) {
-      databaseTrips.child(trip.getTripID()).setValue(trip);
+        databaseTrips.child(trip.getTripID()).setValue(trip);
 
     }
 
-    public  void deleteTrip(String tripId){
+    public void deleteTrip(String tripId) {
         databaseTrips.child(tripId).removeValue();
 
 
     }
 
+    public void checkAuthentication(String email, String password, final Activity activity, final LoginContract.PresenterInterface presenterInterface) {
+
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+// If sign in fails, display a message to the user. If sign in succeeds
+// the auth state listener will be notified and logic to handle the
+// signed in user can be handled in the listener.
+
+                        if (!task.isSuccessful()) {
+                            presenterInterface.loginSuccess(false);
+                        } else {
+                            saveUserID();
+                            presenterInterface.loginSuccess(true);
+                        }
+                    }
+                });
+    }
+
+    public void registerNew(String email, String password, final RegisterContract.PresenterInterface presenterInterface) {
+        FirebaseApp.initializeApp(GlobalApplication.getAppContext());
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            saveUserID();
+                            presenterInterface.registerSuccess(true);
+                        } else {
+                            presenterInterface.registerSuccess(false);
+
+                        }
+
+                    }
+                });
+    }
+
+    private void saveUserID() {
+        String user_id = auth.getCurrentUser().getUid();
+        SavedPreferences.getInstance().writeUserID(user_id);
+        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+
+    }
 }
+
+
 

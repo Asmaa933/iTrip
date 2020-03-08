@@ -30,4 +30,43 @@
     <string name="cancel">Cancel</string>
     <string name="delete_trip">Are you sure you want to delete trip?</string>
 
+    <string name="tripName">trip</string>
+    <string name="startpoint">startpoint</string>
+    <string name="StartPoint">Start point</string>
+    <string name="endpoint">End point</string>
+    <string name="Tripname">Trip name</string>
+    <string name="addaNewTrip">Add a new TRIP</string>
+    <string name="add_trip">Add Trip</string>
+    <string name="Type_trip">Type of trip</string>
+    <string name="Repetition">Repetition</string>
+    <string name="time">00:00 AM</string>
+
+
+    <string name="Time">Time</string>
+    <string name="Date">Date</string>
+    <string name="DateTime">Date-Time</string>
+    <string name="Add">Add</string>
+    <string name="Cancel">Cancel</string>
+    <string name="date">m/dd/yyyy</string>
+    <string name="datetime">m/dd/yyyy---00:00 AM</string>
+
+    <string-array name="typeoftrip">
+        <item>One Direction</item>
+        <item>Round Trip</item>
+    </string-array>
+
+    <string-array name="repetition">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+    <string name="login_failed">Invalid email or password</string>
+    <string name="empty_email">Enter email</string>
+    <string name="empty_password">Enter password</string>
+    <string name="weak_password">Password too weak</string>
+    <string name="invalid_email">"Enter a valid email address"</string>
+    <string name="unable_register">Unable to register</string>
+    <string name="password_error">Passwords do not match</string>
+    <string name="empty_name">Enter name</string>
+    <string name="name_error">Do not use special character or numbers </string>
 </resources>

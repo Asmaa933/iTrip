@@ -15,6 +15,7 @@ public class UpcomingContract {
 
         void onUpdate(Trip trip);
         void addTrip(Trip trip);
+
     }
 
     public interface ViewInterface {
