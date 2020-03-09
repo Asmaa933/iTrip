@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.R;
 import com.andro.itrip.registerActivity.RegisterActivity;
@@ -41,6 +42,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (SavedPreferences.getInstance().readUserID() != "")
+        {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         emailTxt = findViewById(R.id.emailTxt);
         passwordTxt = findViewById(R.id.passwordTxt);

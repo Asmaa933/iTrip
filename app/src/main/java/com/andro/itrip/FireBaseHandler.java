@@ -50,6 +50,7 @@ public class FireBaseHandler {
 
     public void getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
         trips = new ArrayList<>();
+        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         databaseTrips.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,12 +72,13 @@ public class FireBaseHandler {
 
     }
 
-    public void addTrip(Trip trip) {
+    public String addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
         if(tripId!=null){
             trip.setTripID(tripId);
             databaseTrips.child(tripId).setValue(trip);
         }
+        return tripId;
 
     }
 
@@ -129,15 +131,19 @@ public class FireBaseHandler {
                     }
                 });
     }
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+        SavedPreferences.getInstance().resetUserID();
+    }
 
     private void saveUserID() {
         String user_id = auth.getCurrentUser().getUid();
         if(user_id!= null) {
             SavedPreferences.getInstance().writeUserID(user_id);
-            databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         }
 
     }
+
 }
 
 

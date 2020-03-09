@@ -34,7 +34,10 @@ public class SavedPreferences {
 
     public String readUserID () {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
-       return settings.getString(USER_ID, "Not Found");
+       return settings.getString(USER_ID, "");
+    }
+    public void resetUserID(){
+      writeUserID("");
     }
 
 }

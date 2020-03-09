@@ -18,8 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.andro.itrip.SavedPreferences;
+import com.andro.itrip.Trip;
 import com.andro.itrip.addTripActivity.AddTripActivity;
 import com.andro.itrip.R;
+import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.historyUI.HistoryFragment;
 import com.andro.itrip.loginActivity.LoginActivity;
 import com.andro.itrip.ui.upcomingUI.UpcomingFragment;
@@ -27,14 +30,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements MainContract.ViewInterface {
+    MainContract.PresenterInterface mainPresenter;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainPresenter = new MainPresenter(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,13 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
 
-
-                //test
-//                Trip tr = new Trip("First","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
-//                "33","34","ismailia","43","45");
-//        FireBaseHandler.getInstance().addTrip(tr);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()) {
                     case R.id.nav_logout:
-                        logout();
+                        mainPresenter.logout();
                         Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.nav_upcoming:
@@ -93,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void logout() {
-        FirebaseAuth.getInstance().signOut();
+    public void logoutSuccessful() {
         finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
