@@ -21,6 +21,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 
 import com.andro.itrip.AlertReceiver;
 import com.andro.itrip.GlobalApplication;
@@ -29,8 +40,6 @@ import com.andro.itrip.Trip;
 import com.andro.itrip.mainActivity.MainActivity;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +52,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     private Button btnAddTrip;
     private ImageView imageViewAddNote;
     private LinearLayout roundTripTimeAndDate;
+
+    private static final String apiKey = "AIzaSyBEx1-Id2GOqasqHC-2WhxTkSe2hEWZuOo";
+    PlacesClient placesClient;
 
     private Trip trip;
 
@@ -158,6 +170,51 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 }
             }
         });
+        //Ramzy
+        // Setup Places Client
+        if (!Places.isInitialized()) {
+            Places.initialize(AddTripActivity.this, apiKey);
+        }
+        placesClient = Places.createClient(this);
+        final AutocompleteSupportFragment autocompleteSupportFragmentStart =
+                (AutocompleteSupportFragment)
+                        getSupportFragmentManager().findFragmentById(R.id.editTxt_start_point);
+        final AutocompleteSupportFragment autocompleteSupportFragmentEnd =
+                (AutocompleteSupportFragment)
+                        getSupportFragmentManager().findFragmentById(R.id.editTxt_end_point);
+        autocompleteSupportFragmentStart.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
+        autocompleteSupportFragmentEnd.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
+        autocompleteSupportFragmentStart.setOnPlaceSelectedListener(
+                new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(Place place) {
+                        final LatLng latLng = place.getLatLng();
+
+                        Toast.makeText(AddTripActivity.this, ""+latLng.latitude, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(Status status) {
+                        Toast.makeText(AddTripActivity.this, ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        autocompleteSupportFragmentEnd.setOnPlaceSelectedListener(
+                new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(Place place) {
+                        final LatLng latLng = place.getLatLng();
+
+                        Toast.makeText(AddTripActivity.this, ""+latLng.latitude, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(Status status) {
+                        Toast.makeText(AddTripActivity.this, ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        //Ramzy
     }
 
     void showDatePickerDialog(final String tripDirection) {

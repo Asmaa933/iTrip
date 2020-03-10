@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.andro.itrip.R;
 
 public class LogoutFragment extends Fragment {
-
+/*
     private LogoutViewModel sendViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,5 +31,5 @@ public class LogoutFragment extends Fragment {
             }
         });
         return root;
-    }
+    }*/
 }
