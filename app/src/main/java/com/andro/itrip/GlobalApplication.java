@@ -6,11 +6,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class GlobalApplication extends Application {
+public class GlobalApplication extends MultiDexApplication {
 
     public static final String CHANNEL_1_ID = "channel1";
 
