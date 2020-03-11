@@ -7,5 +7,6 @@
     <color name="white">#ffffff</color>
     <color name="colorOffwhite">#DADADA</color>
     <color name="Black">#000000</color>
-
+    <color name="Blue">#381460</color>
+    <color name="Adsy">#c93838</color>
 </resources>

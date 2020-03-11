@@ -216,7 +216,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 });
         //Ramzy
     }
-
     void showDatePickerDialog(final String tripDirection) {
         //TODO
     }
