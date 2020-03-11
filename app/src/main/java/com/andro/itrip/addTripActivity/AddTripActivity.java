@@ -52,7 +52,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     private EditText editTxtTripName, editTxtAddNote;
     private Spinner spinnerTripType, spinnerTripRepetition;
-    private TextView txtViewDateTime, txtViewDateTime2;
+    private TextView singleTxtViewDateTime, roundTxtViewDateTime;
     private Button btnAddTrip;
     private ImageView imageViewAddNote;
     private LinearLayout roundTripTimeAndDate;
@@ -61,6 +61,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     PlacesClient placesClient;
 
     private Trip trip;
+    private boolean isRound = false;
 
     private ArrayList<String> notesArrayList;
     private NotesAdapter notesAdapter;
@@ -80,8 +81,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         editTxtAddNote = findViewById(R.id.textView_add_note);
         spinnerTripType = findViewById(R.id.spinner_type_trip);
         spinnerTripRepetition = findViewById(R.id.spinner_trip_repetition);
-        txtViewDateTime = findViewById(R.id.txtView_time);
-        txtViewDateTime2 = findViewById(R.id.txtView_time2);
+        singleTxtViewDateTime = findViewById(R.id.txtView_time);
+        roundTxtViewDateTime = findViewById(R.id.txtView_time2);
         btnAddTrip = findViewById(R.id.btn_add_trip);
         imageViewAddNote = findViewById(R.id.image_add_note);
         roundTripTimeAndDate = findViewById(R.id.round_trip_layout);
@@ -103,10 +104,12 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             @Override
             public void onClick(View view) {
                 //test
-                 // Trip tr = new Trip("هالو","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
+                // Trip tr = new Trip("هالو","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
                 // "33","34","ismailia","43","45");
                 ////validation
-                //addPresenter.addTrip(trip);
+                trip.setTripTitle(editTxtTripName.getText().toString());
+                trip.setStatus(getString(R.string.upcoming));
+                addPresenter.addTrip(trip);
                 Intent intent = new Intent(AddTripActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -114,19 +117,19 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             }
         });
 
-        txtViewDateTime.setOnClickListener(new View.OnClickListener() {
+        singleTxtViewDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTimePickerDialog("single");
+                showDateTimePickerDialog("single");
 
 
             }
         });
 
-        txtViewDateTime2.setOnClickListener(new View.OnClickListener() {
+        roundTxtViewDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTimePickerDialog("round");
+                showDateTimePickerDialog("round");
 
             }
         });
@@ -135,11 +138,14 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String tripType = adapterView.getItemAtPosition(i).toString();
-                //trip.setType(tripType);
+                trip.setTripType(tripType);
                 if (tripType.equals("Round Trip")) {
+                    isRound = true;
                     roundTripTimeAndDate.setVisibility(View.VISIBLE);
                 } else
                     roundTripTimeAndDate.setVisibility(View.GONE);
+                isRound = false;
+
             }
 
             @Override
@@ -152,7 +158,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String tripRepetition = adapterView.getItemAtPosition(i).toString();
-                //trip.setRepetition(tripRepetition);
+                trip.setRepeat(tripRepetition);
             }
 
             @Override
@@ -174,7 +180,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 }
             }
         });
-        //Ramzy
         // Setup Places Client
         if (!Places.isInitialized()) {
             Places.initialize(AddTripActivity.this, apiKey);
@@ -186,21 +191,23 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         final AutocompleteSupportFragment autocompleteSupportFragmentEnd =
                 (AutocompleteSupportFragment)
                         getSupportFragmentManager().findFragmentById(R.id.editTxt_end_point);
-        autocompleteSupportFragmentStart.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
-        autocompleteSupportFragmentEnd.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
+        autocompleteSupportFragmentStart.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
+        autocompleteSupportFragmentEnd.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autocompleteSupportFragmentStart.setOnPlaceSelectedListener(
                 new PlaceSelectionListener() {
                     @Override
                     public void onPlaceSelected(Place place) {
                         final LatLng latLng = place.getLatLng();
-
-                        Toast.makeText(AddTripActivity.this, ""+latLng.latitude, Toast.LENGTH_SHORT).show();
+                        trip.setStartLat(latLng.latitude + "");
+                        trip.setStartLang(latLng.longitude + "");
+                        trip.setStartLocation(place.getName());
+                        Toast.makeText(GlobalApplication.getAppContext(), place.getName(), Toast.LENGTH_LONG).show();
 
                     }
 
                     @Override
                     public void onError(Status status) {
-                        Toast.makeText(AddTripActivity.this, ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         autocompleteSupportFragmentEnd.setOnPlaceSelectedListener(
@@ -208,25 +215,20 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     @Override
                     public void onPlaceSelected(Place place) {
                         final LatLng latLng = place.getLatLng();
-
-                        Toast.makeText(AddTripActivity.this, ""+latLng.latitude, Toast.LENGTH_SHORT).show();
-
+                        trip.setDestinationLat(latLng.latitude + "");
+                        trip.setDestinationLang(latLng.longitude + "");
+                        trip.setDestinationLocation(place.getName());
                     }
 
                     @Override
                     public void onError(Status status) {
-                        Toast.makeText(AddTripActivity.this, ""+status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-        //Ramzy
     }
 
 
-    void showDatePickerDialog(final String tripDirection) {
-        //TODO
-    }
-
-    void showTimePickerDialog(final String tripDirection) {
+    void showDateTimePickerDialog(final String tripDirection) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
@@ -244,14 +246,17 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                             chosenSingleDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             chosenSingleDate.set(Calendar.MINUTE, minute);
                             chosenSingleDate.set(Calendar.SECOND, 0);
-                            txtViewDateTime.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime()));
+                            String singleDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
+                            singleTxtViewDateTime.setText(singleDateTime);
+                            trip.setStartDateTime(singleDateTime);
                             setAlarmManager(chosenSingleDate);
                         } else {
                             chosenRoundDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             chosenRoundDate.set(Calendar.MINUTE, minute);
                             chosenRoundDate.set(Calendar.SECOND, 0);
-                            txtViewDateTime2.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenRoundDate.getTime()));
-
+                            String roundDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
+                            roundTxtViewDateTime.setText(roundDateTime);
+                            trip.setRoundDateTime(roundDateTime);
                         }
 
                     }

@@ -65,7 +65,12 @@
         <activity android:name=".mainActivity.MainActivity" />
         <activity android:name=".addTripActivity.AddTripActivity" />
 
-        <receiver android:name=".AlertReceiver" />
+        <receiver android:name=".AlertReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+            </intent-filter>
+        </receiver>
         <service android:name=".NotificationService"/>
     </application>
 

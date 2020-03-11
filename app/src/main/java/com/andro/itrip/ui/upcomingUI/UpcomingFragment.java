@@ -61,7 +61,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     public void displayTrips(List<Trip> tripList) {
         recyclerView.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.INVISIBLE);
-        adapter = new TripAdapter(tripList, getContext(),upcomingPresenter);
+        adapter = new TripAdapter(tripList,upcomingPresenter);
         recyclerView.setAdapter(adapter);
 
     }

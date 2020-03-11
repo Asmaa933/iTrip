@@ -15,13 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
-    private Context context;
     private List<Trip> tripData;
     private UpcomingContract.PresenterInterface presenterInterface;
 
@@ -52,9 +53,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData, Context context, UpcomingContract.PresenterInterface presenterInterface) {
+    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface) {
         this.tripData = tripData;
-        this.context = context;
         this.presenterInterface = presenterInterface;
     }
 
@@ -70,6 +70,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        String imgURL = "https://maps.googleapis.com/maps/api/staticmap?size=500x250" +
+                "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang() + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang() + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
+        Picasso.get()
+                .load(imgURL)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
         holder.statusText.setText(tripData.get(position).getStatus());
@@ -113,7 +120,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
     private void showDeleteAlert(final int position){
-        AlertDialog.Builder Builder = new AlertDialog.Builder(context)
+        AlertDialog.Builder Builder = new AlertDialog.Builder(GlobalApplication.getAppContext())
                 .setMessage(R.string.delete_trip)
                 .setCancelable(false)
                 .setPositiveButton(R.string.card_delete, new DialogInterface.OnClickListener() {

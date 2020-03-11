@@ -5,12 +5,15 @@ public class Trip {
     private String tripTitle;
     private String startDateTime;
     private String status;
-    private String isRounded;
+    private String tripType;
     private String repeat;
+    private String roundDateTime;
 
     private String startLocation;
     private String startLat;
     private String startLang;
+
+
 
     private String destinationLocation;
     private String destinationLat;
@@ -24,7 +27,7 @@ public class Trip {
         this.tripTitle=tripTitle;
         this.startDateTime=startDateTime;
         this.status=status;
-        this.isRounded=isRounded;
+        this.tripType =isRounded;
         this.repeat=repeat;
         this.startLocation=startLocation;
         this.startLat=startLat;
@@ -32,6 +35,21 @@ public class Trip {
         this.destinationLocation=destinationLocation;
         this.destinationLat=destinationLat;
         this.destinationLang=destinationLang;
+    }
+
+    public Trip(String tripTitle, String startDateTime, String status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang) {
+        this.tripTitle = tripTitle;
+        this.startDateTime = startDateTime;
+        this.status = status;
+        this.tripType = tripType;
+        this.repeat = repeat;
+        this.roundDateTime = roundDateTime;
+        this.startLocation = startLocation;
+        this.startLat = startLat;
+        this.startLang = startLang;
+        this.destinationLocation = destinationLocation;
+        this.destinationLat = destinationLat;
+        this.destinationLang = destinationLang;
     }
 
     public String getTripID() {
@@ -50,8 +68,8 @@ public class Trip {
         return status;
     }
 
-    public String getIsRounded() {
-        return isRounded;
+    public String getTripType() {
+        return tripType;
     }
 
     public String getRepeat() {
@@ -82,6 +100,10 @@ public class Trip {
         return destinationLang;
     }
 
+    public String getRoundDateTime() {
+        return roundDateTime;
+    }
+
     public void setTripID(String tripID) {
         this.tripID=tripID;
     }
@@ -99,8 +121,8 @@ public class Trip {
         this.status=status;
     }
 
-    public void setIsRounded(String isRounded) {
-        this.isRounded=isRounded;
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
     }
 
     public void setRepeat(String repeat) {
@@ -129,5 +151,9 @@ public class Trip {
 
     public void setDestinationLang(String destinationLang) {
         this.destinationLang=destinationLang;
+    }
+
+    public void setRoundDateTime(String roundDateTime) {
+        this.roundDateTime = roundDateTime;
     }
 }
