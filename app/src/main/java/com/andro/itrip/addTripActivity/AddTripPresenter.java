@@ -16,4 +16,9 @@ public class AddTripPresenter implements AddTripContract.PresenterInterface {
         String tripId = FireBaseHandler.getInstance().addTrip(trip);
         return tripId;
     }
+    @Override
+    public void onUpdate(Trip trip) {
+        FireBaseHandler.getInstance().updateTrip(trip);
+
+    }
 }

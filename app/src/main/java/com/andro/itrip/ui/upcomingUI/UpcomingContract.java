@@ -13,7 +13,6 @@ public class UpcomingContract {
 
         void onDelete(String tripId);
 
-        void onUpdate(Trip trip);
         void addTrip(Trip trip);
 
     }

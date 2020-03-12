@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.andro.itrip.GlobalApplication;
+import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.R;
@@ -74,14 +76,22 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailTxt.getText().toString().trim();
-                String password = passwordTxt.getText().toString().trim();
-                if (validateEmail() & validatePassword()) {
-                    loginPresenter.verifyCredentials(email, password, LoginActivity.this);
-                    progressBar.setVisibility(View.VISIBLE);
+                if(HelpingMethods.isNetworkConnected()){
+
+                    String email = emailTxt.getText().toString().trim();
+                    String password = passwordTxt.getText().toString().trim();
+                    if (validateEmail() & validatePassword()) {
+                        loginPresenter.verifyCredentials(email, password, LoginActivity.this);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                    }
+                else {
+                    Toast.makeText(GlobalApplication.getAppContext(),getString(R.string.check_internet),Toast.LENGTH_LONG).show();
                 }
-            }
-        });
+                }
+            });
+
+
         hideSoftKeyboard();
 
     }

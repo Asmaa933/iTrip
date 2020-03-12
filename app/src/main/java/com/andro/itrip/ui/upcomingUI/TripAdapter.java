@@ -3,6 +3,8 @@ package com.andro.itrip.ui.upcomingUI;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
+import com.andro.itrip.addTripActivity.AddTripActivity;
+import com.andro.itrip.mainActivity.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private List<Trip> tripData;
     private UpcomingContract.PresenterInterface presenterInterface;
+    private Context context;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,9 +59,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface) {
+    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface, Context context) {
         this.tripData = tripData;
         this.presenterInterface = presenterInterface;
+        this.context = context;
     }
 
     @NonNull
@@ -80,16 +87,21 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
         holder.statusText.setText(tripData.get(position).getStatus());
-        final int positionOfTrip = position;
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//check update
-                Trip trip = new Trip("updateddd","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
-             "33","34","ismailia","43","45");
-                trip.setTripID(tripData.get(positionOfTrip).getTripID());
-                presenterInterface.onUpdate(trip);
+                double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
+
+                double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
+
+                double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
+
+                double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
+                String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                GlobalApplication.getAppContext().startActivity(intent);
+
 
             }
         });
@@ -103,12 +115,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           showDeleteAlert(positionOfTrip);
+           showDeleteAlert(position);
             }
         });
         holder.recyclerRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(GlobalApplication.getAppContext(), AddTripActivity.class);
+                intent.putExtra("selected trip", tripData.get(position));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setAction(GlobalApplication.getAppContext().getString(R.string.edit_trip));
+                GlobalApplication.getAppContext().startActivity(intent);
 
             }
         });
@@ -120,7 +137,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
     private void showDeleteAlert(final int position){
-        AlertDialog.Builder Builder = new AlertDialog.Builder(GlobalApplication.getAppContext())
+        AlertDialog.Builder Builder = new AlertDialog.Builder(context)
                 .setMessage(R.string.delete_trip)
                 .setCancelable(false)
                 .setPositiveButton(R.string.card_delete, new DialogInterface.OnClickListener() {

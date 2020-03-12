@@ -1,6 +1,11 @@
 package com.andro.itrip;
 
-public class Trip {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
+public class Trip implements Parcelable {
     private String tripID;
     private String tripTitle;
     private String startDateTime;
@@ -18,26 +23,13 @@ public class Trip {
     private String destinationLocation;
     private String destinationLat;
     private String destinationLang;
-
+    private ArrayList<String> notesList;
     public Trip(){
 
     }
 
-    public Trip( String tripTitle, String startDateTime, String status, String isRounded, String repeat, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang) {
-        this.tripTitle=tripTitle;
-        this.startDateTime=startDateTime;
-        this.status=status;
-        this.tripType =isRounded;
-        this.repeat=repeat;
-        this.startLocation=startLocation;
-        this.startLat=startLat;
-        this.startLang=startLang;
-        this.destinationLocation=destinationLocation;
-        this.destinationLat=destinationLat;
-        this.destinationLang=destinationLang;
-    }
 
-    public Trip(String tripTitle, String startDateTime, String status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang) {
+    public Trip(String tripTitle, String startDateTime, String status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang,ArrayList<String> notesList) {
         this.tripTitle = tripTitle;
         this.startDateTime = startDateTime;
         this.status = status;
@@ -50,6 +42,61 @@ public class Trip {
         this.destinationLocation = destinationLocation;
         this.destinationLat = destinationLat;
         this.destinationLang = destinationLang;
+        this.notesList = notesList;
+
+
+    }
+
+    protected Trip(Parcel in) {
+        tripID = in.readString();
+        tripTitle = in.readString();
+        startDateTime = in.readString();
+        status = in.readString();
+        tripType = in.readString();
+        repeat = in.readString();
+        roundDateTime = in.readString();
+        startLocation = in.readString();
+        startLat = in.readString();
+        startLang = in.readString();
+        destinationLocation = in.readString();
+        destinationLat = in.readString();
+        destinationLang = in.readString();
+        notesList = in.createStringArrayList();
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(tripID);
+        parcel.writeString(tripTitle);
+        parcel.writeString(startDateTime);
+        parcel.writeString(status);
+        parcel.writeString(tripType);
+        parcel.writeString(repeat);
+        parcel.writeString(roundDateTime);
+        parcel.writeString(startLocation);
+        parcel.writeString(startLat);
+        parcel.writeString(startLang);
+        parcel.writeString(destinationLocation);
+        parcel.writeString(destinationLat);
+        parcel.writeString(destinationLang);
+        parcel.writeStringList(notesList);
     }
 
     public String getTripID() {
@@ -104,6 +151,11 @@ public class Trip {
         return roundDateTime;
     }
 
+    public ArrayList<String> getNotesList() {
+        return notesList;
+    }
+
+
     public void setTripID(String tripID) {
         this.tripID=tripID;
     }
@@ -155,5 +207,10 @@ public class Trip {
 
     public void setRoundDateTime(String roundDateTime) {
         this.roundDateTime = roundDateTime;
+    }
+
+
+    public void setNotesList(ArrayList<String> notesList) {
+        this.notesList = notesList;
     }
 }

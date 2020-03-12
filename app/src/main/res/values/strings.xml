@@ -71,4 +71,18 @@
     <string name="empty_name">Enter name</string>
     <string name="name_error">Do not use special character or numbers </string>
     <string name="upcoming">Upcoming</string>
+    <string name="save">Save</string>
+    <string name="round_trip">Round Trip</string>
+    <string name="once">Once</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="edit_trip">Edit Trip</string>
+    <string name="check_internet">Check internet connection</string>
+    <string name="selected_trip">selected trip</string>
+    <string name="single">single</string>
+    <string name="round">round</string>
+    <string name="choose_time">choose time</string>
+    <string name="choose_date">choose date</string>
+
 </resources>

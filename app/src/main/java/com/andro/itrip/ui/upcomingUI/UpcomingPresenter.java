@@ -43,11 +43,7 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         FireBaseHandler.getInstance().deleteTrip(tripId);
     }
 
-    @Override
-    public void onUpdate(Trip trip) {
-        FireBaseHandler.getInstance().updateTrip(trip);
 
-    }
 
 
 }
