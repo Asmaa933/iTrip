@@ -9,7 +9,7 @@ import android.media.MediaPlayer;
 
 
 public class AlertReceiver extends BroadcastReceiver {
-    MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -20,6 +20,9 @@ public class AlertReceiver extends BroadcastReceiver {
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(alarmIntent);
 
+    }
+    public static void stopMedia(){
+        mediaPlayer.stop();
     }
 
 }

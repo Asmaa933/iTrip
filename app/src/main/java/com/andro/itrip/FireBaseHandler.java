@@ -32,6 +32,7 @@ public class FireBaseHandler {
 
     private FireBaseHandler() {
         auth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
 

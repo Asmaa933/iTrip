@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.andro.itrip.GlobalApplication;
+import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.loginActivity.LoginActivity;
@@ -27,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     private RegisterContract.PresenterInterface registerPresenter;
     private EditText nameTxt, emailTxt, passwordTxt, confirmPasswordTxt;
-    private Button registerBtn,haveAccountButton;
+    private Button registerBtn, haveAccountButton;
     private ProgressBar progressBar;
     private TextInputLayout nameLayout, emailLayout, passwordLayout, confirmLayout;
 
@@ -54,13 +56,19 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
             @Override
             public void onClick(View view) {
                 //Initiate registration task
-                if (validateName() & validateEmail() & validatePassword() & validateConfirmPassword()) {
-                    registerPresenter.registerNewAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
-                    showProgressBar();
+                if (HelpingMethods.isNetworkConnected()) {
+                    if (validateName() & validateEmail() & validatePassword() & validateConfirmPassword()) {
+                        registerPresenter.registerNewAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
+                        showProgressBar();
+
+                    }
+                } else {
+                    Toast.makeText(GlobalApplication.getAppContext(), getString(R.string.check_internet), Toast.LENGTH_LONG).show();
 
                 }
             }
         });
+
 
         haveAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,15 +158,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     public boolean validateConfirmPassword() {
         String confirmPassInput = confirmPasswordTxt.getText().toString().trim();
         boolean passwordMatches;
-        if(confirmPassInput.isEmpty()) {
+        if (confirmPassInput.isEmpty()) {
             confirmLayout.setError(getString(R.string.empty_password));
             passwordMatches = false;
-        }
-        else if (doStringsMatch(passwordTxt.getText().toString().trim(), confirmPassInput)) {
+        } else if (doStringsMatch(passwordTxt.getText().toString().trim(), confirmPassInput)) {
             passwordMatches = true;
             confirmLayout.setError(null);
-        }
-        else {
+        } else {
             passwordMatches = false;
             confirmLayout.setError(getString(R.string.password_error));
 
@@ -167,7 +173,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         return passwordMatches;
 
     }
-    public boolean validateName(){
+
+    public boolean validateName() {
         String nameInput = nameTxt.getText().toString().trim();
         boolean isValidName;
 
@@ -184,4 +191,4 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         return isValidName;
     }
 
-    }
+}

@@ -32,12 +32,14 @@ public class DialogActivity extends AppCompatActivity {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         startActivity(intent);
                         stopNotification();
+                        AlertReceiver.stopMedia();
                         finish();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        AlertReceiver.stopMedia();
                         stopNotification();
                     }
                 })
@@ -47,6 +49,7 @@ public class DialogActivity extends AppCompatActivity {
                         Intent serviceIntent = new Intent(GlobalApplication.getAppContext(), NotificationService.class);
                         serviceIntent.putExtra("inputExtra", "INPUT FROM ACTIVITY");
                         ContextCompat.startForegroundService(GlobalApplication.getAppContext(), serviceIntent);
+                        AlertReceiver.stopMedia();
                         finish();
                     }
                 });
