@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.AlertReceiver;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
@@ -116,6 +117,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 } else {
                     addPresenter.addTrip(trip);
                 }
+                AlarmManagerHandler.getInstance().setAlarmManager(chosenSingleDate,trip,trip.getRequestId());
+                
 
                 Intent intent = new Intent(AddTripActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -338,12 +341,11 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                             String singleDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
                             singleTxtViewDateTime.setText(singleDateTime);
                             trip.setStartDateTime(singleDateTime);
-                            setAlarmManager(chosenSingleDate);
                         } else {
                             chosenRoundDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             chosenRoundDate.set(Calendar.MINUTE, minute);
                             chosenRoundDate.set(Calendar.SECOND, 0);
-                            String roundDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
+                            String roundDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenRoundDate.getTime());
                             roundTxtViewDateTime.setText(roundDateTime);
                             trip.setRoundDateTime(roundDateTime);
                         }
@@ -392,6 +394,11 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         });
         datePickerDialog.show();
 
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     }
 
     private void setAlarmManager(Calendar date) {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
@@ -145,7 +146,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         presenterInterface.onDelete(tripData.get(position).getTripID());
                       presenterInterface.getTripList();
-
+                      AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

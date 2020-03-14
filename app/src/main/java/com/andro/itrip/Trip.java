@@ -24,7 +24,10 @@ public class Trip implements Parcelable {
     private String destinationLat;
     private String destinationLang;
     private ArrayList<String> notesList;
+    private static int increment = FireBaseHandler.getInstance().getLastRequestID();
+    private int requestId;
     public Trip(){
+        requestId = ++increment + 2;
 
     }
 
@@ -45,7 +48,9 @@ public class Trip implements Parcelable {
         this.notesList = notesList;
 
 
+
     }
+
 
     protected Trip(Parcel in) {
         tripID = in.readString();
@@ -62,6 +67,7 @@ public class Trip implements Parcelable {
         destinationLat = in.readString();
         destinationLang = in.readString();
         notesList = in.createStringArrayList();
+        requestId = in.readInt();
     }
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
@@ -97,6 +103,7 @@ public class Trip implements Parcelable {
         parcel.writeString(destinationLat);
         parcel.writeString(destinationLang);
         parcel.writeStringList(notesList);
+        parcel.writeInt(requestId);
     }
 
     public String getTripID() {
@@ -155,6 +162,9 @@ public class Trip implements Parcelable {
         return notesList;
     }
 
+    public int getRequestId() {
+        return requestId;
+    }
 
     public void setTripID(String tripID) {
         this.tripID=tripID;
@@ -213,4 +223,6 @@ public class Trip implements Parcelable {
     public void setNotesList(ArrayList<String> notesList) {
         this.notesList = notesList;
     }
+
+
 }

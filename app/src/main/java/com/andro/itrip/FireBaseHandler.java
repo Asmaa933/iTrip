@@ -144,6 +144,13 @@ public class FireBaseHandler {
         }
 
     }
+    public int getLastRequestID(){
+        int requestID = 0 ;
+        if(!trips.isEmpty()){
+            requestID = trips.get(trips.size() - 1).getRequestId();
+        }
+        return requestID;
+    }
 
 }
 

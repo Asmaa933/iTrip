@@ -10,24 +10,28 @@ import android.net.Uri;
 import android.os.Bundle;
 
 public class DialogActivity extends AppCompatActivity {
-
+Trip trip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent incomingIntent = getIntent();
+        if (incomingIntent!=null){
+             trip = incomingIntent.getParcelableExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip));
+        }
         AlertDialog.Builder Builder = new AlertDialog.Builder(this)
-                .setMessage("Reminder for your trip!!!")
+                .setMessage(R.string.reminder)
                 .setCancelable(false)
-                .setPositiveButton("Start", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                        //test
-                        double sourceLongitude = 31.2357;
+                        double sourceLongitude = Double.parseDouble(trip.getStartLang());
 
-                        double sourceLatitude = 30.0444;
+                        double sourceLatitude = Double.parseDouble(trip.getStartLat());
 
-                        double destinationLongitude = 32.2715;
+                        double destinationLongitude = Double.parseDouble(trip.getDestinationLang());
 
-                        double destinationLatitude = 30.5965;
+                        double destinationLatitude = Double.parseDouble(trip.getDestinationLat());
                         String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         startActivity(intent);
@@ -36,18 +40,19 @@ public class DialogActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AlertReceiver.stopMedia();
                         stopNotification();
                     }
                 })
-                .setNeutralButton("Snooze", new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.snooze, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent serviceIntent = new Intent(GlobalApplication.getAppContext(), NotificationService.class);
-                        serviceIntent.putExtra("inputExtra", "INPUT FROM ACTIVITY");
+                        serviceIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
+                        serviceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         ContextCompat.startForegroundService(GlobalApplication.getAppContext(), serviceIntent);
                         AlertReceiver.stopMedia();
                         finish();
