@@ -9,7 +9,8 @@ public class Trip implements Parcelable {
     private String tripID;
     private String tripTitle;
     private String startDateTime;
-    private String status;
+    //private String status;
+    private int status = Utils.STATUS_UPCOMING;
     private String tripType;
     private String repeat;
     private String roundDateTime;
@@ -32,7 +33,7 @@ public class Trip implements Parcelable {
     }
 
 
-    public Trip(String tripTitle, String startDateTime, String status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang,ArrayList<String> notesList) {
+    public Trip(String tripTitle, String startDateTime, int status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang,ArrayList<String> notesList) {
         this.tripTitle = tripTitle;
         this.startDateTime = startDateTime;
         this.status = status;
@@ -56,7 +57,7 @@ public class Trip implements Parcelable {
         tripID = in.readString();
         tripTitle = in.readString();
         startDateTime = in.readString();
-        status = in.readString();
+        status = in.readInt();
         tripType = in.readString();
         repeat = in.readString();
         roundDateTime = in.readString();
@@ -92,7 +93,7 @@ public class Trip implements Parcelable {
         parcel.writeString(tripID);
         parcel.writeString(tripTitle);
         parcel.writeString(startDateTime);
-        parcel.writeString(status);
+        parcel.writeInt(status);
         parcel.writeString(tripType);
         parcel.writeString(repeat);
         parcel.writeString(roundDateTime);
@@ -118,7 +119,7 @@ public class Trip implements Parcelable {
         return startDateTime;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -179,7 +180,7 @@ public class Trip implements Parcelable {
     }
 
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status=status;
     }
 

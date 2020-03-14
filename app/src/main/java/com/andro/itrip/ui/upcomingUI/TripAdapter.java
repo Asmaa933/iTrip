@@ -87,7 +87,19 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
-        holder.statusText.setText(tripData.get(position).getStatus());
+        switch (tripData.get(position).getStatus()){
+            case 0:
+                holder.statusText.setText("Canceled");
+                break;
+            case 1:
+                holder.statusText.setText("Done");
+                break;
+            case 2:
+                holder.statusText.setText("Upcoming");
+                break;
+        }
+
+        //holder.statusText.setText(tripData.get(position).getStatus());
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override

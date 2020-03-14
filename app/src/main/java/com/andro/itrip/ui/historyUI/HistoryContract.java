@@ -1,12 +1,22 @@
 package com.andro.itrip.ui.historyUI;
 
+import com.andro.itrip.Trip;
+
+import java.util.List;
+
 public class HistoryContract {
 
-    interface PresenterInterface {
-        void sendMessage();
+    public interface PresenterInterface {
+        void getTripList();
+
+        void onDelete(String tripId);
     }
 
-    interface ViewInterface {
+    public interface ViewInterface {
+        void displayTrips(List<Trip> tripList);
+
+        void displayNoTrips();
+
         void displayMessage(String message);
     }
 

@@ -27,6 +27,7 @@ import com.andro.itrip.AlertReceiver;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
+import com.andro.itrip.Utils;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -109,7 +110,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             public void onClick(View view) {
                 ////validation
                 trip.setTripTitle(editTxtTripName.getText().toString());
-                trip.setStatus(getString(R.string.upcoming));
+                trip.setStatus(Utils.STATUS_UPCOMING);
                 trip.setNotesList(notesArrayList);
                 if (isEdit) {
                     addPresenter.onUpdate(trip);

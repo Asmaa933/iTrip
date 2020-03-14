@@ -23,6 +23,7 @@
     <string name="welcome">Welcome to our app</string>
     <string name="signup">Sign up</string>
     <string name="add_more_trips">Opps! No trips here. Start by adding(+) more trips.</string>
+    <string name="past_trips">Opps! No trips here yet.</string>
     <string name="card_notes">Notes</string>
     <string name="card_delete">Delete</string>
 
