@@ -9,6 +9,8 @@ import android.os.Build;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

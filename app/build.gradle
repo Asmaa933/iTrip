@@ -47,13 +47,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
 
     implementation 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.1'
-    implementation 'com.google.android.libraries.places:places:1.0.0'
     implementation "androidx.multidex:multidex:2.0.1"
+
     implementation 'com.google.android.libraries.places:places:1.0.0'
     implementation 'com.github.apl-devs:appintro:v4.2.3'
 }
