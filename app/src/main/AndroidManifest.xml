@@ -62,8 +62,7 @@
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Translucent"
             />
-
-
+        <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
         <activity android:name=".addTripActivity.AddTripActivity" />
 
