@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.andro.itrip.registerActivity.RegisterContract;
 import com.andro.itrip.loginActivity.LoginContract;
-import com.andro.itrip.ui.upcomingUI.UpcomingContract;
+import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -49,7 +49,7 @@ public class FireBaseHandler {
     }
 
 
-    public void getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
+    public void getAllTrips(final UpcomingPresenter presenterInterface) {
         trips = new ArrayList<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         databaseTrips.addValueEventListener(new ValueEventListener() {

@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.andro.itrip.R;
+import com.andro.itrip.Trip;
+
+import java.util.List;
 
 public class HistoryFragment extends Fragment implements HistoryContract.ViewInterface {
 
@@ -21,11 +24,20 @@ public class HistoryFragment extends Fragment implements HistoryContract.ViewInt
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
-        textView = root.findViewById(R.id.text_history);
         historyPresenter = new HistoryPresenter(this);
-        historyPresenter.sendMessage();
         return root;
     }
+
+    @Override
+    public void displayTrips(List<Trip> tripList) {
+
+    }
+
+    @Override
+    public void displayNoTrips() {
+
+    }
+
     public void displayMessage(String message) {
         textView.setText(message);
     }
