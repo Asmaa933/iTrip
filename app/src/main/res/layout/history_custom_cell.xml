@@ -15,13 +15,13 @@
     >
 
     <LinearLayout
-        android:id="@+id/row"
+        android:id="@+id/history_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/img_list_item_map"
+            android:id="@+id/img_list_item_map_history"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
@@ -42,14 +42,14 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_list_item_main"
+                    android:id="@+id/img_list_item_main_histroy"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_img_default_img" />
 
                 <TextView
-                    android:id="@+id/status_list_item_main"
+                    android:id="@+id/status_list_item_main_history"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5sp"
@@ -60,6 +60,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/title_list_item_histoy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3sp"
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp">
                 <TextView
+                    android:id="@+id/time_list_item_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1/7/1995      12.00 am"
@@ -121,6 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <Button
+            android:id="@+id/delete_list_item_main_history"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/delete"></Button>
