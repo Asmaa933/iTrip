@@ -58,12 +58,23 @@ public class AlarmManagerHandler {
     public void cancelAlarm(Trip trip) {
         AlarmManager alarmManager = (AlarmManager) GlobalApplication.getAppContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(GlobalApplication.getAppContext(), AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), trip.getRequestId(), intent, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(GlobalApplication.getAppContext().getString(R.string.alarm));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
+
+        intent.putExtra(GlobalApplication.getAppContext().getString(R.string.data), bundle);
+        if (trip.getRequestId()  % 2 == 1) {
+            intent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound), true);
+        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), trip.getRequestId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
         if (trip.getTripType().equals(GlobalApplication.getAppContext().getString(R.string.round_trip))) {
-            pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), trip.getRequestId() + 1, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), trip.getRequestId() + 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmManager.cancel(pendingIntent);
         }
 
     }
 }
+
+

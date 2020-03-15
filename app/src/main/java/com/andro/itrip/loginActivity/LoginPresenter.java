@@ -23,6 +23,7 @@ public class LoginPresenter implements LoginContract.PresenterInterface {
     public void loginSuccess(boolean isSuccess) {
         if (isSuccess){
             viewInterface.loginSuccessful();
+
         }
         else{
             viewInterface.displayError(R.string.login_failed);

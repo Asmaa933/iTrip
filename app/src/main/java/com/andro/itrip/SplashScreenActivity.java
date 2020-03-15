@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             // True -----> Not first time
             config = new EasySplashScreen(SplashScreenActivity.this)
                     .withFullScreen()
-                    .withTargetActivity(MainActivity.class)
+                    .withTargetActivity(LoginActivity.class)
                     .withSplashTimeOut(3000)
                     .withBackgroundColor(Color.parseColor("#00ffaa"))
                     .withAfterLogoText("Welcome Back Yasta!")

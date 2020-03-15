@@ -305,7 +305,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         int mYear = 0, mMonth = 0, mDay = 0, mHour = 0, mMinute = 0;
         String dateInString;
         if (isEdit) {
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
             if (tripDirection.equals(getString(R.string.single))) {
                 dateInString = trip.getStartDateTime();
             } else {
@@ -427,7 +427,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             editTxtTripName.setError("Enter trip title");
             validateFlag = false;
         }
-        if(trip.getTripType().equals(getString(R.string.round_trip))){
+        if (trip.getTripType().equals(getString(R.string.round_trip))) {
             if (trip.getRoundDateTime() == null) {
                 validateFlag = false;
 

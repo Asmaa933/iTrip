@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccessful() {
         progressBar.setVisibility(View.GONE);
+        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
