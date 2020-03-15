@@ -18,11 +18,11 @@ public class AppIntroActivity extends AppIntro {
         //setContentView(R.layout.activity_app_intro);
 
         addSlide(AppIntroFragment.newInstance("Plan your trips.", "Daily planner, to manage your trips.",
-                R.drawable.first, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
+                R.drawable.first, ContextCompat.getColor(getApplicationContext(), R.color.palette2)));
         addSlide(AppIntroFragment.newInstance("Get Notification", "Suit up. It's time for fun.",
-                R.drawable.second, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
+                R.drawable.second, ContextCompat.getColor(getApplicationContext(), R.color.palette3)));
         addSlide(AppIntroFragment.newInstance("Start your trip.", "Step by step, till your destination!",
-                R.drawable.third, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
+                R.drawable.third, ContextCompat.getColor(getApplicationContext(), R.color.palette2)));
     }
 
 

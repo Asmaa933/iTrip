@@ -9,4 +9,9 @@
     <color name="Black">#000000</color>
     <color name="Blue">#381460</color>
     <color name="Adsy">#c93838</color>
+
+    <color name="palette1">#1b262c</color>
+    <color name="palette2">#0f4c75</color>
+    <color name="palette3">#3282b8</color>
+    <color name="palette4">#bbe1fa</color>
 </resources>

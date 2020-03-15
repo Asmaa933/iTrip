@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginActivity.LoginActivity">
+    tools:context=".loginActivity.LoginActivity"
+    android:background="@color/palette4">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
 
         <ImageView
@@ -20,9 +22,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="137dp"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="133dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="137dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 
         <TextView
             android:id="@+id/textView2"
@@ -31,9 +34,11 @@
             android:layout_below="@+id/imageView5"
             android:layout_alignParentStart="true"
             android:layout_marginStart="43dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginEnd="43dp"
+            android:layout_marginTop="8dp"
             android:text="@string/welcome"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -41,9 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="11dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="22dp"
-            android:text="@string/haveAccount" />
+            android:text="@string/haveAccount"
+            android:textColor="@android:color/black"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
@@ -53,9 +59,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="33dp"
-            app:errorEnabled="true">
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
+            app:errorEnabled="true"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailTxt"
@@ -73,7 +80,7 @@
             android:layout_alignStart="@+id/emailLayout"
             android:layout_alignEnd="@+id/emailLayout"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="-2dp"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true">
@@ -93,10 +100,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/passwordLayout"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
             android:layout_marginTop="31dp"
             android:text="@string/login"
             android:textAllCaps="false"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"
             />
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
@@ -107,12 +117,13 @@
             android:layout_alignStart="@+id/facebookButton"
             android:layout_alignEnd="@+id/facebookButton"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginTop="10dp"
+
             android:layout_marginBottom="10dp"
             android:text="@string/google"
             android:textAlignment="textStart"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebookButton"
@@ -122,18 +133,20 @@
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="74dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginEnd="74dp"
+            android:layout_marginTop="10dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp" />
 
         <Button
             android:id="@+id/createAccountButton"
-            android:layout_width="183dp"
+            android:layout_width="190dp"
             android:layout_height="34dp"
             android:layout_below="@+id/haveAccountButton"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="111dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
             android:background="@color/browser_actions_bg_grey"
             android:text="@string/create"
             android:textAllCaps="false" />
