@@ -9,24 +9,31 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.andro.itrip.mainActivity.MainActivity;
 
 public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        String input = intent.getStringExtra("inputExtra");
+
+           Trip trip = (Trip) intent.getSerializableExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip));
+           boolean isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
+
 
         Intent notificationIntent = new Intent(this, DialogActivity.class);
+        notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
+        if(isRound){
+            notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound),true);
+        }
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
+                0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Notification notification = new NotificationCompat.Builder(this, GlobalApplication.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_menu_camera)
-                .setContentTitle("check Title")
-                .setContentText(input)
+                .setContentTitle(getString(R.string.alarm_trip))
+                .setContentText(trip.getTripTitle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentIntent(pendingIntent)

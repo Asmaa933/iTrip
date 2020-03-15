@@ -7,13 +7,13 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainRecyclerView"
+        android:id="@+id/historyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        android:id="@+id/layout_empty"
+        android:id="@+id/layout_empty_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
