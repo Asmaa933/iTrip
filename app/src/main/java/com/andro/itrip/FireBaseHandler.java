@@ -6,7 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.andro.itrip.registerActivity.RegisterContract;
 import com.andro.itrip.loginActivity.LoginContract;
-import com.andro.itrip.ui.upcomingUI.UpcomingContract;
+import com.andro.itrip.ui.historyUI.HistoryPresenter;
+import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -32,6 +33,7 @@ public class FireBaseHandler {
 
     private FireBaseHandler() {
         auth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
 
@@ -48,7 +50,7 @@ public class FireBaseHandler {
     }
 
 
-    public void getAllTrips(final UpcomingContract.PresenterInterface presenterInterface) {
+    public void getAllTrips(final UpcomingPresenter presenterInterface) {
         trips = new ArrayList<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         databaseTrips.addValueEventListener(new ValueEventListener() {
@@ -71,7 +73,31 @@ public class FireBaseHandler {
 
 
     }
+    public void getAllPastTrips(final HistoryPresenter presenterInterface) {
+        trips = new ArrayList<>();
+        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+        databaseTrips.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                trips.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Trip trip = postSnapshot.getValue(Trip.class);
+                    if (trip.getStatus() != 2) {
+                        trips.add(trip);
+                        presenterInterface.updateTripList(trips);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        presenterInterface.updateTripList(trips);
+
+
+    }
     public String addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
         if(tripId!=null){
@@ -89,8 +115,6 @@ public class FireBaseHandler {
 
     public void deleteTrip(String tripId) {
         databaseTrips.child(tripId).removeValue();
-
-
     }
 
     public void checkAuthentication(String email, String password, final Activity activity, final LoginContract.PresenterInterface presenterInterface) {
@@ -142,6 +166,13 @@ public class FireBaseHandler {
             SavedPreferences.getInstance().writeUserID(user_id);
         }
 
+    }
+    public int getLastRequestID(){
+        int requestID = 0 ;
+        if(!trips.isEmpty()){
+            requestID = trips.get(trips.size() - 1).getRequestId();
+        }
+        return requestID;
     }
 
 }

@@ -23,6 +23,7 @@
     <string name="welcome">Welcome to our app</string>
     <string name="signup">Sign up</string>
     <string name="add_more_trips">Opps! No trips here. Start by adding(+) more trips.</string>
+    <string name="past_trips">Opps! No trips here yet.</string>
     <string name="card_notes">Notes</string>
     <string name="card_delete">Delete</string>
 
@@ -56,6 +57,7 @@
     </string-array>
 
     <string-array name="repetition">
+        <item>Once</item>
         <item>Daily</item>
         <item>Weekly</item>
         <item>Monthly</item>
@@ -69,4 +71,31 @@
     <string name="password_error">Passwords do not match</string>
     <string name="empty_name">Enter name</string>
     <string name="name_error">Do not use special character or numbers </string>
+    <string name="upcoming">Upcoming</string>
+    <string name="save">Save</string>
+    <string name="round_trip">Round Trip</string>
+    <string name="once">Once</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="edit_trip">Edit Trip</string>
+    <string name="check_internet">Check internet connection</string>
+    <string name="selected_trip">selected trip</string>
+    <string name="single">single</string>
+    <string name="round">round</string>
+    <string name="choose_time">choose time</string>
+    <string name="choose_date">choose date</string>
+    <string name="alarm_trip">Trip alarm</string>
+    <string name="reminder">Reminder for your trip!</string>
+    <string name="start">Start</string>
+    <string name="snooze">Snooze</string>
+    <string name="trip_added">Trip added</string>
+    <string name="trip_edit">Trip edited</string>
+    <string name="alarmManager">alarmManager</string>
+    <string name="isRound">isRound</string>
+    <string name="alarm">alarm</string>
+    <string name="data">DATA</string>
+    <string name="enter_start_date">Enter start Date and time</string>
+
+
 </resources>

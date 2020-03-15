@@ -5,21 +5,38 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-
+import android.os.Bundle;
 
 
 public class AlertReceiver extends BroadcastReceiver {
-    MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
+    Trip trip;
+    boolean isRound;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
         mediaPlayer.start();
 
-        Intent alarmIntent = new Intent(context.getApplicationContext(),DialogActivity.class);
-        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (intent.getAction().equals(GlobalApplication.getAppContext().getString(R.string.alarm))) {
+
+            Bundle args = intent.getBundleExtra(GlobalApplication.getAppContext().getString(R.string.data));
+            trip = (Trip) args.getSerializable(GlobalApplication.getAppContext().getString(R.string.alarm_trip));
+            isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
+        }
+
+        Intent alarmIntent = new Intent(context.getApplicationContext(), DialogActivity.class);
+        alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
+        if(isRound){
+            alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound) , true);
+        }
+        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(alarmIntent);
 
+    }
+
+    public static void stopMedia() {
+        mediaPlayer.stop();
     }
 
 }

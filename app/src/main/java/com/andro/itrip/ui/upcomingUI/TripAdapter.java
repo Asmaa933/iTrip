@@ -3,6 +3,8 @@ package com.andro.itrip.ui.upcomingUI;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +17,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andro.itrip.AlarmManagerHandler;
+import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
+import com.andro.itrip.addTripActivity.AddTripActivity;
+import com.andro.itrip.mainActivity.MainActivity;
+import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
-    private Context context;
     private List<Trip> tripData;
     private UpcomingContract.PresenterInterface presenterInterface;
+    private Context context;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -52,10 +60,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData, Context context, UpcomingContract.PresenterInterface presenterInterface) {
+    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface, Context context) {
         this.tripData = tripData;
-        this.context = context;
         this.presenterInterface = presenterInterface;
+        this.context = context;
     }
 
     @NonNull
@@ -70,19 +78,44 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        String imgURL = "https://maps.googleapis.com/maps/api/staticmap?size=500x250" +
+                "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang() + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang() + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
+        Picasso.get()
+                .load(imgURL)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
-        holder.statusText.setText(tripData.get(position).getStatus());
-        final int positionOfTrip = position;
+        switch (tripData.get(position).getStatus()){
+            case 0:
+                holder.statusText.setText("Canceled");
+                break;
+            case 1:
+                holder.statusText.setText("Done");
+                break;
+            case 2:
+                holder.statusText.setText("Upcoming");
+                break;
+        }
+
+        //holder.statusText.setText(tripData.get(position).getStatus());
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//check update
-                Trip trip = new Trip("updateddd","Mar 6, 2020 07:33 PM","upcomming","true","true","cairo" ,
-             "33","34","ismailia","43","45");
-                trip.setTripID(tripData.get(positionOfTrip).getTripID());
-                presenterInterface.onUpdate(trip);
+                double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
+
+                double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
+
+                double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
+
+                double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
+                String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                GlobalApplication.getAppContext().startActivity(intent);
+
 
             }
         });
@@ -96,12 +129,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           showDeleteAlert(positionOfTrip);
+           showDeleteAlert(position);
             }
         });
         holder.recyclerRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(GlobalApplication.getAppContext(), AddTripActivity.class);
+                intent.putExtra("selected trip", tripData.get(position));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setAction(GlobalApplication.getAppContext().getString(R.string.edit_trip));
+                GlobalApplication.getAppContext().startActivity(intent);
 
             }
         });
@@ -121,7 +159,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         presenterInterface.onDelete(tripData.get(position).getTripID());
                       presenterInterface.getTripList();
-
+                      AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

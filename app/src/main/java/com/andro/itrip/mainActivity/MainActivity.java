@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.andro.itrip.GlobalApplication;
+import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
 import com.andro.itrip.addTripActivity.AddTripActivity;
@@ -46,9 +48,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddTripActivity.class);
-                startActivity(intent);
-                finish();
+                if(HelpingMethods.isNetworkConnected()){
+                    Intent intent = new Intent(MainActivity.this, AddTripActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(GlobalApplication.getAppContext(),getString(R.string.check_internet),Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });
