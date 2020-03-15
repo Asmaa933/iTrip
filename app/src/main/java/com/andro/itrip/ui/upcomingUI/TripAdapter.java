@@ -40,7 +40,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         private ImageView statusImage;
         private TextView statusText;
         private Button deleteButton;
-        private Button notesButton;
+        private Button cancelButton;
         private TextView tripTitle;
         private TextView tripTime;
         private ImageButton startButton;
@@ -53,7 +53,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             statusImage = view.findViewById(R.id.img_list_item_main);
             statusText = view.findViewById(R.id.status_list_item_main);
             deleteButton = view.findViewById(R.id.delete_list_item_main);
-            notesButton = view.findViewById(R.id.note_list_item_main);
+            cancelButton = view.findViewById(R.id.cancel_list_item_main);
             tripTitle = view.findViewById(R.id.title_list_item_main);
             tripTime = view.findViewById(R.id.time_list_item_main);
             startButton = view.findViewById(R.id.start_list_item_main);
@@ -119,11 +119,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
             }
         });
-        holder.notesButton.setOnClickListener(new View.OnClickListener() {
+        holder.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                tripData.get(position).setStatus(0);
+                presenterInterface.onCancel(tripData.get(position));
+                presenterInterface.getTripList();
+                AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {

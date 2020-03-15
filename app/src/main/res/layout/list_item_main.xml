@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.MaterialComponents.CardView"
     android:id="@+id/container_list_item_main"
+    style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="25dp"
+    android:background="@android:drawable/list_selector_background"
+    android:clickable="true"
     android:outlineSpotShadowColor="@color/Grey"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="12dp"
-    android:clickable="true"
-    android:background="@android:drawable/list_selector_background"
-    >
+    app:cardCornerRadius="15dp">
 
     <LinearLayout
         android:id="@+id/row"
@@ -65,6 +64,18 @@
                 android:layout_weight="1" />
 
             <Button
+                android:id="@+id/cancel_list_item_main"
+                android:layout_width="54dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_rounded_grey"
+                android:clickable="true"
+                android:text="@string/card_cancel"
+                android:textColor="@color/colorOffwhite"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/delete_list_item_main"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
@@ -74,21 +85,9 @@
                 android:text="@string/card_delete"
                 android:textColor="@color/colorOffwhite"
                 android:textSize="12sp"
-                android:textStyle="bold"
-
-                />
-
-            <Button
-                android:id="@+id/note_list_item_main"
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/btn_rounded_grey"
-                android:clickable="true"
-                android:text="@string/card_notes"
-                android:textColor="@color/colorOffwhite"
-                android:textSize="12sp"
                 android:textStyle="bold" />
+
+
 
         </LinearLayout>
 
@@ -96,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:layout_width="0dp"

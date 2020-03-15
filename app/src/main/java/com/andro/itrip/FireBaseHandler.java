@@ -113,6 +113,11 @@ public class FireBaseHandler {
 
     }
 
+    public void updateTripStatus(Trip trip) {
+        databaseTrips.child(trip.getTripID()).setValue(trip);
+
+    }
+
     public void deleteTrip(String tripId) {
         databaseTrips.child(tripId).removeValue();
     }
