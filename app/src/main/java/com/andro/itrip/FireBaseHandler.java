@@ -90,8 +90,6 @@ public class FireBaseHandler {
 
     public void deleteTrip(String tripId) {
         databaseTrips.child(tripId).removeValue();
-
-
     }
 
     public void checkAuthentication(String email, String password, final Activity activity, final LoginContract.PresenterInterface presenterInterface) {
