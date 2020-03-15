@@ -244,8 +244,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             //  Toast.makeText(getActivity(), "trueeeeeeeee", Toast.LENGTH_SHORT).show();
                             String userId=user.getUid();
+                            SavedPreferences.getInstance().writeUserID(userId);
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("userId",userId);
                             startActivity(intent);
                             finish();
 
