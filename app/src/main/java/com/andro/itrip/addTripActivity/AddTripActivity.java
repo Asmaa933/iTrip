@@ -427,10 +427,13 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             editTxtTripName.setError("Enter trip title");
             validateFlag = false;
         }
-        if (trip.getRoundDateTime() == null) {
-            validateFlag = false;
+        if(trip.getTripType().equals(getString(R.string.round_trip))){
+            if (trip.getRoundDateTime() == null) {
+                validateFlag = false;
 
+            }
         }
+
         if (trip.getStartDateTime() == null) {
             validateFlag = false;
 
