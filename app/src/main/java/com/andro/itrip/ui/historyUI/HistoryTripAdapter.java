@@ -34,20 +34,22 @@ public class HistoryTripAdapter extends RecyclerView.Adapter<HistoryTripAdapter.
         private LinearLayout recyclerRow;
         private ImageView mapImage;
         private ImageView statusImage;
-        private TextView statusText;
         private Button deleteButton;
         private TextView tripTitle;
         private TextView tripTime;
+        private TextView fromTxtView;
+        private TextView toTxtView;
 
         public ViewHolder(View view) {
             super(view);
             recyclerRow = view.findViewById(R.id.history_row);
             mapImage = view.findViewById(R.id.img_list_item_map_history);
             statusImage = view.findViewById(R.id.img_list_item_main_histroy);
-            statusText = view.findViewById(R.id.status_list_item_main_history);
             deleteButton = view.findViewById(R.id.delete_list_item_main_history);
             tripTitle = view.findViewById(R.id.title_list_item_histoy);
             tripTime = view.findViewById(R.id.time_list_item_history);
+            fromTxtView = view.findViewById(R.id.fromTxtView);
+            toTxtView = view.findViewById(R.id.toTxtView);
     }
 }
         public HistoryTripAdapter(List<Trip> tripData, HistoryContract.PresenterInterface presenterInterface, Context context) {
@@ -78,15 +80,18 @@ public class HistoryTripAdapter extends RecyclerView.Adapter<HistoryTripAdapter.
                     .into(holder.mapImage);
             holder.tripTitle.setText(tripData.get(position).getTripTitle());
             holder.tripTime.setText(tripData.get(position).getStartDateTime());
-            switch (tripData.get(position).getStatus()){
+            holder.toTxtView.setText("To : " + tripData.get(position).getDestinationLocation());
+            holder.fromTxtView.setText("From : " + tripData.get(position).getStartLocation());
+
+        switch (tripData.get(position).getStatus()){
                 case 0:
-                    holder.statusText.setText("Canceled");
+                    holder.statusImage.setImageResource(R.drawable.cancel);
                     break;
                 case 1:
-                    holder.statusText.setText("Done");
+                    holder.statusImage.setImageResource(R.drawable.done);
                     break;
                 case 2:
-                    holder.statusText.setText("Upcoming");
+                    holder.statusImage.setImageResource(R.drawable.upcoming);
                     break;
             }
 

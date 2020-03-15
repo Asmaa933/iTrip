@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.loginActivity.LoginActivity;
 import com.google.android.material.textfield.TextInputLayout;
@@ -89,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @Override
     public void redirectMainScreen() {
         hideProgressBar();
+        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

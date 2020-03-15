@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccessful() {
         progressBar.setVisibility(View.GONE);
+        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -245,7 +246,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             String userId=user.getUid();
                             SavedPreferences.getInstance().writeUserID(userId);
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                            //intent.putExtra("userId",userId);
                             startActivity(intent);
                             finish();
                             Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();

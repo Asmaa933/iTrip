@@ -96,6 +96,8 @@
     <string name="alarm">alarm</string>
     <string name="data">DATA</string>
     <string name="enter_start_date">Enter start Date and time</string>
+    <string name="history">History</string>
+    <string name="logout">Log out</string>
 
 
 </resources>
