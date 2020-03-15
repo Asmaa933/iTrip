@@ -15,11 +15,15 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-           Trip trip = intent.getParcelableExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip));
+           Trip trip = (Trip) intent.getSerializableExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip));
+           boolean isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
 
 
         Intent notificationIntent = new Intent(this, DialogActivity.class);
         notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
+        if(isRound){
+            notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound),true);
+        }
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,

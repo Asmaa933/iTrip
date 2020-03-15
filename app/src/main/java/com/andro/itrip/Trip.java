@@ -1,11 +1,10 @@
 package com.andro.itrip;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Trip implements Parcelable {
+public class Trip implements Serializable {
     private String tripID;
     private String tripTitle;
     private String startDateTime;
@@ -25,10 +24,9 @@ public class Trip implements Parcelable {
     private String destinationLat;
     private String destinationLang;
     private ArrayList<String> notesList;
-    private static int increment = FireBaseHandler.getInstance().getLastRequestID();
     private int requestId;
     public Trip(){
-        requestId = ++increment + 2;
+        requestId = FireBaseHandler.getInstance().getLastRequestID() + 2;
 
     }
 
@@ -53,59 +51,6 @@ public class Trip implements Parcelable {
     }
 
 
-    protected Trip(Parcel in) {
-        tripID = in.readString();
-        tripTitle = in.readString();
-        startDateTime = in.readString();
-        status = in.readInt();
-        tripType = in.readString();
-        repeat = in.readString();
-        roundDateTime = in.readString();
-        startLocation = in.readString();
-        startLat = in.readString();
-        startLang = in.readString();
-        destinationLocation = in.readString();
-        destinationLat = in.readString();
-        destinationLang = in.readString();
-        notesList = in.createStringArrayList();
-        requestId = in.readInt();
-    }
-
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel in) {
-            return new Trip(in);
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(tripID);
-        parcel.writeString(tripTitle);
-        parcel.writeString(startDateTime);
-        parcel.writeInt(status);
-        parcel.writeString(tripType);
-        parcel.writeString(repeat);
-        parcel.writeString(roundDateTime);
-        parcel.writeString(startLocation);
-        parcel.writeString(startLat);
-        parcel.writeString(startLang);
-        parcel.writeString(destinationLocation);
-        parcel.writeString(destinationLat);
-        parcel.writeString(destinationLang);
-        parcel.writeStringList(notesList);
-        parcel.writeInt(requestId);
-    }
 
     public String getTripID() {
         return tripID;

@@ -92,6 +92,10 @@
     <string name="trip_added">Trip added</string>
     <string name="trip_edit">Trip edited</string>
     <string name="alarmManager">alarmManager</string>
+    <string name="isRound">isRound</string>
+    <string name="alarm">alarm</string>
+    <string name="data">DATA</string>
+    <string name="enter_start_date">Enter start Date and time</string>
 
 
 </resources>
