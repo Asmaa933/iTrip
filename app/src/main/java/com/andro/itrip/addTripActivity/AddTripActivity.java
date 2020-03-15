@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.AlertReceiver;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
@@ -71,6 +72,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     private Trip trip;
     private boolean isEdit = false;
 
+
     private ArrayList<String> notesArrayList;
     private NotesAdapter notesAdapter;
     private ListView notesList;
@@ -95,7 +97,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         String action = incomingIntent.getAction();
         if (incomingIntent != null) {
             if (action != null && action.equals(getString(R.string.edit_trip))) {
-                trip = incomingIntent.getParcelableExtra(getString(R.string.selected_trip));
+                trip = (Trip) incomingIntent.getSerializableExtra(getString(R.string.selected_trip));
                 isEdit = true;
                 fillComponentsWithTrip();
             }
@@ -108,20 +110,26 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             @Override
             public void onClick(View view) {
                 ////validation
+
                 trip.setTripTitle(editTxtTripName.getText().toString());
                 trip.setStatus(Utils.STATUS_UPCOMING);
                 trip.setNotesList(notesArrayList);
-                if (isEdit) {
-                    addPresenter.onUpdate(trip);
+                if (validateInputs()) {
+                    if (isEdit) {
+                        addPresenter.onUpdate(trip);
 
-                } else {
-                    addPresenter.addTrip(trip);
+                    } else {
+                        addPresenter.addTrip(trip);
+                    }
+                    AlarmManagerHandler.getInstance().setAlarmManager(chosenSingleDate, trip, trip.getRequestId());
+                    if (trip.getTripType().equals(getString(R.string.round_trip))) {
+                        AlarmManagerHandler.getInstance().setAlarmManager(chosenRoundDate, trip, trip.getRequestId() + 1);
+                    }
+
+                    Intent intent = new Intent(AddTripActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-
-                Intent intent = new Intent(AddTripActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-
             }
         });
 
@@ -216,7 +224,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     @Override
                     public void onPlaceSelected(Place place) {
                         final LatLng latLng = place.getLatLng();
-                        if(latLng!=null){
+                        if (latLng != null) {
                             trip.setDestinationLat(latLng.latitude + "");
                             trip.setDestinationLang(latLng.longitude + "");
                             trip.setDestinationLocation(place.getName());
@@ -280,8 +288,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         }
         autocompleteSupportFragmentStart.setText(trip.getStartLocation());
         autocompleteSupportFragmentEnd.setText(trip.getDestinationLocation());
-        if (trip.getNotesList() != null && !trip.getNotesList().isEmpty()){
-            notesArrayList =  trip.getNotesList();
+        if (trip.getNotesList() != null && !trip.getNotesList().isEmpty()) {
+            notesArrayList = trip.getNotesList();
         }
 
         btnAddTrip.setText(R.string.save);
@@ -294,14 +302,14 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     private void showDateTimePickerDialog(final String tripDirection) {
         Locale.setDefault(Locale.ENGLISH);
         final Calendar c = Calendar.getInstance();
-        int mYear=0 ,mMonth=0,mDay=0,mHour=0,mMinute=0;
+        int mYear = 0, mMonth = 0, mDay = 0, mHour = 0, mMinute = 0;
         String dateInString;
-        if(isEdit){
+        if (isEdit) {
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
-            if(tripDirection.equals(getString(R.string.single))){
-                 dateInString =  trip.getStartDateTime();
-            }else {
-                 dateInString = trip.getRoundDateTime();
+            if (tripDirection.equals(getString(R.string.single))) {
+                dateInString = trip.getStartDateTime();
+            } else {
+                dateInString = trip.getRoundDateTime();
             }
             try {
                 Date date = sdf.parse(dateInString);
@@ -316,13 +324,13 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
 
-             mYear = c.get(Calendar.YEAR);
-             mMonth = c.get(Calendar.MONTH);
-             mDay = c.get(Calendar.DAY_OF_MONTH);
-             mHour = c.get(Calendar.HOUR_OF_DAY);
-             mMinute = c.get(Calendar.MINUTE);
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
         }
 
         // Launch Time Picker Dialog
@@ -339,12 +347,11 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                             String singleDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
                             singleTxtViewDateTime.setText(singleDateTime);
                             trip.setStartDateTime(singleDateTime);
-                            setAlarmManager(chosenSingleDate);
                         } else {
                             chosenRoundDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             chosenRoundDate.set(Calendar.MINUTE, minute);
                             chosenRoundDate.set(Calendar.SECOND, 0);
-                            String roundDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenSingleDate.getTime());
+                            String roundDateTime = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(chosenRoundDate.getTime());
                             roundTxtViewDateTime.setText(roundDateTime);
                             trip.setRoundDateTime(roundDateTime);
                         }
@@ -356,12 +363,12 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
+
                     Toast.makeText(getApplicationContext(), getString(R.string.choose_time), Toast.LENGTH_LONG).show();
                 }
 
             }
         });
-
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -383,7 +390,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
                     }
                 }, mYear, mMonth, mDay);
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel) , new DialogInterface.OnClickListener() {
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
                     Toast.makeText(getApplicationContext(), getString(R.string.choose_date), Toast.LENGTH_LONG).show();
@@ -391,23 +398,54 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 }
             }
         });
-        datePickerDialog.show();
+        if (tripDirection.equals(getString(R.string.single))) {
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.show();
+
+        } else {
+            if (trip.getStartDateTime() != null) {
+                datePickerDialog.getDatePicker().setMinDate(chosenSingleDate.getTime().getTime());
+                datePickerDialog.show();
+
+            } else {
+                sendMessage(getString(R.string.enter_start_date));
+                timePickerDialog.dismiss();
+            }
+
+        }
 
     }
 
-    private void setAlarmManager(Calendar date) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(GlobalApplication.getAppContext(), AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), 1, intent, 0);
-        if (date.before(Calendar.getInstance())) {
-            date.add(Calendar.DATE, 1);
-
-        }
-        if (alarmManager != null) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
-        }
-
-
+    @Override
+    public void sendMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
+    private boolean validateInputs() {
+        boolean validateFlag = true;
+        if (editTxtTripName.getText().toString().isEmpty()) {
+            editTxtTripName.setError("Enter trip title");
+            validateFlag = false;
+        }
+        if (trip.getRoundDateTime() == null) {
+            validateFlag = false;
+
+        }
+        if (trip.getStartDateTime() == null) {
+            validateFlag = false;
+
+        }
+        if (trip.getStartLocation() == null) {
+            validateFlag = false;
+
+        }
+        if (trip.getDestinationLocation() == null) {
+            validateFlag = false;
+
+        }
+        return validateFlag;
+    }
+
 
 }
+

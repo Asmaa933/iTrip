@@ -85,4 +85,17 @@
     <string name="round">round</string>
     <string name="choose_time">choose time</string>
     <string name="choose_date">choose date</string>
+    <string name="alarm_trip">Trip alarm</string>
+    <string name="reminder">Reminder for your trip!</string>
+    <string name="start">Start</string>
+    <string name="snooze">Snooze</string>
+    <string name="trip_added">Trip added</string>
+    <string name="trip_edit">Trip edited</string>
+    <string name="alarmManager">alarmManager</string>
+    <string name="isRound">isRound</string>
+    <string name="alarm">alarm</string>
+    <string name="data">DATA</string>
+    <string name="enter_start_date">Enter start Date and time</string>
+
+
 </resources>
