@@ -24,7 +24,7 @@
     <string name="signup">Sign up</string>
     <string name="add_more_trips">Opps! No trips here. Start by adding(+) more trips.</string>
     <string name="past_trips">Opps! No trips here yet.</string>
-    <string name="card_notes">Notes</string>
+    <string name="card_cancel">Cancel</string>
     <string name="card_delete">Delete</string>
 
     <string name="confirm">Confirm Password</string>
@@ -96,6 +96,8 @@
     <string name="alarm">alarm</string>
     <string name="data">DATA</string>
     <string name="enter_start_date">Enter start Date and time</string>
+    <string name="history">History</string>
+    <string name="logout">Log out</string>
 
 
 </resources>

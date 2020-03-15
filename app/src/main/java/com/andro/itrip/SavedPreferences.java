@@ -8,7 +8,7 @@ public class SavedPreferences {
     private static SavedPreferences instance;
     public static final String USER_DATA = "userData";
     public static final String USER_ID = "userID";
-
+    public static final String USER_EMAIL = "userEmail";
     private SavedPreferences(){}
 
     public static SavedPreferences getInstance() {
@@ -38,6 +38,17 @@ public class SavedPreferences {
     }
     public void resetUserID(){
       writeUserID("");
+    }
+
+    public void writeLoginEmail(String email){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(USER_EMAIL, email);
+        editor.commit();
+    }
+    public String readLoginEmail(){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        return settings.getString(USER_EMAIL, "");
     }
 
 }

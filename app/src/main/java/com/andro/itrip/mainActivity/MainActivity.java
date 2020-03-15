@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andro.itrip.GlobalApplication;
@@ -35,38 +36,43 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements MainContract.ViewInterface {
     MainContract.PresenterInterface mainPresenter;
     private AppBarConfiguration mAppBarConfiguration;
-
+    private TextView emailTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenter(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.upcoming));
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(HelpingMethods.isNetworkConnected()){
+                if (HelpingMethods.isNetworkConnected()) {
                     Intent intent = new Intent(MainActivity.this, AddTripActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
-                    Toast.makeText(GlobalApplication.getAppContext(),getString(R.string.check_internet),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(GlobalApplication.getAppContext(), getString(R.string.check_internet), Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
-
+      ;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.txtName);
+        navUsername.setText(SavedPreferences.getInstance().readLoginEmail());
 
         UpcomingFragment upcomingFragment = new UpcomingFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, upcomingFragment).commit();
@@ -78,13 +84,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 switch (item.getItemId()) {
                     case R.id.nav_logout:
                         mainPresenter.logout();
-                        Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.logout), Toast.LENGTH_LONG).show();
                         break;
                     case R.id.nav_upcoming:
+                        getSupportActionBar().setTitle(getString(R.string.upcoming));
                         selectedFragment = new UpcomingFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
                         break;
                     case R.id.nav_history:
+                        getSupportActionBar().setTitle(getString(R.string.history));
+
                         selectedFragment = new HistoryFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
                         break;

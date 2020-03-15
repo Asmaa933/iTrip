@@ -18,7 +18,7 @@ public class HelpingMethods {
     public static Calendar convertToDate (String dateInString) {
         Locale.setDefault(Locale.ENGLISH);
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
         try {
             Date date = sdf.parse(dateInString);
             if (date != null) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
+import com.andro.itrip.mainActivity.MainPresenter;
 import com.andro.itrip.registerActivity.RegisterContract;
 import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.historyUI.HistoryPresenter;
@@ -59,30 +60,7 @@ public class FireBaseHandler {
                 trips.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Trip trip = postSnapshot.getValue(Trip.class);
-                    trips.add(trip);
-                    presenterInterface.updateTripList(trips);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        presenterInterface.updateTripList(trips);
-
-
-    }
-    public void getAllPastTrips(final HistoryPresenter presenterInterface) {
-        trips = new ArrayList<>();
-        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
-        databaseTrips.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                trips.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Trip trip = postSnapshot.getValue(Trip.class);
-                    if (trip.getStatus() != 2) {
+                    if (trip.getStatus() == Utils.STATUS_UPCOMING) {
                         trips.add(trip);
                         presenterInterface.updateTripList(trips);
                     }
@@ -98,9 +76,39 @@ public class FireBaseHandler {
 
 
     }
+
+
+
+
+    public void getAllPastTrips(final HistoryPresenter presenterInterface) {
+        trips = new ArrayList<>();
+        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+        databaseTrips.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                trips.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Trip trip = postSnapshot.getValue(Trip.class);
+                    if (trip.getStatus() != Utils.STATUS_UPCOMING) {
+                        trips.add(trip);
+                        presenterInterface.updateTripList(trips);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        presenterInterface.updateTripList(trips);
+
+
+    }
+
     public String addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
-        if(tripId!=null){
+        if (tripId != null) {
             trip.setTripID(tripId);
             databaseTrips.child(tripId).setValue(trip);
         }
@@ -109,6 +117,11 @@ public class FireBaseHandler {
     }
 
     public void updateTrip(Trip trip) {
+        databaseTrips.child(trip.getTripID()).setValue(trip);
+
+    }
+
+    public void updateTripStatus(Trip trip) {
         databaseTrips.child(trip.getTripID()).setValue(trip);
 
     }
@@ -155,21 +168,23 @@ public class FireBaseHandler {
                     }
                 });
     }
-    public void logout(){
+
+    public void logout() {
         FirebaseAuth.getInstance().signOut();
         SavedPreferences.getInstance().resetUserID();
     }
 
     private void saveUserID() {
         String user_id = auth.getCurrentUser().getUid();
-        if(user_id!= null) {
+        if (user_id != null) {
             SavedPreferences.getInstance().writeUserID(user_id);
         }
 
     }
-    public int getLastRequestID(){
-        int requestID = 0 ;
-        if(!trips.isEmpty()){
+
+    public int getLastRequestID() {
+        int requestID = 0;
+        if (!trips.isEmpty()) {
             requestID = trips.get(trips.size() - 1).getRequestId();
         }
         return requestID;
