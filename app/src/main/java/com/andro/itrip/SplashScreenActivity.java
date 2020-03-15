@@ -37,8 +37,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                     .withFullScreen()
                     .withTargetActivity(AppIntroActivity.class)
                     .withSplashTimeOut(3000)
-                    .withBackgroundColor(Color.parseColor("#1a1b29"))
-                    .withAfterLogoText("First time to run!")
+                    .withBackgroundColor(Color.parseColor("#0f4c75"))
+                    .withAfterLogoText("Take only memories, leave only footprints. ")
                     .withLogo(R.mipmap.ic_launcher_round);
         }else {
             // True -----> Not first time
@@ -46,8 +46,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                     .withFullScreen()
                     .withTargetActivity(LoginActivity.class)
                     .withSplashTimeOut(3000)
-                    .withBackgroundColor(Color.parseColor("#00ffaa"))
-                    .withAfterLogoText("Welcome Back Yasta!")
+                    .withBackgroundColor(Color.parseColor("#3282b8"))
+                    .withAfterLogoText("People don't take trips, trips take people.")
                     .withLogo(R.mipmap.ic_launcher_round);
         }
 

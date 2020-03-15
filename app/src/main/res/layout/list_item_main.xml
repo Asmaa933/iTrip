@@ -74,7 +74,9 @@
                 android:text="@string/card_delete"
                 android:textColor="@color/colorOffwhite"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+
+                />
 
             <Button
                 android:id="@+id/note_list_item_main"
