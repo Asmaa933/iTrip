@@ -61,7 +61,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     private EditText editTxtTripName, editTxtAddNote;
     private Spinner spinnerTripType, spinnerTripRepetition;
-    private TextView singleTxtViewDateTime, roundTxtViewDateTime;
+    private TextView singleTxtViewDateTime, roundTxtViewDateTime, startDateError, roundDateError, startPointError, endPointError,nameError;
     private Button btnAddTrip;
     private ImageView imageViewAddNote;
     private LinearLayout roundTripTimeAndDate;
@@ -77,7 +77,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     private ArrayList<String> notesArrayList;
     private NotesAdapter notesAdapter;
-    private ListView notesList;
+    private static ListView notesList;
     private AddTripContract.PresenterInterface addPresenter;
     private Calendar chosenSingleDate;
     private Calendar chosenRoundDate;
@@ -159,9 +159,11 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 trip.setTripType(tripType);
                 if (tripType.equals(getString(R.string.round_trip))) {
                     roundTripTimeAndDate.setVisibility(View.VISIBLE);
-                } else
+                } else {
                     roundTripTimeAndDate.setVisibility(View.GONE);
-
+                    trip.setRoundDateTime(null);
+                    roundTxtViewDateTime.setText(getString(R.string.datetime));
+                }
             }
 
             @Override
@@ -189,6 +191,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             public void onClick(View view) {
 
                 if (editTxtAddNote.getText().toString().length() > 0) {
+                    notesList.setVisibility(View.VISIBLE);
                     notesArrayList.add(editTxtAddNote.getText().toString());
                     editTxtAddNote.setText("");
 
@@ -251,6 +254,11 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         btnAddTrip = findViewById(R.id.btn_add_trip);
         imageViewAddNote = findViewById(R.id.image_add_note);
         roundTripTimeAndDate = findViewById(R.id.round_trip_layout);
+        startDateError = findViewById(R.id.startDateError);
+        roundDateError = findViewById(R.id.roundDateError);
+        startPointError = findViewById(R.id.startPointError);
+        endPointError = findViewById(R.id.endPointError);
+        nameError = findViewById(R.id.nameError);
         autocompleteSupportFragmentStart = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.editTxt_start_point);
         autocompleteSupportFragmentEnd = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.editTxt_end_point);
 
@@ -285,13 +293,17 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
         }
         singleTxtViewDateTime.setText(trip.getStartDateTime());
-        if (roundTripTimeAndDate != null) {
+        if (trip.getTripType().equals(getString(R.string.round_trip))) {
             roundTxtViewDateTime.setText(trip.getRoundDateTime());
         }
         autocompleteSupportFragmentStart.setText(trip.getStartLocation());
         autocompleteSupportFragmentEnd.setText(trip.getDestinationLocation());
         if (trip.getNotesList() != null && !trip.getNotesList().isEmpty()) {
+            notesList.setVisibility(View.VISIBLE);
             notesArrayList = trip.getNotesList();
+        }else {
+            notesList.setVisibility(View.GONE);
+
         }
 
         btnAddTrip.setText(R.string.save);
@@ -305,13 +317,21 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         Locale.setDefault(Locale.ENGLISH);
         final Calendar c = Calendar.getInstance();
         int mYear = 0, mMonth = 0, mDay = 0, mHour = 0, mMinute = 0;
-        String dateInString;
+        String dateInString = "";
         if (isEdit) {
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
             if (tripDirection.equals(getString(R.string.single))) {
                 dateInString = trip.getStartDateTime();
             } else {
-                dateInString = trip.getRoundDateTime();
+                if (trip.getRoundDateTime() != null && trip.getTripType().equals(getString(R.string.round_trip))) {
+                    dateInString = trip.getRoundDateTime();
+                } else {
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
+                    mHour = c.get(Calendar.HOUR_OF_DAY);
+                    mMinute = c.get(Calendar.MINUTE);
+                }
             }
             try {
                 Date date = sdf.parse(dateInString);
@@ -366,7 +386,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.choose_time), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -395,7 +414,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.choose_date), Toast.LENGTH_LONG).show();
                     timePickerDialog.dismiss();
                 }
             }
@@ -426,34 +444,52 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     private boolean validateInputs() {
         boolean validateFlag = true;
         if (editTxtTripName.getText().toString().isEmpty()) {
-            editTxtTripName.setError("Enter trip title");
+            nameError.setText(getString(R.string.title_error));
             validateFlag = false;
         }
-        if (trip.getTripType().equals(getString(R.string.round_trip))) {
-            if (trip.getRoundDateTime() == null) {
-                validateFlag = false;
-
-            }
+        else {
+            nameError.setText("");
         }
+        if (trip.getRoundDateTime() == null && trip.getTripType().equals(getString(R.string.round_trip))) {
+            roundDateError.setText(getString(R.string.round_error));
+            validateFlag = false;
+
+        } else {
+            roundDateError.setText("");
+        }
+
 
         if (trip.getStartDateTime() == null) {
+            startDateError.setText(getString(R.string.start_date_error));
             validateFlag = false;
 
+        } else {
+            startDateError.setText("");
         }
         if (trip.getStartLocation() == null) {
+            startPointError.setText(getString(R.string.start_error));
             validateFlag = false;
+        } else {
+            startPointError.setText("");
 
         }
         if (trip.getDestinationLocation() == null) {
+            endPointError.setText(getString(R.string.dest_error));
             validateFlag = false;
 
+        } else {
+            endPointError.setText("");
         }
         return validateFlag;
     }
+
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+    public static void hideNoteList(){
+            notesList.setVisibility(View.GONE);
     }
 
 

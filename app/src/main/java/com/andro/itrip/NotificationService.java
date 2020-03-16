@@ -43,7 +43,7 @@ public class NotificationService extends Service {
                 .build();
 
 
-        startForeground(1, notification);
+        startForeground(trip.getRequestId(), notification);
 
         return START_NOT_STICKY;
     }

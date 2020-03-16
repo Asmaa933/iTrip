@@ -52,11 +52,15 @@ public class NotesAdapter extends BaseAdapter implements ListAdapter {
 
         ImageView imgDeleteNote = view.findViewById(R.id.delete_note);
 
-        imgDeleteNote.setOnClickListener(new View.OnClickListener(){
+        imgDeleteNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notesList.remove(position);
+
                 notifyDataSetChanged();
+                if (notesList.isEmpty()) {
+                    AddTripActivity.hideNoteList();
+                }
             }
         });
 
