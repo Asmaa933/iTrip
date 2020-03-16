@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/img_list_item_map_history"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/map_country_globe_world_11131_1600x900" />
 
