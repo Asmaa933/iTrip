@@ -45,6 +45,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         emptyView = view.findViewById(R.id.layout_empty);
@@ -54,6 +55,9 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+            requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
+        }
 
 
     }
@@ -62,18 +66,15 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     @Override
     public void onStart() {
         super.onStart();
-        if (Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
-            upcomingPresenter.getTripList();
-        } else {
-            requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
-        }
+        upcomingPresenter.getTripList();
+
     }
 
     @Override
     public void displayTrips(List<Trip> tripList) {
         recyclerView.setVisibility(View.VISIBLE);
         emptyView.setVisibility(View.INVISIBLE);
-        adapter = new TripAdapter(tripList,upcomingPresenter,getContext());
+        adapter = new TripAdapter(tripList, upcomingPresenter, getContext());
         recyclerView.setAdapter(adapter);
 
     }
@@ -92,7 +93,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     }
 
     private void needPermissionDialog(final int requestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GlobalApplication.getAppContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("You need to allow permission");
         builder.setPositiveButton("OK",
                 new android.content.DialogInterface.OnClickListener() {
@@ -101,40 +102,34 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
                         requestPermission(requestCode);
                     }
                 });
-        builder.setNegativeButton("Cancel", new android.content.DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
         builder.setCancelable(false);
         builder.show();
     }
 
     private void requestPermission(int requestCode) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + GlobalApplication.getAppContext().getPackageName()));
+        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
         startActivityForResult(intent, requestCode);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD) {
-            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+            if (!Utils.canDrawOverlays(getActivity())) {
                 needPermissionDialog(requestCode);
-            } else {
             }
 
         } else if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD_MSG) {
-            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+            if (!Utils.canDrawOverlays(getActivity())) {
                 needPermissionDialog(requestCode);
-            } else {
-            }
 
+
+            }
 
         }
 
     }
-
 }
 
