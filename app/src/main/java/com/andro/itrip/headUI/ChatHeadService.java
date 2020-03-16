@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.andro.itrip.R;
 import com.andro.itrip.Utils;
 
+import java.util.ArrayList;
+
 public class ChatHeadService extends Service {
     private WindowManager windowManager;
     private RelativeLayout chatheadView, removeView;
@@ -35,6 +37,8 @@ public class ChatHeadService extends Service {
     private Point szWindow = new Point();
     private boolean isLeft = true;
     private String sMsg = "";
+    private ArrayList<String> notesArrayList;
+
 
     @SuppressWarnings("deprecation")
 
@@ -43,7 +47,6 @@ public class ChatHeadService extends Service {
         // TODO Auto-generated method stub
         super.onCreate();
         Log.d(Utils.LogTag, "ChatHeadService.onCreate()");
-
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -369,6 +372,7 @@ public class ChatHeadService extends Service {
             MyDialog.myDialog.finish();
         }else{
             Intent it = new Intent(this,MyDialog.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            it.putStringArrayListExtra("notes",notesArrayList);
             startActivity(it);
         }
 
@@ -438,7 +442,10 @@ public class ChatHeadService extends Service {
         Log.d(Utils.LogTag, "ChatHeadService.onStartCommand() -> startId=" + startId);
 
         if(intent != null){
+            notesArrayList = intent.getStringArrayListExtra("notes");
+
             Bundle bd = intent.getExtras();
+
 
             if(bd != null)
                 sMsg = bd.getString(Utils.EXTRA_MSG);

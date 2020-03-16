@@ -49,7 +49,8 @@ public class DialogActivity extends AppCompatActivity {
                             uri = "http://maps.google.com/maps?saddr=" + destinationLatitude + "," + destinationLongitude + "&daddr=" + sourceLatitude + "," + sourceLongitude;
 
                         }
-                        showHead();
+                        startChatHead();
+
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         startActivity(intent);
                         stopNotification();
@@ -89,65 +90,14 @@ public class DialogActivity extends AppCompatActivity {
         finish();
     }
 
-    private void showHead() {
-        if (Utils.canDrawOverlays(GlobalApplication.getAppContext())){
-            startChatHead();
-        }
-        else {
-            requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
-        }
-    }
 
     private void startChatHead() {
-        startService(new Intent(GlobalApplication.getAppContext(), ChatHeadService.class));
+      Intent intent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+      intent.putStringArrayListExtra("notes",trip.getNotesList());
+        startService(intent);
     }
 
-    private void needPermissionDialog(final int requestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GlobalApplication.getAppContext());
-        builder.setMessage("You need to allow permission");
-        builder.setPositiveButton("OK",
-                new android.content.DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        requestPermission(requestCode);
-                    }
-                });
-        builder.setNegativeButton("Cancel", new android.content.DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
-
-    private void requestPermission(int requestCode) {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, requestCode);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD) {
-            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
-                needPermissionDialog(requestCode);
-            } else {
-                startChatHead();
-            }
-
-        } else if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD_MSG) {
-            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
-                needPermissionDialog(requestCode);
-            } else {
-            }
-        }
-    }
 }
+
 
 

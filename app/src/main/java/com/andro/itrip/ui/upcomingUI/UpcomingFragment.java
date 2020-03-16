@@ -1,6 +1,11 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import androidx.lifecycle.ViewModelProviders;
 
+import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
+import com.andro.itrip.Utils;
+import com.andro.itrip.headUI.ChatHeadService;
 
 import java.util.List;
 
@@ -54,7 +62,11 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     @Override
     public void onStart() {
         super.onStart();
-        upcomingPresenter.getTripList();
+        if (Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+            upcomingPresenter.getTripList();
+        } else {
+            requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
+        }
     }
 
     @Override
@@ -79,8 +91,50 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
+    private void needPermissionDialog(final int requestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GlobalApplication.getAppContext());
+        builder.setMessage("You need to allow permission");
+        builder.setPositiveButton("OK",
+                new android.content.DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        requestPermission(requestCode);
+                    }
+                });
+        builder.setNegativeButton("Cancel", new android.content.DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    private void requestPermission(int requestCode) {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+        intent.setData(Uri.parse("package:" + GlobalApplication.getAppContext().getPackageName()));
+        startActivityForResult(intent, requestCode);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD) {
+            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+                needPermissionDialog(requestCode);
+            } else {
+            }
+
+        } else if (requestCode == Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD_MSG) {
+            if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
+                needPermissionDialog(requestCode);
+            } else {
+            }
 
 
+        }
+
+    }
 
 }
 

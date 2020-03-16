@@ -22,6 +22,7 @@ import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
 import com.andro.itrip.addTripActivity.AddTripActivity;
+import com.andro.itrip.headUI.ChatHeadService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -107,6 +108,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 presenterInterface.getTripList();
                 AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
 
+                Intent headIntent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+                headIntent.putStringArrayListExtra("notes",tripData.get(position).getNotesList());
+                GlobalApplication.getAppContext().startService(headIntent);
+
                 double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
 
                 double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
@@ -179,4 +184,5 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         AlertDialog alertDialog = Builder.create();
         alertDialog.show();
     }
+
 }

@@ -7,57 +7,46 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.andro.itrip.R;
 import com.andro.itrip.Utils;
+import com.andro.itrip.addTripActivity.NotesAdapter;
+
+import java.util.ArrayList;
 
 public class MyDialog extends AppCompatActivity {
     public static boolean active = false;
     public static Activity myDialog;
 
-    EditText edt;
-    Button btn;
-    View top;
+    private ArrayList<String> notesArrayList;
+    private NotesAdapter notesAdapter;
+    private ListView notesList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.dialog);
-
-        edt =  findViewById(R.id.dialog_edt);
-        btn =  findViewById(R.id.dialog_btn);
-        top =  findViewById(R.id.dialog_top);
-
         myDialog = MyDialog.this;
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        notesList = findViewById(R.id.list_view_notes);
+        notesArrayList = new ArrayList<>();
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                String str = edt.getText().toString();
-                if(str.length() > 0){
-                    Intent it = new Intent(MyDialog.this, ChatHeadService.class);
-                    it.putExtra(Utils.EXTRA_MSG, str);
-                    startService(it);
-                }
-            }
-        });
+        Intent incomingIntent = getIntent();
+        if(incomingIntent!=null){
+            notesArrayList = incomingIntent.getStringArrayListExtra("notes");
+        }
 
+        notesAdapter = new NotesAdapter(notesArrayList, this);
+        notesList.setAdapter(notesAdapter);
 
-        top.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                finish();
-            }
-        });
 
     }
 
