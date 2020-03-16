@@ -64,7 +64,12 @@
             />
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
-        <activity android:name=".addTripActivity.AddTripActivity" />
+        <activity android:name=".addTripActivity.AddTripActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".mainActivity.MainActivity" />
+
+        </activity>
         <activity android:name=".headUI.MyDialog"
             android:launchMode="singleTask"
             />

@@ -98,7 +98,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 break;
         }
 
-        //holder.statusText.setText(tripData.get(position).getStatus());
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +152,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
             }
         });
+        holder.statusImage.setImageResource(R.mipmap.ic_upcoming_foreground);
     }
 
     @Override
