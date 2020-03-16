@@ -22,10 +22,8 @@ import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
 import com.andro.itrip.addTripActivity.AddTripActivity;
-import com.andro.itrip.mainActivity.MainActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
@@ -104,6 +102,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tripData.get(position).setStatus(1);
+                presenterInterface.onUpdate(tripData.get(position));
+                presenterInterface.getTripList();
+                AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
+
                 double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
 
                 double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
@@ -123,7 +126,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 tripData.get(position).setStatus(0);
-                presenterInterface.onCancel(tripData.get(position));
+                presenterInterface.onUpdate(tripData.get(position));
                 presenterInterface.getTripList();
                 AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
             }
