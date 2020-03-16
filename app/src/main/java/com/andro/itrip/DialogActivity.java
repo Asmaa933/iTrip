@@ -10,14 +10,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import com.andro.itrip.dialogActivity.DialogContract;
+import com.andro.itrip.dialogActivity.DialogPresenter;
 import com.andro.itrip.headUI.ChatHeadService;
+import com.andro.itrip.ui.upcomingUI.UpcomingContract;
+import com.andro.itrip.ui.upcomingUI.UpcomingFragment;
+import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 import com.google.android.gms.common.internal.GmsLogger;
 
 import okhttp3.internal.Util;
 
-public class DialogActivity extends AppCompatActivity {
+public class DialogActivity extends AppCompatActivity implements DialogContract.ViewInterface {
     Trip trip;
     boolean isRound;
+    DialogContract.PresenterInterface dialogPresenter;
+    UpcomingContract.PresenterInterface upcomingPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +36,17 @@ public class DialogActivity extends AppCompatActivity {
             isRound = incomingIntent.getBooleanExtra(getString(R.string.isRound), false);
 
         }
+        dialogPresenter = new DialogPresenter(this);
         AlertDialog.Builder Builder = new AlertDialog.Builder(this)
                 .setMessage(R.string.reminder)
                 .setCancelable(false)
                 .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        trip.setStatus(1);
+                        dialogPresenter.onUpdate(trip);
+                        AlarmManagerHandler.getInstance().cancelAlarm(trip);
 
                         double sourceLongitude = Double.parseDouble(trip.getStartLang());
 
@@ -61,6 +74,11 @@ public class DialogActivity extends AppCompatActivity {
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        trip.setStatus(0);
+                        dialogPresenter.onUpdate(trip);
+                        UpcomingFragment.updateTripLists();
+                        AlarmManagerHandler.getInstance().cancelAlarm(trip);
+
                         AlertReceiver.stopMedia();
                         stopNotification();
                     }
