@@ -27,9 +27,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="20dp">
 
 
@@ -39,8 +39,7 @@
                 android:paddingTop="20dp"
                 android:text="@string/Tripname"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"
-                />
+                android:textColor="@android:color/black" />
 
             <EditText
                 android:id="@+id/editTxt_trip_name"
@@ -57,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/StartPoint"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <fragment
                 android:id="@+id/editTxt_start_point"
@@ -71,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/endpoint"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <fragment
                 android:id="@+id/editTxt_end_point"
@@ -85,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Type_trip"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <Spinner
                 android:id="@+id/spinner_type_trip"
@@ -100,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Repetition"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <Spinner
                 android:id="@+id/spinner_trip_repetition"
@@ -130,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/DateTime"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/black" />
 
                     <TextView
                         android:id="@+id/txtView_time"
@@ -171,7 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/DateTime"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/black" />
 
 
                     <TextView
@@ -184,8 +183,7 @@
                         android:text="@string/datetime"
                         android:textAlignment="center"
                         android:textColor="@color/Black"
-                        android:textSize="16sp"
-                        />
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -219,8 +217,8 @@
                 <ListView
                     android:id="@+id/list_view_notes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="true"/>
+                    android:layout_height="97dp"
+                    android:nestedScrollingEnabled="true" />
             </LinearLayout>
 
             <Button
@@ -231,6 +229,7 @@
                 android:background="@drawable/rounded_button"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="0dp"
                 android:text="@string/Add"
                 android:textAlignment="center"
                 android:textColor="@color/white"
