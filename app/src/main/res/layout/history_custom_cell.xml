@@ -8,7 +8,7 @@
     android:layout_margin="6dp"
     android:layout_marginBottom="12dp"
     android:outlineSpotShadowColor="@color/Black"
-    app:cardBackgroundColor="@color/Adsy"
+    app:cardBackgroundColor="@color/palette3"
     app:cardCornerRadius="12dp"
     android:clickable="true"
     android:background="@android:drawable/list_selector_background"
@@ -43,22 +43,15 @@
 
                 <ImageView
                     android:id="@+id/img_list_item_main_histroy"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_img_default_img" />
 
-                <TextView
-                    android:id="@+id/status_list_item_main_history"
-                    android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:gravity="center_vertical"
-                    android:text="Status"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/title_list_item_histoy"
@@ -100,7 +93,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="15dp">
 
             <TextView
                 android:id="@+id/fromTxtView"
@@ -109,7 +103,7 @@
                 android:layout_marginBottom="3sp"
                 android:text=" From : Aswan"
                 android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -119,7 +113,7 @@
                 android:layout_marginBottom="3sp"
                 android:text=" To : Alex"
                 android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
         <Space
@@ -130,7 +124,7 @@
             android:id="@+id/delete_list_item_main_history"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/delete"></Button>
+            android:background="@drawable/deletex"></Button>
     </LinearLayout>
 
     </LinearLayout>

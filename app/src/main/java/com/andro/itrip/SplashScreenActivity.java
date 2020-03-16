@@ -37,18 +37,18 @@ public class SplashScreenActivity extends AppCompatActivity {
                     .withFullScreen()
                     .withTargetActivity(AppIntroActivity.class)
                     .withSplashTimeOut(3000)
-                    .withBackgroundColor(Color.parseColor("#0f4c75"))
+                    .withBackgroundColor(Color.parseColor("#3282b8"))
                     .withAfterLogoText("Take only memories, leave only footprints. ")
-                    .withLogo(R.mipmap.ic_launcher_round);
+                    .withLogo(R.drawable.itriplogo);
         }else {
             // True -----> Not first time
             config = new EasySplashScreen(SplashScreenActivity.this)
                     .withFullScreen()
                     .withTargetActivity(LoginActivity.class)
                     .withSplashTimeOut(3000)
-                    .withBackgroundColor(Color.parseColor("#3282b8"))
+                    .withBackgroundColor(Color.parseColor("#0f4c75"))
                     .withAfterLogoText("People don't take trips, trips take people.")
-                    .withLogo(R.mipmap.ic_launcher_round);
+                    .withLogo(R.drawable.itriplogo);
         }
 
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
