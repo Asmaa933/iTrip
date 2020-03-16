@@ -1,15 +1,20 @@
 package com.andro.itrip.ui.upcomingUI;
 
 
+import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.FireBaseHandler;
+import com.andro.itrip.GlobalApplication;
+import com.andro.itrip.HelpingMethods;
+import com.andro.itrip.R;
 import com.andro.itrip.Trip;
 
 
+import java.util.Calendar;
 import java.util.List;
 
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
-   private UpcomingContract.ViewInterface viewInterface;
-   private List<Trip> trips;
+    private UpcomingContract.ViewInterface viewInterface;
+    private List<Trip> trips;
 
 
     public UpcomingPresenter(UpcomingContract.ViewInterface viewInterface) {
@@ -44,9 +49,11 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
     }
 
     @Override
-    public void onCancel(Trip trip) {
-        FireBaseHandler.getInstance().updateTripStatus(trip);
+    public void onUpdate(Trip trip) {
+        FireBaseHandler.getInstance().updateTrip(trip);
     }
 
 
 }
+
+
