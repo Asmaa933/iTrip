@@ -1,7 +1,12 @@
 package com.andro.itrip;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.provider.Settings;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,5 +34,7 @@ public class HelpingMethods {
         }
         return calendar;
     }
+
+
 
 }

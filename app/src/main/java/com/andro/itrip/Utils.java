@@ -10,6 +10,8 @@ public class Utils {
     public static final int STATUS_UPCOMING = 2;
     public static String LogTag = "henrytest";
     public static String EXTRA_MSG = "extra_msg";
+    public static int OVERLAY_PERMISSION_REQ_CODE_CHATHEAD = 1234;
+    public static int OVERLAY_PERMISSION_REQ_CODE_CHATHEAD_MSG = 5678;
 
 
     public static boolean canDrawOverlays(Context context) {

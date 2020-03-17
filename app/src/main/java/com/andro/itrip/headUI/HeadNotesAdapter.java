@@ -1,4 +1,4 @@
-package com.andro.itrip.addTripActivity;
+package com.andro.itrip.headUI;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import com.andro.itrip.R;
 
 import java.util.ArrayList;
 
-public class NotesAdapter extends BaseAdapter implements ListAdapter {
+public class HeadNotesAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> notesList;
     private Context context;
 
 
-    public NotesAdapter(ArrayList<String> notesList, Context context) {
+    public HeadNotesAdapter(ArrayList<String> notesList, Context context) {
         this.notesList = notesList;
         this.context = context;
     }
@@ -44,7 +44,7 @@ public class NotesAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_notes_layout, null);
+            view = inflater.inflate(R.layout.dialog, null);
         }
 
         TextView textViewAddNote = view.findViewById(R.id.textView_add_note);
@@ -52,19 +52,14 @@ public class NotesAdapter extends BaseAdapter implements ListAdapter {
 
         ImageView imgDeleteNote = view.findViewById(R.id.delete_note);
 
-        imgDeleteNote.setOnClickListener(new View.OnClickListener() {
+        imgDeleteNote.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 notesList.remove(position);
-
                 notifyDataSetChanged();
-                if (notesList.isEmpty()) {
-                    AddTripActivity.hideNoteList();
-                }
             }
         });
 
         return view;
     }
-
 }

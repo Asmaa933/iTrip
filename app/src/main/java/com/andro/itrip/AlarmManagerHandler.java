@@ -48,7 +48,7 @@ public class AlarmManagerHandler {
             date.add(Calendar.DATE, 1);
         }
         if (alarmManager != null) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
         }
 
 

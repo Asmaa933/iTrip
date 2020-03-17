@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:text="@string/Tripname"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black" />
@@ -50,6 +50,14 @@
 
                 <requestFocus />
             </EditText>
+            <TextView
+                android:id="@+id/nameError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,7 +71,15 @@
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:layout_marginBottom="20dp" />
+                 />
+            <TextView
+                android:id="@+id/startPointError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,7 +93,15 @@
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginBottom="20dp" />
+             />
+            <TextView
+                android:id="@+id/endPointError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,7 +152,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/DateTime"
+                        android:text="@string/start_date_time"
                         android:textColor="@android:color/black" />
 
                     <TextView
@@ -142,6 +166,14 @@
                         android:textAlignment="center"
                         android:textColor="@color/Black"
                         android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/startDateError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/holo_red_dark"
+                        />
 
                 </LinearLayout>
 
@@ -169,7 +201,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/DateTime"
+                        android:text="@string/round_date_time"
                         android:textColor="@android:color/black" />
 
 
@@ -184,6 +216,14 @@
                         android:textAlignment="center"
                         android:textColor="@color/Black"
                         android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/roundDateError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/holo_red_dark"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -218,7 +258,8 @@
                     android:id="@+id/list_view_notes"
                     android:layout_width="match_parent"
                     android:layout_height="97dp"
-                    android:nestedScrollingEnabled="true" />
+                    android:nestedScrollingEnabled="true"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <Button
