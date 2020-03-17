@@ -15,7 +15,6 @@
     <color name="palette3">#3282b8</color>
     <color name="palette4">#bbe1fa</color>
 
-    <color name="palette5">#57c56f</color>
     <color name="whitePurble">#f4eeff</color>
 
 
@@ -25,5 +24,8 @@
     <color name="yellow">#FCF2C5</color>
     <color name="blue">#2d5d88</color>
     <color name="blue_A2E5F5">#A2E5F5</color>
+=========
+    <color name="palette5">#57c56f</color>
+>>>>>>>>> Temporary merge branch 2
 
 </resources>
