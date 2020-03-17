@@ -8,7 +8,7 @@
     android:layout_margin="6dp"
     android:layout_marginBottom="12dp"
     android:outlineSpotShadowColor="@color/Black"
-    app:cardBackgroundColor="@color/palette3"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="12dp"
     android:clickable="true"
     android:background="@android:drawable/list_selector_background"
@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/map_country_globe_world_11131_1600x900" />
+            app:srcCompat="@drawable/map_country_globe_world_11131_1600x900"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3sp"
                     android:text="Title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/Black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -78,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1/7/1995      12.00 am"
-                    android:textColor="@color/white"
+                    android:textColor="@color/Black"
                     android:textSize="18sp"/>
             </LinearLayout>
 
@@ -102,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3sp"
                 android:text=" From : Aswan"
-                android:textColor="@color/white"
+                android:textColor="@color/Black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -112,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3sp"
                 android:text=" To : Alex"
-                android:textColor="@color/white"
+                android:textColor="@color/Black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -120,11 +121,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
         <Button
             android:id="@+id/delete_list_item_main_history"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/deletex"></Button>
+            android:background="@android:drawable/ic_menu_delete"></Button>
     </LinearLayout>
 
     </LinearLayout>
