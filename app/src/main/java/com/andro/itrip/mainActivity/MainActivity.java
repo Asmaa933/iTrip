@@ -29,6 +29,7 @@ import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.historyUI.HistoryFragment;
 import com.andro.itrip.loginActivity.LoginActivity;
 import com.andro.itrip.ui.upcomingUI.UpcomingFragment;
+import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;

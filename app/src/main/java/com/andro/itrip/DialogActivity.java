@@ -24,7 +24,6 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
     Trip trip;
     boolean isRound;
     DialogContract.PresenterInterface dialogPresenter;
-    UpcomingContract.PresenterInterface upcomingPresenter;
 
 
     @Override

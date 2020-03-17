@@ -57,11 +57,8 @@
         </activity>
 
         <activity android:name=".DialogActivity"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Translucent"
-            />
+            android:theme="@style/Theme.AppCompat.Dialog"/>
+
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
         <activity android:name=".addTripActivity.AddTripActivity">
@@ -75,6 +72,9 @@
             />
 
         <receiver android:name=".AlertReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
         <service android:name=".NotificationService"/>
         <service android:name=".headUI.ChatHeadService"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 public class AlarmManagerHandler {
@@ -74,6 +75,11 @@ public class AlarmManagerHandler {
             alarmManager.cancel(pendingIntent);
         }
 
+    }
+    public void cancelAllTripsAlarm(List<Trip> tripList){
+        for (int index = 0 ; index<tripList.size();index++){
+            cancelAlarm(tripList.get(index));
+        }
     }
 }
 

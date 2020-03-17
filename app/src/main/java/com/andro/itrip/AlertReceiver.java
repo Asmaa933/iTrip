@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import com.andro.itrip.mainActivity.MainActivity;
+
 
 public class AlertReceiver extends BroadcastReceiver {
     private static MediaPlayer mediaPlayer;
@@ -25,13 +27,14 @@ public class AlertReceiver extends BroadcastReceiver {
             isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
         }
 
-        Intent alarmIntent = new Intent(context.getApplicationContext(), DialogActivity.class);
+        Intent alarmIntent = new Intent();
+        alarmIntent.setClassName(context.getPackageName(), DialogActivity.class.getName());
         alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
         if(isRound){
             alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound) , true);
         }
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.getApplicationContext().startActivity(alarmIntent);
+        context.startActivity(alarmIntent);
 
     }
 

@@ -13,8 +13,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
-    private UpcomingContract.ViewInterface viewInterface;
-    private List<Trip> trips;
+    private  UpcomingContract.ViewInterface viewInterface;
+    private static List<Trip> trips;
 
 
     public UpcomingPresenter(UpcomingContract.ViewInterface viewInterface) {
@@ -39,6 +39,7 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
             viewInterface.displayNoTrips();
         } else {
             viewInterface.displayTrips(tripList);
+            trips = tripList;
         }
     }
 
@@ -53,6 +54,10 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         FireBaseHandler.getInstance().updateTrip(trip);
     }
 
+    public static List<Trip> gettrips() {
+
+        return trips;
+    }
 
 }
 

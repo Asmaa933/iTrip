@@ -100,14 +100,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/passwordLayout"
             android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
             android:layout_marginTop="31dp"
+            android:layout_marginEnd="17dp"
+            android:background="@android:color/white"
             android:text="@string/login"
             android:textAllCaps="false"
-            android:background="@android:color/white"
-            android:textColor="@android:color/black"
-            />
+            android:textColor="@android:color/black" />
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/googleButton"
@@ -132,21 +132,22 @@
             android:layout_below="@+id/createAccountButton"
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="74dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="27dp"
             android:layout_marginEnd="74dp"
-            android:layout_marginTop="10dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp" />
 
         <Button
             android:id="@+id/createAccountButton"
-            android:layout_width="190dp"
-            android:layout_height="34dp"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/haveAccountButton"
-            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/haveAccountButton"
+            android:layout_alignEnd="@+id/haveAccountButton"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginEnd="0dp"
             android:background="@color/browser_actions_bg_grey"
             android:text="@string/create"
             android:textAllCaps="false" />

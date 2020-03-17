@@ -107,7 +107,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     private void requestPermission(int requestCode) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+        intent.setData(Uri.parse("package:" + GlobalApplication.getAppContext().getPackageName()));
         startActivityForResult(intent, requestCode);
     }
 
