@@ -64,11 +64,23 @@
             />
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
-        <activity android:name=".addTripActivity.AddTripActivity" />
+        <activity android:name=".addTripActivity.AddTripActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".mainActivity.MainActivity" />
+
+        </activity>
+        <activity android:name=".headUI.MyDialog"
+            android:launchMode="singleTask"
+            />
 
         <receiver android:name=".AlertReceiver" >
         </receiver>
         <service android:name=".NotificationService"/>
+        <service android:name=".headUI.ChatHeadService"
+            android:enabled="true"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

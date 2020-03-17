@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -27,11 +28,12 @@ public class NotificationService extends Service {
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+                trip.getRequestId(), notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Notification notification = new NotificationCompat.Builder(this, GlobalApplication.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_menu_camera)
+                .setSmallIcon(R.drawable.itriplogo)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(getString(R.string.alarm_trip))
                 .setContentText(trip.getTripTitle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -41,7 +43,7 @@ public class NotificationService extends Service {
                 .build();
 
 
-        startForeground(1, notification);
+        startForeground(trip.getRequestId(), notification);
 
         return START_NOT_STICKY;
     }
