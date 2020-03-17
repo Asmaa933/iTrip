@@ -38,10 +38,9 @@ public class DialogActivity extends AppCompatActivity {
                         double destinationLatitude = Double.parseDouble(trip.getDestinationLat());
                         String uri;
                         if (!isRound) {
-                            uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude;
+                            uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude ;
                         } else {
-                            uri = "http://maps.google.com/maps?saddr=" + destinationLatitude + "," + destinationLongitude + "&daddr=" + sourceLatitude + "," + sourceLongitude;
-
+                            uri = "http://maps.google.com/maps?daddr=" + sourceLatitude + "," + sourceLongitude ;
                         }
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         startActivity(intent);
