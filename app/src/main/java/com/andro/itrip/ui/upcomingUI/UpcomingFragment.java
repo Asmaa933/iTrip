@@ -30,7 +30,7 @@ import java.util.List;
 
 public class UpcomingFragment extends Fragment implements UpcomingContract.ViewInterface {
 
-    UpcomingContract.PresenterInterface upcomingPresenter;
+    private static UpcomingContract.PresenterInterface upcomingPresenter;
     private RecyclerView recyclerView;
     private TripAdapter adapter;
     private LinearLayout emptyView;
@@ -66,8 +66,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     @Override
     public void onStart() {
         super.onStart();
-        upcomingPresenter.getTripList();
-
+        updateTripLists();
     }
 
     @Override
@@ -130,6 +129,9 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
         }
 
+    }
+    public static void updateTripLists(){
+        upcomingPresenter.getTripList();
     }
 }
 

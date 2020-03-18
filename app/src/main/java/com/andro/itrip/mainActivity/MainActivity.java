@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 if (HelpingMethods.isNetworkConnected()) {
                     Intent intent = new Intent(MainActivity.this, AddTripActivity.class);
                     startActivity(intent);
-                    finish();
                 } else {
                     Toast.makeText(GlobalApplication.getAppContext(), getString(R.string.check_internet), Toast.LENGTH_LONG).show();
                 }

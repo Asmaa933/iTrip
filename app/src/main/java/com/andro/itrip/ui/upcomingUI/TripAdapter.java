@@ -98,7 +98,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 break;
         }
 
-        //holder.statusText.setText(tripData.get(position).getStatus());
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +118,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
 
                 double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
-                String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude+"travelmode=driving&dir_action=navigate";
+                String uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude ;
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 GlobalApplication.getAppContext().startActivity(intent);
@@ -153,6 +152,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
             }
         });
+        holder.statusImage.setImageResource(R.mipmap.ic_upcoming_foreground);
     }
 
     @Override

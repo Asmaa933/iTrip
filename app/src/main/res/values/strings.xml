@@ -11,7 +11,7 @@
     <string name="menu_home">Upcoming</string>
     <string name="menu_gallery">History</string>
     <string name="menu_send">Logout</string>
-    <string name="name">ramzix02@gmail.com</string>
+    <string name="name">Name</string>
     <string name="facebook_app_id">2114845638805730</string>
     <string name="fb_login_protocol_scheme">fb2114845638805730</string>
     <string name="google">Continue with Google      </string>
@@ -95,9 +95,16 @@
     <string name="isRound">isRound</string>
     <string name="alarm">alarm</string>
     <string name="data">DATA</string>
-    <string name="enter_start_date">Enter start Date and time</string>
+    <string name="enter_start_date">Enter start date and time</string>
     <string name="history">History</string>
     <string name="logout">Log out</string>
+    <string name="start_error">Enter start location</string>
+    <string name="dest_error">Enter destination location</string>
+    <string name="title_error">Enter trip title</string>
+    <string name="round_error">Enter round trip date</string>
+    <string name="start_date_error">Enter start trip date</string>
 
+    <string name="start_date_time">Start Date-Time</string>
+    <string name="round_date_time">Round Date-Time</string>
 
 </resources>
