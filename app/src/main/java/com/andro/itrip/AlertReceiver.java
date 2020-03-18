@@ -27,13 +27,13 @@ public class AlertReceiver extends BroadcastReceiver {
             isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
         }
 
-        Intent alarmIntent = new Intent(context,DialogActivity.class);
+        Intent alarmIntent = new Intent(GlobalApplication.getAppContext(),AlertDialogService.class);
         alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
         if(isRound){
             alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound) , true);
         }
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(alarmIntent);
+        GlobalApplication.getAppContext().startService(alarmIntent);
 
     }
 

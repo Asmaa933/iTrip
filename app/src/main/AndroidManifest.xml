@@ -55,9 +55,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DialogActivity"
-            android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"/>
+<!--        <activity android:name=".DialogActivity"-->
+<!--            android:launchMode="singleInstance"-->
+<!--            android:theme="@style/Theme.AppCompat.Dialog"/>-->
 
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
@@ -80,6 +80,7 @@
         <service android:name=".headUI.ChatHeadService"
             android:enabled="true"
             android:exported="false"/>
+        <service android:name=".AlertDialogService"/>
 
     </application>
 

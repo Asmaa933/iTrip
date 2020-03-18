@@ -20,7 +20,7 @@ public class NotificationService extends Service {
            boolean isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
 
 
-        Intent notificationIntent = new Intent(this, DialogActivity.class);
+        Intent notificationIntent = new Intent(this, AlertDialogService.class);
         notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
         if(isRound){
             notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound),true);
