@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -27,9 +25,10 @@ import com.google.android.gms.common.internal.GmsLogger;
 import okhttp3.internal.Util;
 
 public class DialogActivity extends AppCompatActivity implements DialogContract.ViewInterface {
-    private Trip trip;
+   private Trip trip;
     boolean isRound;
     private DialogContract.PresenterInterface dialogPresenter;
+    private WindowManager windowManager;
 
 
     @Override
@@ -41,7 +40,7 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
             isRound = incomingIntent.getBooleanExtra(getString(R.string.isRound), false);
 
         }
-
+      
         dialogPresenter = new DialogPresenter(this);
         AlertDialog.Builder Builder = new AlertDialog.Builder(this)
                 .setMessage((R.string.reminder))
@@ -103,6 +102,9 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                         finish();
                     }
                 });
+        AlertDialog alertDialog = Builder.create();
+        alertDialog.show();
+
     }
 
     private void stopNotification() {
@@ -113,11 +115,10 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
 
 
     private void startChatHead() {
-        Intent intent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
-        intent.putStringArrayListExtra("notes", trip.getNotesList());
+      Intent intent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+      intent.putStringArrayListExtra("notes",trip.getNotesList());
         startService(intent);
     }
-
 
 }
 
