@@ -1,65 +1,70 @@
 package com.andro.itrip.headUI;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.andro.itrip.R;
+import com.andro.itrip.addTripActivity.NotesAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class HeadNotesAdapter extends BaseAdapter implements ListAdapter {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class HeadNotesAdapter extends RecyclerView.Adapter<HeadNotesAdapter.NoteViewHandler> {
     private ArrayList<String> notesList;
     private Context context;
+    ChatHeadService headService;
 
+    public class NoteViewHandler extends RecyclerView.ViewHolder {
 
-    public HeadNotesAdapter(ArrayList<String> notesList, Context context) {
+        CheckBox checkBox = new CheckBox(context);
+
+        public NoteViewHandler(View itemView) {
+            super(itemView);
+            checkBox = itemView.findViewById(R.id.check);
+        }
+    }
+
+    public HeadNotesAdapter(ArrayList<String> notesList, ChatHeadService headService, Context context) {
         this.notesList = notesList;
         this.context = context;
+        this.headService = headService;
+    }
+
+    @NonNull
+    @Override
+    public NoteViewHandler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater itemView = LayoutInflater.from(parent.getContext());
+        View listItem = itemView.inflate(R.layout.note_item_notification, parent, false);
+        NoteViewHandler noteViewHandler = new NoteViewHandler(listItem);
+        return noteViewHandler;
     }
 
     @Override
-    public int getCount() {
-        return notesList.size();
-    }
+    public void onBindViewHolder(@NonNull HeadNotesAdapter.NoteViewHandler holder, int position) {
 
-    @Override
-    public Object getItem(int pos) {
-        return notesList.get(pos);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.dialog, null);
-        }
-
-        TextView textViewAddNote = view.findViewById(R.id.textView_add_note);
-        textViewAddNote.setText(notesList.get(position));
-
-        ImageView imgDeleteNote = view.findViewById(R.id.delete_note);
-
-        imgDeleteNote.setOnClickListener(new View.OnClickListener(){
+        holder.checkBox.setText(notesList.get(position).toString());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                notesList.remove(position);
-                notifyDataSetChanged();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
             }
         });
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return notesList.size();
     }
 }

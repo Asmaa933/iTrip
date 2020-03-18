@@ -7,11 +7,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.andro.itrip.headUI.ChatHeadService;
 import com.google.android.gms.common.internal.GmsLogger;
+
+import java.util.ArrayList;
 
 import okhttp3.internal.Util;
 
@@ -92,9 +97,18 @@ public class DialogActivity extends AppCompatActivity {
 
 
     private void startChatHead() {
-      Intent intent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
-      intent.putStringArrayListExtra("notes",trip.getNotesList());
-        startService(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + GlobalApplication.getAppContext().getPackageName()));
+            startActivityForResult(intent, 2084);
+        } else {
+            Intent intent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+            intent.putStringArrayListExtra("notes", trip.getNotesList());
+            startService(intent);
+        }
     }
 
 }
