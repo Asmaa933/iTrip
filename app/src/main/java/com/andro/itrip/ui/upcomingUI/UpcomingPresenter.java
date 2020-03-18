@@ -6,6 +6,7 @@ import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
 
 
@@ -13,7 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
-    private  UpcomingContract.ViewInterface viewInterface;
+    private UpcomingContract.ViewInterface viewInterface;
     private static List<Trip> trips;
 
 
@@ -38,8 +39,8 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         if (tripList.isEmpty()) {
             viewInterface.displayNoTrips();
         } else {
-            viewInterface.displayTrips(tripList);
             trips = tripList;
+            viewInterface.displayTrips(tripList);
         }
     }
 
@@ -54,11 +55,13 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         FireBaseHandler.getInstance().updateTrip(trip);
     }
 
-    public static List<Trip> gettrips() {
+    public static List<Trip> getTrips() {
 
         return trips;
     }
 
+
 }
+
 
 

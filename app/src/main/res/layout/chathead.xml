@@ -4,11 +4,12 @@
     android:layout_height="wrap_content"
     android:id="@+id/chathead_relativelayout">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chathead_img"
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:src="@mipmap/ic_upcoming_round" />
+
 
 
 

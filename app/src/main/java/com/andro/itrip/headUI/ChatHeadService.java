@@ -56,10 +56,17 @@ public class ChatHeadService extends Service {
         LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
         removeView = (RelativeLayout)inflater.inflate(R.layout.remove, null);
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
         WindowManager.LayoutParams paramRemove = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                LAYOUT_FLAG,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         paramRemove.gravity = Gravity.TOP | Gravity.LEFT;
@@ -84,7 +91,7 @@ public class ChatHeadService extends Service {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                LAYOUT_FLAG,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.LEFT;
@@ -246,21 +253,21 @@ public class ChatHeadService extends Service {
         });
 
 
-        txtView = (LinearLayout)inflater.inflate(R.layout.txt, null);
-        txt1 = (TextView) txtView.findViewById(R.id.txt1);
-        txt_linearlayout = (LinearLayout)txtView.findViewById(R.id.txt_linearlayout);
-
-
-        WindowManager.LayoutParams paramsTxt = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                PixelFormat.TRANSLUCENT);
-        paramsTxt.gravity = Gravity.TOP | Gravity.LEFT;
-
-        txtView.setVisibility(View.GONE);
-        windowManager.addView(txtView, paramsTxt);
+//        txtView = (LinearLayout)inflater.inflate(R.layout.txt, null);
+//        txt1 = (TextView) txtView.findViewById(R.id.txt1);
+//        txt_linearlayout = (LinearLayout)txtView.findViewById(R.id.txt_linearlayout);
+//
+//
+//        WindowManager.LayoutParams paramsTxt = new WindowManager.LayoutParams(
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                LAYOUT_FLAG,
+//                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//                PixelFormat.TRANSLUCENT);
+//        paramsTxt.gravity = Gravity.TOP | Gravity.LEFT;
+//
+//        txtView.setVisibility(View.GONE);
+//        windowManager.addView(txtView, paramsTxt);
     }
 
 

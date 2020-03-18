@@ -19,12 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.GlobalApplication;
+import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
 import com.andro.itrip.addTripActivity.AddTripActivity;
 import com.andro.itrip.headUI.ChatHeadService;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
@@ -63,6 +66,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         this.tripData = tripData;
         this.presenterInterface = presenterInterface;
         this.context = context;
+
     }
 
     @NonNull
@@ -77,6 +81,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        setAlarmForTrips(tripData);
         String imgURL = "https://maps.googleapis.com/maps/api/staticmap?size=500x250" +
                 "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang() + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang() + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
         Picasso.get()
@@ -86,7 +91,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
-        switch (tripData.get(position).getStatus()){
+        switch (tripData.get(position).getStatus()) {
             case 0:
                 holder.statusText.setText("Canceled");
                 break;
@@ -107,8 +112,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 presenterInterface.getTripList();
                 AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
 
-                Intent headIntent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
-                headIntent.putStringArrayListExtra("notes",tripData.get(position).getNotesList());
+                Intent headIntent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+                headIntent.putStringArrayListExtra("notes", tripData.get(position).getNotesList());
                 GlobalApplication.getAppContext().startService(headIntent);
 
                 double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
@@ -118,7 +123,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
 
                 double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
-                String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude+"travelmode=driving&dir_action=navigate";
+                String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "&daddr=" + destinationLatitude + "," + destinationLongitude + "travelmode=driving&dir_action=navigate";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 GlobalApplication.getAppContext().startActivity(intent);
@@ -138,7 +143,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           showDeleteAlert(position);
+                showDeleteAlert(position);
             }
         });
         holder.recyclerRow.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +165,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         return tripData.size();
     }
 
-    private void showDeleteAlert(final int position){
+    private void showDeleteAlert(final int position) {
         AlertDialog.Builder Builder = new AlertDialog.Builder(context)
                 .setMessage(R.string.delete_trip)
                 .setCancelable(false)
@@ -168,8 +173,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         presenterInterface.onDelete(tripData.get(position).getTripID());
-                      presenterInterface.getTripList();
-                      AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
+                        presenterInterface.getTripList();
+                        AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -185,4 +190,20 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         alertDialog.show();
     }
 
+    private void setAlarmForTrips(List<Trip> tripList) {
+        if (!SavedPreferences.getInstance().readFirstCreate()) {
+            SavedPreferences.getInstance().writeFirstCreate(true);
+            if (tripList != null && !tripList.isEmpty()) {
+                for (int index = 0; index < tripList.size(); index++) {
+                    Calendar calStart = HelpingMethods.convertToDate(tripList.get(index).getStartDateTime());
+                    HelpingMethods.convertToDate(tripList.get(index).getStartDateTime());
+                    AlarmManagerHandler.getInstance().setAlarmManager(calStart, tripList.get(index), tripList.get(index).getRequestId());
+                    if (tripList.get(index).getTripType().equals(GlobalApplication.getAppContext().getString(R.string.round_trip))) {
+                        Calendar calRound = HelpingMethods.convertToDate(tripList.get(index).getStartDateTime());
+                        AlarmManagerHandler.getInstance().setAlarmManager(calRound, tripList.get(index), tripList.get(index).getRequestId() + 1);
+                    }
+                }
+            }
+        }
+    }
 }

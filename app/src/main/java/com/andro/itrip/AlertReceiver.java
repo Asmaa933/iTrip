@@ -27,8 +27,7 @@ public class AlertReceiver extends BroadcastReceiver {
             isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
         }
 
-        Intent alarmIntent = new Intent();
-        alarmIntent.setClassName(context.getPackageName(), DialogActivity.class.getName());
+        Intent alarmIntent = new Intent(context,DialogActivity.class);
         alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
         if(isRound){
             alarmIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound) , true);

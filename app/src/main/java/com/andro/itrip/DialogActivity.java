@@ -4,11 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.Gravity;
+import android.view.WindowManager;
 
 import com.andro.itrip.dialogActivity.DialogContract;
 import com.andro.itrip.dialogActivity.DialogPresenter;
@@ -21,9 +27,9 @@ import com.google.android.gms.common.internal.GmsLogger;
 import okhttp3.internal.Util;
 
 public class DialogActivity extends AppCompatActivity implements DialogContract.ViewInterface {
-    Trip trip;
+    private Trip trip;
     boolean isRound;
-    DialogContract.PresenterInterface dialogPresenter;
+    private DialogContract.PresenterInterface dialogPresenter;
 
 
     @Override
@@ -35,9 +41,10 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
             isRound = incomingIntent.getBooleanExtra(getString(R.string.isRound), false);
 
         }
+
         dialogPresenter = new DialogPresenter(this);
         AlertDialog.Builder Builder = new AlertDialog.Builder(this)
-                .setMessage(R.string.reminder)
+                .setMessage((R.string.reminder))
                 .setCancelable(false)
                 .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
                     @Override
@@ -96,9 +103,6 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                         finish();
                     }
                 });
-        AlertDialog alertDialog = Builder.create();
-        alertDialog.show();
-
     }
 
     private void stopNotification() {
@@ -109,10 +113,11 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
 
 
     private void startChatHead() {
-      Intent intent =  new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
-      intent.putStringArrayListExtra("notes",trip.getNotesList());
+        Intent intent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+        intent.putStringArrayListExtra("notes", trip.getNotesList());
         startService(intent);
     }
+
 
 }
 

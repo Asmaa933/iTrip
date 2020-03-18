@@ -74,9 +74,6 @@ public class FireBaseHandler {
         return trips;
     }
 
-
-
-
     public List<Trip> getAllPastTrips(final HistoryPresenter presenterInterface) {
         trips = new ArrayList<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
@@ -168,7 +165,6 @@ public class FireBaseHandler {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        SavedPreferences.getInstance().resetUserID();
     }
 
     private void saveUserID() {

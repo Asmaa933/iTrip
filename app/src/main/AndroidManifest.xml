@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 
-
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -57,7 +56,8 @@
         </activity>
 
         <activity android:name=".DialogActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"/>
 
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />

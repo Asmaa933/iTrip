@@ -9,6 +9,9 @@ public class SavedPreferences {
     public static final String USER_DATA = "userData";
     public static final String USER_ID = "userID";
     public static final String USER_EMAIL = "userEmail";
+    public static final String FIRSTCREATE = "FIRSTCREATE";
+
+
     private SavedPreferences(){}
 
     public static SavedPreferences getInstance() {
@@ -36,8 +39,10 @@ public class SavedPreferences {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
        return settings.getString(USER_ID, "");
     }
-    public void resetUserID(){
+    public void resetSavedPreference(){
       writeUserID("");
+      writeLoginEmail("");
+      writeFirstCreate(false);
     }
 
     public void writeLoginEmail(String email){
@@ -50,5 +55,20 @@ public class SavedPreferences {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         return settings.getString(USER_EMAIL, "");
     }
+
+
+
+    public void writeFirstCreate(boolean isCreated){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(FIRSTCREATE, isCreated);
+        editor.commit();
+    }
+    public boolean readFirstCreate(){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        return settings.getBoolean(FIRSTCREATE,false);
+    }
+
+
 
 }

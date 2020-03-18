@@ -65,7 +65,7 @@ public class AlarmManagerHandler {
         bundle.putSerializable(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
 
         intent.putExtra(GlobalApplication.getAppContext().getString(R.string.data), bundle);
-        if (trip.getRequestId()  % 2 == 1) {
+        if (trip.getRequestId() % 2 == 1) {
             intent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound), true);
         }
         PendingIntent pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), trip.getRequestId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -76,11 +76,16 @@ public class AlarmManagerHandler {
         }
 
     }
-    public void cancelAllTripsAlarm(List<Trip> tripList){
-        for (int index = 0 ; index<tripList.size();index++){
-            cancelAlarm(tripList.get(index));
+
+    public void cancelAllTripsAlarm(List<Trip> tripList) {
+        if (tripList != null && !tripList.isEmpty()) {
+            for (int index = 0; index < tripList.size(); index++) {
+                cancelAlarm(tripList.get(index));
+            }
         }
     }
+
+
 }
 
 

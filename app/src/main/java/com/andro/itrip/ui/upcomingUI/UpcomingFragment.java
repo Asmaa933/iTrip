@@ -1,14 +1,18 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -58,7 +62,6 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
             requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
         }
-
 
     }
 
@@ -132,6 +135,11 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     }
     public static void updateTripLists(){
         upcomingPresenter.getTripList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
 
