@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import com.andro.itrip.ui.upcomingUI.UpcomingFragment;
 
 public class AlertDialogService extends Service {
     private WindowManager windowManager;
-    private RelativeLayout alert;
+    private LinearLayout alert;
     private Point szWindow = new Point();
     private TextView titleTxt, descTxt;
     private Button startBtn, snoozeBtn, cancelBtn;
@@ -57,7 +58,7 @@ public class AlertDialogService extends Service {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        alert = (RelativeLayout) inflater.inflate(R.layout.alert_dialog, null);
+        alert = (LinearLayout) inflater.inflate(R.layout.alert_dialog, null);
         startBtn = alert.findViewById(R.id.startButton);
         snoozeBtn = alert.findViewById(R.id.snoozeButton);
         cancelBtn = alert.findViewById(R.id.cancelButton);
@@ -123,20 +124,6 @@ public class AlertDialogService extends Service {
         snoozeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trip.setStatus(0);
-                FireBaseHandler.getInstance().updateTrip(trip);
-                UpcomingFragment.updateTripLists();
-                AlarmManagerHandler.getInstance().cancelAlarm(trip);
-
-                AlertReceiver.stopMedia();
-                stopNotification();
-
-            }
-        });
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
                 Intent serviceIntent = new Intent(GlobalApplication.getAppContext(), NotificationService.class);
                 serviceIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
                 if (isRound) {
@@ -148,6 +135,22 @@ public class AlertDialogService extends Service {
                 if (alert != null) {
                     windowManager.removeView(alert);
                 }
+
+            }
+        });
+
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trip.setStatus(0);
+                FireBaseHandler.getInstance().updateTrip(trip);
+                UpcomingFragment.updateTripLists();
+                AlarmManagerHandler.getInstance().cancelAlarm(trip);
+
+                AlertReceiver.stopMedia();
+                stopNotification();
+
             }
         });
         titleTxt.setText(trip.getTripTitle());
@@ -159,9 +162,6 @@ public class AlertDialogService extends Service {
         // TODO Auto-generated method stub
         super.onDestroy();
 
-        if (alert != null) {
-            windowManager.removeView(alert);
-        }
 
     }
 
@@ -179,4 +179,5 @@ public class AlertDialogService extends Service {
         intent.putStringArrayListExtra("notes", trip.getNotesList());
         startService(intent);
     }
+
 }

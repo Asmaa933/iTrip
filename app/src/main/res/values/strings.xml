@@ -106,5 +106,7 @@
 
     <string name="start_date_time">Start Date-Time</string>
     <string name="round_date_time">Round Date-Time</string>
+    <string name="trip_title">Trip Title</string>
+    <string name="alarm_message">alarm message</string>
 
 </resources>

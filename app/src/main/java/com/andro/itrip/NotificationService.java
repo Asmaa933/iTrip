@@ -20,14 +20,14 @@ public class NotificationService extends Service {
            boolean isRound = intent.getBooleanExtra(GlobalApplication.getAppContext().getString(R.string.isRound),false);
 
 
-        Intent notificationIntent = new Intent(this, AlertDialogService.class);
+        Intent notificationIntent = new Intent(GlobalApplication.getAppContext(), AlertDialogService.class);
         notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.alarm_trip), trip);
         if(isRound){
             notificationIntent.putExtra(GlobalApplication.getAppContext().getString(R.string.isRound),true);
         }
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+        PendingIntent pendingIntent = PendingIntent.getService(this,
                 trip.getRequestId(), notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
 
