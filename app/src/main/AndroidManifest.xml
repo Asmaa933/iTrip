@@ -55,9 +55,7 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name=".DialogActivity"-->
-<!--            android:launchMode="singleInstance"-->
-<!--            android:theme="@style/Theme.AppCompat.Dialog"/>-->
+
 
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
