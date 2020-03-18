@@ -81,8 +81,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang() + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang() + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
         Picasso.get()
                 .load(imgURL)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.loadingindicator2)
+                .error(R.drawable.imagenotfound)
                 .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
