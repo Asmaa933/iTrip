@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     private void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
-
+        disableViews();
     }
 
     private void hideProgressBar() {
@@ -221,6 +221,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
             isValidName = true;
         }
         return isValidName;
+    }
+
+    public void disableViews(){
+        nameTxt.setEnabled(false);
+        nameTxt.setFocusable(false);
+
+        emailTxt.setEnabled(false);
+        emailTxt.setFocusable(false);
+
+        passwordTxt.setEnabled(false);
+        passwordTxt.setFocusable(false);
+
+        confirmPasswordTxt.setEnabled(false);
+        confirmPasswordTxt.setFocusable(false);
     }
 
     public void addUserToDatabase() {

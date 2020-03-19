@@ -104,39 +104,28 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="31dp"
             android:layout_marginEnd="17dp"
-            android:background="@android:color/white"
             android:text="@string/login"
             android:textAllCaps="false"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:background="@drawable/shadow_button_layer_list"/>
 
         <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/googleButton"
             android:layout_width="262dp"
             android:layout_height="56dp"
-            android:layout_below="@+id/facebookButton"
-            android:layout_alignStart="@+id/facebookButton"
-            android:layout_alignEnd="@+id/facebookButton"
+            android:layout_below="@+id/createAccountButton"
+            android:layout_alignStart="@+id/createAccountButton"
+            android:layout_alignEnd="@+id/createAccountButton"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
 
             android:layout_marginBottom="10dp"
             android:text="@string/google"
             android:textAlignment="textStart"
             android:textAllCaps="false"
+            app:isDarkTheme="false"
             />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/facebookButton"
-            android:layout_width="262dp"
-            android:layout_height="56dp"
-            android:layout_below="@+id/createAccountButton"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="74dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp" />
 
         <Button
             android:id="@+id/createAccountButton"
@@ -148,9 +137,9 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="0dp"
-            android:background="@color/browser_actions_bg_grey"
             android:text="@string/create"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:background="@drawable/shadow_button_layer_list" />
 
         <ProgressBar
             android:id="@+id/progressBar"
