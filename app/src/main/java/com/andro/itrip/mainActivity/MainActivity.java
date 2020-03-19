@@ -40,12 +40,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     MainContract.PresenterInterface mainPresenter;
     private AppBarConfiguration mAppBarConfiguration;
     private TextView emailTxt;
+    private TextView navUseremail;
+    private TextView navUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenter(this);
-
+            mainPresenter.getUser();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.upcoming));
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         });
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-      ;
+        ;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -74,13 +77,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
 
-        TextView navUseremail = (TextView) headerView.findViewById(R.id.txtemail);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.txtName);
+        navUseremail = (TextView) headerView.findViewById(R.id.txtemail);
+        navUsername = (TextView) headerView.findViewById(R.id.txtName);
 
-        String[] userdata = SavedPreferences.getInstance().readLoginEmail();
+//        String[] userdata = SavedPreferences.getInstance().readLoginEmail();
+//
 
-        navUseremail.setText(userdata[0]);
-        navUsername.setText(userdata[1]);
 
         UpcomingFragment upcomingFragment = new UpcomingFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, upcomingFragment).commit();
@@ -119,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-
+    @Override
+    public void updateUserData(User user) {
+        navUseremail.setText(user.getEmail());
+        navUsername.setText(user.getUsername());
+    }
 
 
     @Override

@@ -100,9 +100,13 @@ public class AlertDialogService extends Service {
                     } else {
                         Toast.makeText(GlobalApplication.getAppContext(), "Turn on location", Toast.LENGTH_LONG).show();
                     }
+                } else {
+                    Intent intent = new Intent(GlobalApplication.getAppContext(), TakeLocationPermission.class);
+                    startActivity(intent);
                 }
-
             }
+
+
         });
         snoozeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

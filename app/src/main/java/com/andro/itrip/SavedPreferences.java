@@ -13,7 +13,8 @@ public class SavedPreferences {
     public static final String USER_TABLE_ID = "USERTABLEID";
 
 
-    private SavedPreferences(){}
+    private SavedPreferences() {
+    }
 
     public static SavedPreferences getInstance() {
         if (instance == null) {
@@ -27,8 +28,6 @@ public class SavedPreferences {
     }
 
 
-
-
     public void writeUserID(String userID) {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -36,42 +35,43 @@ public class SavedPreferences {
         editor.commit();
     }
 
-    public String readUserID () {
+    public String readUserID() {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
-       return settings.getString(USER_ID, "");
-    }
-    public void resetSavedPreference(){
-      writeUserID("");
-      writeLoginEmailandUsername("","");
+        return settings.getString(USER_ID, "");
     }
 
-    public void writeLoginEmailandUsername(String email, String username){
+    public void resetSavedPreference() {
+        writeUserID("");
+        //writeLoginEmailandUsername("", "");
+    }
+
+    public void writeLoginEmailandUsername(String email, String username) {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(USER_EMAIL, email);
         editor.putString(USER_NAME, username);
         editor.commit();
     }
-    public String[] readLoginEmail(){
+
+    public String[] readLoginEmail() {
         String[] arr = new String[2];
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         arr[0] = settings.getString(USER_EMAIL, "");
         arr[1] = settings.getString(USER_NAME, "");
         return arr;
     }
-public String readUserTableId(){
-    SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
-    return settings.getString(USER_TABLE_ID, "");
-}
+
+    public String readUserTableId() {
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        return settings.getString(USER_TABLE_ID, "");
+    }
+
     public void writeUserTableID(String userID) {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(USER_TABLE_ID, userID);
         editor.commit();
     }
-
-
-
 
 
 }

@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
+import com.andro.itrip.mainActivity.MainContract;
+import com.andro.itrip.mainActivity.MainPresenter;
 import com.andro.itrip.registerActivity.RegisterContract;
 import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.historyUI.HistoryPresenter;
@@ -110,7 +112,7 @@ public class FireBaseHandler {
 
     }
 
-    public User getUser(){
+    public User getUser(final MainPresenter presenter){
         databaseUsers = FirebaseDatabase.getInstance().getReference("users").child(SavedPreferences.getInstance().readUserTableId());
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -122,7 +124,7 @@ public class FireBaseHandler {
                 user.setUserId(userId);
                 user.setEmail(email);
                 user.setUsername(username);
-                updateUser(user);
+                presenter.updateUI(user);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -214,9 +216,7 @@ public class FireBaseHandler {
         }
 
     }
-    private void updateUser(User user){
-        SavedPreferences.getInstance().writeLoginEmailandUsername(user.getEmail(),user.getUsername());
-    }
+
 
     public int getLastRequestID() {
         int requestID = 0;

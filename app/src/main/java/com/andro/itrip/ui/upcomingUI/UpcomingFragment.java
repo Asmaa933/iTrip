@@ -67,8 +67,6 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
             requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
         }
         //Get user data and save it.
-        User user =  FireBaseHandler.getInstance().getUser();
-        SavedPreferences.getInstance().writeLoginEmailandUsername(user.getEmail(),user.getUsername());
     }
 
 

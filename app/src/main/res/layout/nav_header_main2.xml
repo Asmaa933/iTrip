@@ -28,7 +28,6 @@
         android:layout_height="28dp"
         android:layout_marginStart="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/name"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -38,6 +37,5 @@
         android:layout_height="28dp"
         android:layout_marginStart="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

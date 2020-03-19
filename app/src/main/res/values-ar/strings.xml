@@ -61,7 +61,6 @@
         <item>مرة واحده</item>
         <item>يومياً</item>
         <item>إسبوعياً</item>
-        <item>شهرياً</item>
     </string-array>
     <string name="login_failed">البريد الإلكتروني أو كلمة المرور خاطئة</string>
     <string name="empty_email">أدخل البريد الإلكتروني</string>
@@ -78,7 +77,6 @@
     <string name="once">مرة واحده</string>
     <string name="daily">يومياً</string>
     <string name="weekly">إسبوعياً</string>
-    <string name="monthly">شهرياً</string>
     <string name="edit_trip">تعدبل الرحلة</string>
     <string name="check_internet">تحقق من اتصال الإنترنت</string>
     <string name="selected_trip">رحلة مخددة</string>
@@ -109,4 +107,12 @@
     <string name="round_date_time">تاريخ ووقت العودة</string>
     <string name="trip_title">اسم الرحلة</string>
     <string name="alarm_message">رسالة التنبيه</string>
+    <string name="title_activity_maps">خريطة</string>
+    <string name="title_activity_history_map">خريطة</string>
+    <string name="start_points">نقط البداية</string>
+    <string name="end_points">نقط الوصول</string>
+    <string name="round_before_error">وقت الإياب يجب ان يكون بعد وقت الذهاب</string>
+    <string name="cancel_trip_alert">"هل تريد إلغاء الرحلة"</string>
+    <string name="cancel_once">إلغاء لمرة </string>
+    <string name="cancel_repeat">إلغاء الكل</string>
 </resources>

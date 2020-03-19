@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.SavedPreferences;
+import com.andro.itrip.User;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.R;
 import com.andro.itrip.registerActivity.RegisterActivity;
@@ -248,9 +250,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             String userId = user.getUid();
                             String username = user.getDisplayName();
                             String email = user.getEmail();
+                            User googleUser = new User(userId,username,email);
+                            FireBaseHandler.getInstance().addUser(googleUser);
 
-                            SavedPreferences.getInstance().writeUserID(userId);
-                          //  SavedPreferences.getInstance().writeLoginEmailandUsername(email, username);
 
                             progressBar.setVisibility(View.GONE);
                             enableViews(true);

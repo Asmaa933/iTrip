@@ -10,6 +10,7 @@ import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
 import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
+import com.andro.itrip.User;
 import com.andro.itrip.loginActivity.LoginActivity;
 import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 
@@ -38,6 +39,14 @@ public class MainPresenter implements MainContract.PresenterInterface {
 
 
     }
+
+    @Override
+    public void getUser() {
+        FireBaseHandler.getInstance().getUser(this);
+    }
+   public void updateUI(User user){
+        viewInterface.updateUserData(user);
+   }
 
 
 }
