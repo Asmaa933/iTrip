@@ -36,8 +36,9 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     private static UpcomingContract.PresenterInterface upcomingPresenter;
     private RecyclerView recyclerView;
-    private TripAdapter adapter;
+    private static TripAdapter adapter;
     private LinearLayout emptyView;
+
 
     @Nullable
     @Override

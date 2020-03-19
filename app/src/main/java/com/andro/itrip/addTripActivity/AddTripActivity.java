@@ -216,6 +216,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                             trip.setStartLat(latLng.latitude + "");
                             trip.setStartLang(latLng.longitude + "");
                             trip.setStartLocation(place.getName());
+                            trip.setStartAddress(place.getAddress());
                         }
                     }
 
@@ -233,6 +234,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                             trip.setDestinationLat(latLng.latitude + "");
                             trip.setDestinationLang(latLng.longitude + "");
                             trip.setDestinationLocation(place.getName());
+                            trip.setDestAddress(place.getAddress());
+
                         }
                     }
 

@@ -23,10 +23,12 @@ import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
 import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
+import com.andro.itrip.Utils;
 import com.andro.itrip.addTripActivity.AddTripActivity;
 import com.andro.itrip.headUI.ChatHeadService;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         private LinearLayout recyclerRow;
         private ImageView mapImage;
         private ImageView statusImage;
-        private TextView statusText;
+        private TextView repeatTxt;
         private Button deleteButton;
         private Button cancelButton;
         private TextView tripTitle;
@@ -53,7 +55,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             recyclerRow = view.findViewById(R.id.row);
             mapImage = view.findViewById(R.id.img_list_item_map);
             statusImage = view.findViewById(R.id.img_list_item_main);
-            statusText = view.findViewById(R.id.status_list_item_main);
+            repeatTxt = view.findViewById(R.id.status_list_item_main);
             deleteButton = view.findViewById(R.id.delete_list_item_main);
             cancelButton = view.findViewById(R.id.cancel_list_item_main);
             tripTitle = view.findViewById(R.id.title_list_item_main);
@@ -91,25 +93,33 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 .into(holder.mapImage);
         holder.tripTitle.setText(tripData.get(position).getTripTitle());
         holder.tripTime.setText(tripData.get(position).getStartDateTime());
-        switch (tripData.get(position).getStatus()) {
-            case 0:
-                holder.statusText.setText("Canceled");
-                break;
-            case 1:
-                holder.statusText.setText("Done");
-                break;
-            case 2:
-                holder.statusText.setText("Upcoming");
-                break;
+
+        if (tripData.get(position).getRepeat().equals(context.getString(R.string.once))) {
+            holder.repeatTxt.setText(R.string.once);
+
+        } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
+            holder.repeatTxt.setText(R.string.daily);
+        } else {
+            holder.repeatTxt.setText(R.string.weekly);
         }
 
 
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tripData.get(position).setStatus(1);
-                presenterInterface.onUpdate(tripData.get(position));
-                presenterInterface.getTripList();
+
+                if (tripData.get(position).getRepeat().equals(context.getString(R.string.once))) {
+                    tripData.get(position).setIsRepeated(false);
+                    tripData.get(position).setStatus(Utils.STATUS_DONE);
+                    presenterInterface.onUpdate(tripData.get(position));
+
+                } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
+                   changeDateForRepeatTrips(1,position);
+
+                } else {
+                    changeDateForRepeatTrips(7,position);
+                }
+
                 AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
 
                 Intent headIntent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
@@ -124,7 +134,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
                 double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
 
-                String uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude ;
+                String uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -209,4 +219,22 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             }
         }
     }
-}
+    private void changeDateForRepeatTrips(int numbersOfDays , int position){
+
+        if (!tripData.get(position).isRepeated()) {
+            Trip oldTrip = new Trip(tripData.get(position));
+            oldTrip.setStatus(Utils.STATUS_DONE);
+            presenterInterface.addTrip(oldTrip);
+        }
+        Calendar cal = HelpingMethods.convertToDate(tripData.get(position).getStartDateTime());
+        cal.add(Calendar.DATE, numbersOfDays);
+        String dateString = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(cal.getTime());
+        tripData.get(position).setStartDateTime(dateString);
+        tripData.get(position).setIsRepeated(true);
+        presenterInterface.onUpdate(tripData.get(position));
+
+    }
+
+
+    }
+

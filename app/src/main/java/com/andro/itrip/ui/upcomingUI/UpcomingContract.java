@@ -15,7 +15,7 @@ public class UpcomingContract {
 
         void onUpdate(Trip trip);
 
-        void addTrip(Trip trip);
+        String addTrip(Trip trip);
 
     }
 

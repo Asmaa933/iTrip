@@ -1,16 +1,10 @@
 package com.andro.itrip.ui.upcomingUI;
 
 
-import com.andro.itrip.AlarmManagerHandler;
 import com.andro.itrip.FireBaseHandler;
-import com.andro.itrip.GlobalApplication;
-import com.andro.itrip.HelpingMethods;
-import com.andro.itrip.R;
-import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
 
 
-import java.util.Calendar;
 import java.util.List;
 
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
@@ -23,10 +17,11 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
     }
 
     @Override
-    public void addTrip(Trip trip) {
-        FireBaseHandler.getInstance().addTrip(trip);
-
+    public String addTrip(Trip trip) {
+        return FireBaseHandler.getInstance().addTrip(trip);
     }
+
+
 
 
     @Override
@@ -59,6 +54,7 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
 
         return trips;
     }
+
 
 
 }

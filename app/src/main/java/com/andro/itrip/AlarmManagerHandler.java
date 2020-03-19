@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -49,7 +50,19 @@ public class AlarmManagerHandler {
             date.add(Calendar.DATE, 1);
         }
         if (alarmManager != null) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+            if (trip.getRepeat().equals(GlobalApplication.getAppContext().getString(R.string.once))) {
+
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+
+            } else if (trip.getRepeat().equals(GlobalApplication.getAppContext().getString(R.string.daily))) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+            } else {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+
+            }
+
+
         }
 
 
