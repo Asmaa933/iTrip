@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iTrip</string>
+    <string name="title_activity_main2">الرئيسية</string>
+    <string name="navigation_drawer_open">افتح القائمة الجانبيه</string>
+    <string name="navigation_drawer_close">اغلق القائمة الجانبيه</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">عنوان القائمة الجانبيه</string>
+    <string name="action_settings">الاعدادات</string>
+
+    <string name="menu_home">الرحلات القادمة</string>
+    <string name="menu_gallery">الرحلات السابقه</string>
+    <string name="menu_send">تسجيل الخروج</string>
+    <string name="name">الاسم</string>
+    <string name="facebook_app_id">2114845638805730</string>
+    <string name="fb_login_protocol_scheme">fb2114845638805730</string>
+    <string name="google">المتابعه عن طريق Google      </string>
+    <string name="haveAccount">لديك حساب بالفعل؟</string>
+    <string name="email">name@example.com</string>
+    <string name="password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="create">إنشاء حساب</string>
+    <string name="welcome">اهلاً بك في تطبيق iTrip</string>
+    <string name="signup">تسجيل حساب</string>
+    <string name="add_more_trips">لا رحلات هنا. ابدأ بإضافة (+) المزيد من الرحلات.</string>
+    <string name="past_trips">لا توجد رحلات هنا حتى الان.</string>
+    <string name="card_cancel">إلغاء</string>
+    <string name="card_delete">مسح</string>
+
+    <string name="confirm">تأكيد كلمة المرور</string>
+    <string name="cancel">إلغاء</string>
+    <string name="delete_trip">هل أنت متأكد أنك تريد حذف الرحلة؟</string>
+
+    <string name="tripName">رحلة</string>
+    <string name="startpoint">نقطة الانطلاق</string>
+    <string name="StartPoint">نقطة الانطلاق</string>
+    <string name="endpoint">نقطة الوصول</string>
+    <string name="Tripname">اسم الرحلة</string>
+    <string name="addaNewTrip">أضف رحلة جديدة</string>
+    <string name="add_trip">أضف رحلة</string>
+    <string name="Type_trip">نوع الرحلة</string>
+    <string name="Repetition">التكرار</string>
+    <string name="time">00:00 AM</string>
+
+
+    <string name="Time">الوقت</string>
+    <string name="Date">التاريخ</string>
+    <string name="DateTime">التاريخ-الوقت</string>
+    <string name="Add">اضافه</string>
+    <string name="Cancel">إلغاء</string>
+    <string name="date">m/dd/yyyy</string>
+    <string name="datetime">m/dd/yyyy---00:00 AM</string>
+
+    <string-array name="typeoftrip">
+        <item>ذهاباً</item>
+        <item>ذهاباً وإياباً</item>
+    </string-array>
+
+    <string-array name="repetition">
+        <item>مرة واحده</item>
+        <item>يومياً</item>
+        <item>إسبوعياً</item>
+        <item>شهرياً</item>
+    </string-array>
+    <string name="login_failed">البريد الإلكتروني أو كلمة المرور خاطئة</string>
+    <string name="empty_email">أدخل البريد الإلكتروني</string>
+    <string name="empty_password">أدخل كلمة المرور</string>
+    <string name="weak_password">كلمة مرور ضعيفة جدا</string>
+    <string name="invalid_email">"أدخل عنوان بريد إلكتروني صالح"</string>
+    <string name="unable_register">غير قادر على التسجيل</string>
+    <string name="password_error">كلمة المرور غير مطابقة</string>
+    <string name="empty_name">ادخل اسم</string>
+    <string name="name_error">لا تستخدم أحرف أو أرقام خاصة</string>
+    <string name="upcoming">الرحلات القادمة</string>
+    <string name="save">حفظ</string>
+    <string name="round_trip">ذهاباً وإيابا</string>
+    <string name="once">مرة واحده</string>
+    <string name="daily">يومياً</string>
+    <string name="weekly">إسبوعياً</string>
+    <string name="monthly">شهرياً</string>
+    <string name="edit_trip">تعدبل الرحلة</string>
+    <string name="check_internet">تحقق من اتصال الإنترنت</string>
+    <string name="selected_trip">رحلة مخددة</string>
+    <string name="single">فردي</string>
+    <string name="round">round</string>
+    <string name="choose_time">اختر الوقت</string>
+    <string name="choose_date">اختر التاريخ</string>
+    <string name="alarm_trip">إنذار الرحلة</string>
+    <string name="reminder">تذكير لرحلتك!</string>
+    <string name="start">إبدأ</string>
+    <string name="snooze">غفوة</string>
+    <string name="trip_added">تمت إضافة الرحلة</string>
+    <string name="trip_edit">تم تعديل الرحلة</string>
+    <string name="alarmManager">المنبه</string>
+    <string name="isRound">isRound</string>
+    <string name="alarm">المنبه</string>
+    <string name="data">DATA</string>
+    <string name="enter_start_date">أدخل تاريخ ووقت البدء</string>
+    <string name="history">الرحلات السابقه</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="start_error">أدخل موقع البدء</string>
+    <string name="dest_error">أدخل موقع الوجهة</string>
+    <string name="title_error">أدخل عنوان الرحلة</string>
+    <string name="round_error">أدخل تاريخ رحلة العودة</string>
+    <string name="start_date_error">أدخل تاريخ رحلة الذهاب</string>
+
+    <string name="start_date_time">تاريخ-وقت البدء</string>
+    <string name="round_date_time">تاريخ ووقت العودة</string>
+    <string name="trip_title">اسم الرحلة</string>
+    <string name="alarm_message">رسالة التنبيه</string>
+</resources>
