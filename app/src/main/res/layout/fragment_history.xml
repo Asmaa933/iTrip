@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.upcomingUI.UpcomingFragment"
     android:background="@color/whitePurble">
-    
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyRecyclerView"

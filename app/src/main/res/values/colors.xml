@@ -17,9 +17,10 @@
 
     <color name="whitePurble">#f4eeff</color>
 
-
+    <color name="redflower">#fa163f</color>
 
     <color name="palette5">#57c56f</color>
+    <color name="greyGreen">#ebebe0</color>
 
 
     <color name="dark">#000000</color>
