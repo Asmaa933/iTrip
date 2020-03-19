@@ -1,22 +1,16 @@
 package com.andro.itrip.headUI;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
+
 
 import com.andro.itrip.R;
-import com.andro.itrip.addTripActivity.NotesAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

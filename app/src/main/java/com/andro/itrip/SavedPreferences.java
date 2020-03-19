@@ -9,6 +9,10 @@ public class SavedPreferences {
     public static final String USER_DATA = "userData";
     public static final String USER_ID = "userID";
     public static final String USER_EMAIL = "userEmail";
+    public static final String USER_NAME = "username";
+    public static final String FIRSTCREATE = "FIRSTCREATE";
+
+
     private SavedPreferences(){}
 
     public static SavedPreferences getInstance() {
@@ -36,19 +40,40 @@ public class SavedPreferences {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
        return settings.getString(USER_ID, "");
     }
-    public void resetUserID(){
+    public void resetSavedPreference(){
       writeUserID("");
+      writeLoginEmailandUsername("","");
+      writeFirstCreate(false);
     }
 
-    public void writeLoginEmail(String email){
+    public void writeLoginEmailandUsername(String email, String username){
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(USER_EMAIL, email);
+        editor.putString(USER_NAME, username);
         editor.commit();
     }
-    public String readLoginEmail(){
+    public String[] readLoginEmail(){
+        String[] arr = new String[2];
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
-        return settings.getString(USER_EMAIL, "");
+        arr[0] = settings.getString(USER_EMAIL, "");
+        arr[1] = settings.getString(USER_NAME, "");
+        return arr;
     }
+
+
+
+    public void writeFirstCreate(boolean isCreated){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(FIRSTCREATE, isCreated);
+        editor.commit();
+    }
+    public boolean readFirstCreate(){
+        SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+        return settings.getBoolean(FIRSTCREATE,false);
+    }
+
+
 
 }

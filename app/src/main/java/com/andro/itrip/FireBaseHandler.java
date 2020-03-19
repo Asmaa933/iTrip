@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
-import com.andro.itrip.mainActivity.MainPresenter;
 import com.andro.itrip.registerActivity.RegisterContract;
 import com.andro.itrip.loginActivity.LoginContract;
 import com.andro.itrip.ui.historyUI.HistoryPresenter;
@@ -27,14 +26,18 @@ import java.util.List;
 public class FireBaseHandler {
     private static FireBaseHandler instance;
     private DatabaseReference databaseTrips;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference databaseUsers;
     private FirebaseAuth auth;
     private List<Trip> trips;
-
+    SavedPreferences savedPreferences;
+    User user;
 
     private FireBaseHandler() {
         auth = FirebaseAuth.getInstance();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        savedPreferences = SavedPreferences.getInstance();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        user = new User();
     }
 
 
@@ -51,7 +54,7 @@ public class FireBaseHandler {
     }
 
 
-    public void getAllTrips(final UpcomingPresenter presenterInterface) {
+    public List<Trip> getAllTrips(final UpcomingPresenter presenterInterface) {
         trips = new ArrayList<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         databaseTrips.addValueEventListener(new ValueEventListener() {
@@ -73,14 +76,10 @@ public class FireBaseHandler {
             }
         });
         presenterInterface.updateTripList(trips);
-
-
+        return trips;
     }
 
-
-
-
-    public void getAllPastTrips(final HistoryPresenter presenterInterface) {
+    public List<Trip> getAllPastTrips(final HistoryPresenter presenterInterface) {
         trips = new ArrayList<>();
         databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
         databaseTrips.addValueEventListener(new ValueEventListener() {
@@ -102,8 +101,32 @@ public class FireBaseHandler {
             }
         });
         presenterInterface.updateTripList(trips);
+        return trips;
 
+    }
 
+    public User getUser(){
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users").child(SavedPreferences.getInstance().readUserID());
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String email = dataSnapshot.child("email").getValue(String.class);
+                String username = dataSnapshot.child("username").getValue(String.class);
+                String password = dataSnapshot.child("password").getValue(String.class);
+                String userId = dataSnapshot.child("userId").getValue(String.class);
+
+                user.setUserId(userId);
+                user.setEmail(email);
+                user.setUsername(username);
+                user.setPassword(password);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        databaseUsers.addListenerForSingleValueEvent(eventListener);
+        return user;
     }
 
     public String addTrip(Trip trip) {
@@ -114,6 +137,15 @@ public class FireBaseHandler {
         }
         return tripId;
 
+    }
+
+    public String addUser(User user) {
+        String userId = savedPreferences.readUserID();
+        if (userId != null) {
+            user.setUserId(userId);
+            databaseUsers.child(userId).setValue(user);
+        }
+        return userId;
     }
 
     public void updateTrip(Trip trip) {
@@ -171,7 +203,6 @@ public class FireBaseHandler {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        SavedPreferences.getInstance().resetUserID();
     }
 
     private void saveUserID() {

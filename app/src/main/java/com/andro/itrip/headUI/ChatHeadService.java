@@ -1,13 +1,11 @@
 package com.andro.itrip.headUI;
 
-import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -20,11 +18,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.andro.itrip.R;
 import com.andro.itrip.Utils;
-import com.andro.itrip.addTripActivity.NotesAdapter;
 import com.andro.itrip.mainActivity.MainActivity;
 
 import java.util.ArrayList;
@@ -37,13 +33,10 @@ public class ChatHeadService extends Service {
     private WindowManager windowManager;
     private View chatheadView;
     private RelativeLayout removeView;
-    private LinearLayout txtView, txt_linearlayout;
     private ImageView chatheadImg, removeImg;
-    private TextView txt1;
     private int x_init_cord, y_init_cord, x_init_margin, y_init_margin;
     private Point szWindow = new Point();
     private boolean isLeft = true;
-    private String sMsg = "";
     LinearLayout linearLayout;
     private ArrayList<String> notesArrayList;
     RecyclerView notesRecycler;
@@ -66,14 +59,13 @@ public class ChatHeadService extends Service {
 
         if(intent != null) {
             notesArrayList = intent.getStringArrayListExtra("notes");
-            if(!notesArrayList.isEmpty()) {
+            if(notesArrayList!=null && !notesArrayList.isEmpty()) {
                 noteAdapter = new HeadNotesAdapter(notesArrayList, this, getApplicationContext());
                 notesRecycler.setAdapter(noteAdapter);
             }
         }
 
         if(startId == Service.START_STICKY) {
-            //handleStart();
             return super.onStartCommand(intent, flags, startId);
         }else{
             return  Service.START_NOT_STICKY;
@@ -87,17 +79,23 @@ public class ChatHeadService extends Service {
         handleStart();
     }
 
-    //@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void handleStart(){
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 
         removeView = (RelativeLayout)inflater.inflate(R.layout.remove, null);
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
         WindowManager.LayoutParams paramRemove = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                LAYOUT_FLAG,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         paramRemove.gravity = Gravity.TOP | Gravity.LEFT;
@@ -127,7 +125,7 @@ public class ChatHeadService extends Service {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                LAYOUT_FLAG,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.LEFT;
@@ -179,6 +177,9 @@ public class ChatHeadService extends Service {
 
                 @Override
                 public void run() {
+                    // TODO Auto-generated method stub
+                    Log.d(Utils.LogTag, "Into runnable_longClick");
+
                     isLongclick = true;
                     removeView.setVisibility(View.VISIBLE);
                     chathead_longclick();
@@ -207,10 +208,7 @@ public class ChatHeadService extends Service {
                         x_init_margin = layoutParams.x;
                         y_init_margin = layoutParams.y;
 
-                        if(txtView != null){
-                            txtView.setVisibility(View.GONE);
-                            myHandler.removeCallbacks(myRunnable);
-                        }
+
                         break;
                     case MotionEvent.ACTION_MOVE:
                         int x_diff_move = x_cord - x_init_cord;
@@ -290,7 +288,6 @@ public class ChatHeadService extends Service {
                         if(Math.abs(x_diff) < 5 && Math.abs(y_diff) < 5){
                             time_end = System.currentTimeMillis();
                             if((time_end - time_start) < 300){
-                                chathead_click();
                                 if (isViewCollapsed()) {
                                     //When user clicks on the image view of the collapsed layout,
                                     //visibility of the collapsed layout will be changed to "View.GONE"
@@ -316,6 +313,7 @@ public class ChatHeadService extends Service {
 
                         break;
                     default:
+                        Log.d(Utils.LogTag, "chatheadView.setOnTouchListener  -> event.getAction() : default");
                         break;
                 }
                 return true;
@@ -344,9 +342,7 @@ public class ChatHeadService extends Service {
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-            if(txtView != null){
-                txtView.setVisibility(View.GONE);
-            }
+
 
             if(layoutParams.y + (chatheadView.getHeight() + getStatusBarHeight()) > szWindow.y){
                 layoutParams.y = szWindow.y- (chatheadView.getHeight() + getStatusBarHeight());
@@ -359,9 +355,6 @@ public class ChatHeadService extends Service {
 
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
 
-            if(txtView != null){
-                txtView.setVisibility(View.GONE);
-            }
 
             if(layoutParams.x > szWindow.x){
                 resetPosition(szWindow.x);
@@ -424,16 +417,6 @@ public class ChatHeadService extends Service {
         return statusBarHeight;
     }
 
-    private void chathead_click(){
-        /*
-        if(MyDialog.active){
-            MyDialog.myDialog.finish();
-        }else{
-            Intent it = new Intent(this,MyDialog.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            it.putStringArrayListExtra("notes",notesArrayList);
-            startActivity(it);
-        }*/
-    }
 
     private void chathead_longclick(){
 
@@ -447,68 +430,17 @@ public class ChatHeadService extends Service {
         windowManager.updateViewLayout(removeView, param_remove);
     }
 
-    private void showMsg(String sMsg){
-        if(txtView != null && chatheadView != null ){
-            Log.d(Utils.LogTag, "ChatHeadService.showMsg -> sMsg=" + sMsg);
-            txt1.setText(sMsg);
-            myHandler.removeCallbacks(myRunnable);
-
-            WindowManager.LayoutParams param_chathead = (WindowManager.LayoutParams) chatheadView.getLayoutParams();
-            WindowManager.LayoutParams param_txt = (WindowManager.LayoutParams) txtView.getLayoutParams();
-
-            txt_linearlayout.getLayoutParams().height = chatheadView.getHeight();
-            txt_linearlayout.getLayoutParams().width = szWindow.x / 2;
-
-            if(isLeft){
-                param_txt.x = param_chathead.x + chatheadImg.getWidth();
-                param_txt.y = param_chathead.y;
-
-                txt_linearlayout.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-            }else{
-                param_txt.x = param_chathead.x - szWindow.x / 2;
-                param_txt.y = param_chathead.y;
-
-                txt_linearlayout.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-            }
-
-            txtView.setVisibility(View.VISIBLE);
-            windowManager.updateViewLayout(txtView, param_txt);
-
-            myHandler.postDelayed(myRunnable, 4000);
-
-        }
-
-    }
-
-    Handler myHandler = new Handler();
-    Runnable myRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            // TODO Auto-generated method stub
-            if(txtView != null){
-                txtView.setVisibility(View.GONE);
-            }
-        }
-    };
 
     private boolean isViewCollapsed() {
         return chatheadView == null || chatheadView.findViewById(R.id.collapse_view).getVisibility() == View.VISIBLE;
     }
 
-
-
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
 
         if(chatheadView != null){
             windowManager.removeView(chatheadView);
-        }
-
-        if(txtView != null){
-            windowManager.removeView(txtView);
         }
 
         if(removeView != null){

@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 
-
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -56,12 +55,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DialogActivity"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Translucent"
-            />
+
+
         <activity android:name=".AppIntroActivity"/>
         <activity android:name=".mainActivity.MainActivity" />
         <activity android:name=".addTripActivity.AddTripActivity">
@@ -75,11 +70,15 @@
             />
 
         <receiver android:name=".AlertReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
         <service android:name=".NotificationService"/>
         <service android:name=".headUI.ChatHeadService"
             android:enabled="true"
             android:exported="false"/>
+        <service android:name=".AlertDialogService"/>
 
     </application>
 

@@ -1,14 +1,18 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -20,9 +24,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import androidx.lifecycle.ViewModelProviders;
 
+import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
+import com.andro.itrip.User;
 import com.andro.itrip.Utils;
 import com.andro.itrip.headUI.ChatHeadService;
 
@@ -58,8 +65,9 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
             requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
         }
-
-
+        //Get user data and save it.
+        User user = FireBaseHandler.getInstance().getUser();
+        SavedPreferences.getInstance().writeLoginEmailandUsername(user.getEmail(),user.getUsername());
     }
 
 
@@ -107,7 +115,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     private void requestPermission(int requestCode) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+        intent.setData(Uri.parse("package:" + GlobalApplication.getAppContext().getPackageName()));
         startActivityForResult(intent, requestCode);
     }
 
@@ -132,6 +140,11 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
     }
     public static void updateTripLists(){
         upcomingPresenter.getTripList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
 

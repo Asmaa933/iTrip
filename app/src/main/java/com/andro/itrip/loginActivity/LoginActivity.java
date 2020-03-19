@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccessful() {
         progressBar.setVisibility(View.GONE);
-        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
+        //SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -239,12 +239,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            //  Toast.makeText(getActivity(), "trueeeeeeeee", Toast.LENGTH_SHORT).show();
-                            String userId=user.getUid();
+
+                            String userId = user.getUid();
+                            String username = user.getDisplayName();
+                            String email = user.getEmail();
+
                             SavedPreferences.getInstance().writeUserID(userId);
+                            SavedPreferences.getInstance().writeLoginEmailandUsername(email, username);
+
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

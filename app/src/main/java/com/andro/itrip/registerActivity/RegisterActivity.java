@@ -1,5 +1,6 @@
 package com.andro.itrip.registerActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,9 +17,14 @@ import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.R;
 import com.andro.itrip.SavedPreferences;
+import com.andro.itrip.User;
 import com.andro.itrip.mainActivity.MainActivity;
 import com.andro.itrip.loginActivity.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 import java.util.regex.Pattern;
 
@@ -33,6 +39,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     private Button registerBtn, haveAccountButton;
     private ProgressBar progressBar;
     private TextInputLayout nameLayout, emailLayout, passwordLayout, confirmLayout;
+
+    private User user;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
         registerPresenter = new RegisterPresenter(this);
 
+        auth = FirebaseAuth.getInstance();
+
+        user = new User();
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +71,23 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
                 //Initiate registration task
                 if (HelpingMethods.isNetworkConnected()) {
                     if (validateName() & validateEmail() & validatePassword() & validateConfirmPassword()) {
-                        registerPresenter.registerNewAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
-                        showProgressBar();
+                        auth.fetchSignInMethodsForEmail(emailTxt.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                                boolean check = !task.getResult().getSignInMethods().isEmpty();
+                                if (!check){
+                                    registerPresenter.registerNewAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
+                                    showProgressBar();
+
+                                    user.setUsername(nameTxt.getText().toString());
+                                    user.setEmail(emailTxt.getText().toString());
+                                    user.setPassword(passwordTxt.getText().toString());
+                                }
+                                else {
+                                    Toast.makeText(GlobalApplication.getAppContext(), "Email is already exist", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
 
                     }
                 } else {
@@ -89,8 +116,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
      */
     @Override
     public void redirectMainScreen() {
+
+        addUserToDatabase();
+
         hideProgressBar();
-        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
+        //SavedPreferences.getInstance().writeLoginEmailandUsername(emailTxt.getText().toString().trim(), nameTxt.getText().toString().trim());
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -191,6 +221,18 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
             isValidName = true;
         }
         return isValidName;
+    }
+
+    public void addUserToDatabase() {
+
+        //String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        //user.setUserId(user_id);
+        //user.setUsername(nameTxt.getText().toString());
+        //user.setEmail(emailTxt.getText().toString());
+        //user.setPassword(passwordTxt.getText().toString());
+
+        registerPresenter.addUser(user);
     }
 
 }
