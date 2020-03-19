@@ -136,7 +136,7 @@ public class FireBaseHandler {
     }
 
     public String addTrip(Trip trip) {
-        String tripId = databaseUsers.push().getKey();
+        String tripId = databaseTrips.push().getKey();
         if (tripId != null) {
             trip.setTripID(tripId);
             databaseTrips.child(tripId).setValue(trip);
@@ -147,7 +147,7 @@ public class FireBaseHandler {
 
     public String addUser(User user) {
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
-        String userId = databaseTrips.push().getKey();
+        String userId = databaseUsers.push().getKey();
         if (userId != null) {
             user.setUserId(userId);
             SavedPreferences.getInstance().writeUserTableID(userId);

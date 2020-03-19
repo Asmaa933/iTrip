@@ -42,7 +42,7 @@ public class SavedPreferences {
 
     public void resetSavedPreference() {
         writeUserID("");
-        //writeLoginEmailandUsername("", "");
+        writeLoginEmailandUsername("", "");
     }
 
     public void writeLoginEmailandUsername(String email, String username) {

@@ -251,6 +251,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             String username = user.getDisplayName();
                             String email = user.getEmail();
                             User googleUser = new User(userId,username,email);
+                            SavedPreferences.getInstance().writeUserID(userId);
                             FireBaseHandler.getInstance().addUser(googleUser);
 
 
