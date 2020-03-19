@@ -147,7 +147,7 @@ public class FireBaseHandler {
 
     public String addUser(User user) {
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
-        String userId = databaseUsers.push().getKey();
+        String userId = SavedPreferences.getInstance().readUserID();
         if (userId != null) {
             user.setUserId(userId);
             SavedPreferences.getInstance().writeUserTableID(userId);
