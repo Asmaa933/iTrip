@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/layout_bg"
     android:orientation="vertical"
     android:gravity="center"
     android:theme="@style/Theme.AppCompat.Dialog"
+    android:backgroundTint="@color/greyGreen"
+
+
     >
 
 
@@ -14,27 +18,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="center">
+            android:gravity="start"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/itriplogo"/>
 
             <TextView
                 android:id="@+id/titleTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/paytone_one"
                 android:text="@string/trip_title"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-
-                />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tableRow2"
@@ -46,19 +51,12 @@
                 android:id="@+id/descTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="@font/berkshire_swash"
                 android:text="@string/alarm_message"
                 android:textAlignment="textStart"
-
                 android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -85,36 +83,34 @@
                 android:padding="5dp"
                 android:text="@string/snooze"
                 android:textAlignment="textStart"
-                android:textColor="@color/Black"
+                android:textColor="@color/palette3"
                 android:textSize="14sp" />
 
             <Space
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@android:color/transparent"
                 android:padding="5dp"
                 android:text="@string/cancel"
-                android:textAlignment="textEnd"
-                android:textColor="@color/Black"
+                android:textColor="@color/palette3"
                 android:textSize="14sp" />
 
             <Button
                 android:id="@+id/startButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@android:color/transparent"
                 android:padding="5dp"
                 android:text="@string/start"
-                android:textAlignment="textEnd"
-                android:textColor="@color/Black"
+                android:textColor="@color/palette3"
                 android:textSize="14sp" />
 
 
