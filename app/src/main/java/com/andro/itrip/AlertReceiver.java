@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.andro.itrip.mainActivity.MainActivity;
+import com.andro.itrip.ui.upcomingUI.UpcomingFragment;
+import com.andro.itrip.ui.upcomingUI.UpcomingPresenter;
 
 
 public class AlertReceiver extends BroadcastReceiver {
@@ -17,6 +19,9 @@ public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+            UpcomingFragment.updateTripLists();
+        }
         mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
         mediaPlayer.start();
 

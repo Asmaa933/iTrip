@@ -1,5 +1,6 @@
 package com.andro.itrip.ui.upcomingUI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +39,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private List<Trip> tripData;
     private UpcomingContract.PresenterInterface presenterInterface;
     private Context context;
+    private Activity activity;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,11 +68,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
-    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface, Context context) {
+    public TripAdapter(List<Trip> tripData, UpcomingContract.PresenterInterface presenterInterface, Context context,Activity activity) {
         this.tripData = tripData;
         this.presenterInterface = presenterInterface;
         this.context = context;
-
+        this.activity = activity;
     }
 
     @NonNull
@@ -107,39 +110,15 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (tripData.get(position).getRepeat().equals(context.getString(R.string.once))) {
-                    tripData.get(position).setTripAddedBefore(null);
-                    tripData.get(position).setStatus(Utils.STATUS_DONE);
-                    presenterInterface.onUpdate(tripData.get(position));
-
-                } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
-                    changeDateForRepeatTrips(1, position, Utils.STATUS_DONE);
-
+                if (Utils.checkPermissions()) {
+                    if (Utils.isLocationEnabled()) {
+                        startButtonPressed(position);
+                    } else {
+                        Toast.makeText(GlobalApplication.getAppContext(), "Turn on location", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    changeDateForRepeatTrips(7, position, Utils.STATUS_DONE);
+                    Utils.requestPermissions(activity);
                 }
-
-                AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
-
-                Intent headIntent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
-                headIntent.putStringArrayListExtra("notes", tripData.get(position).getNotesList());
-                GlobalApplication.getAppContext().startService(headIntent);
-
-                double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
-
-                double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
-
-                double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
-
-                double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
-
-                String uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
-
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.apps.maps");
-                GlobalApplication.getAppContext().startActivity(intent);
 
 
             }
@@ -272,7 +251,42 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
 
     }
+private void startButtonPressed(int position){
+    if (tripData.get(position).getRepeat().equals(context.getString(R.string.once))) {
+        tripData.get(position).setTripAddedBefore(null);
+        tripData.get(position).setStatus(Utils.STATUS_DONE);
+        presenterInterface.onUpdate(tripData.get(position));
 
+    } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
+        changeDateForRepeatTrips(1, position, Utils.STATUS_DONE);
+
+    } else {
+        changeDateForRepeatTrips(7, position, Utils.STATUS_DONE);
+    }
+
+    AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
+
+    Intent headIntent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
+    headIntent.putStringArrayListExtra("notes", tripData.get(position).getNotesList());
+    GlobalApplication.getAppContext().startService(headIntent);
+
+    double sourceLongitude = Double.parseDouble(tripData.get(position).getStartLang());
+
+    double sourceLatitude = Double.parseDouble(tripData.get(position).getStartLat());
+
+    double destinationLongitude = Double.parseDouble(tripData.get(position).getDestinationLang());
+
+    double destinationLatitude = Double.parseDouble(tripData.get(position).getDestinationLat());
+
+    String uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
+
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.setPackage("com.google.android.apps.maps");
+    GlobalApplication.getAppContext().startActivity(intent);
+
+
+}
 
 }
 

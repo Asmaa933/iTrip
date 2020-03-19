@@ -40,13 +40,11 @@
 
         <activity
             android:name=".HistoryMap"
-            android:label="@string/title_activity_history_map"></activity>
+            android:label="@string/title_activity_history_map"/>
         <activity android:name=".loginActivity.LoginActivity" />
         <activity android:name=".registerActivity.RegisterActivity" />
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -87,7 +85,10 @@
             android:name=".headUI.MyDialog"
             android:launchMode="singleTask" />
 
-        <receiver android:name=".AlertReceiver">
+        <receiver android:name=".AlertReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

@@ -31,14 +31,11 @@ public class FireBaseHandler {
     private FirebaseAuth auth;
     private List<Trip> trips;
     User user;
-    SavedPreferences savedPreferences;
 
 
     private FireBaseHandler() {
         auth = FirebaseAuth.getInstance();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        savedPreferences = SavedPreferences.getInstance();
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         user = new User();
     }
 
@@ -114,31 +111,30 @@ public class FireBaseHandler {
     }
 
     public User getUser(){
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users").child(SavedPreferences.getInstance().readUserID());
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users").child(SavedPreferences.getInstance().readUserTableId());
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String email = dataSnapshot.child("email").getValue(String.class);
                 String username = dataSnapshot.child("username").getValue(String.class);
-                String password = dataSnapshot.child("password").getValue(String.class);
                 String userId = dataSnapshot.child("userId").getValue(String.class);
 
                 user.setUserId(userId);
                 user.setEmail(email);
                 user.setUsername(username);
-                user.setPassword(password);
+                updateUser(user);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         };
-        databaseUsers.addListenerForSingleValueEvent(eventListener);
+        databaseUsers.addValueEventListener(eventListener);
         return user;
     }
 
     public String addTrip(Trip trip) {
-        String tripId = databaseTrips.push().getKey();
+        String tripId = databaseUsers.push().getKey();
         if (tripId != null) {
             trip.setTripID(tripId);
             databaseTrips.child(tripId).setValue(trip);
@@ -148,9 +144,11 @@ public class FireBaseHandler {
     }
 
     public String addUser(User user) {
-        String userId = savedPreferences.readUserID();
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        String userId = databaseTrips.push().getKey();
         if (userId != null) {
             user.setUserId(userId);
+            SavedPreferences.getInstance().writeUserTableID(userId);
             databaseUsers.child(userId).setValue(user);
         }
         return userId;
@@ -215,6 +213,9 @@ public class FireBaseHandler {
             SavedPreferences.getInstance().writeUserID(user_id);
         }
 
+    }
+    private void updateUser(User user){
+        SavedPreferences.getInstance().writeLoginEmailandUsername(user.getEmail(),user.getUsername());
     }
 
     public int getLastRequestID() {

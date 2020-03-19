@@ -81,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
                                     user.setUsername(nameTxt.getText().toString());
                                     user.setEmail(emailTxt.getText().toString());
-                                    user.setPassword(passwordTxt.getText().toString());
                                 }
                                 else {
                                     Toast.makeText(GlobalApplication.getAppContext(), "Email is already exist", Toast.LENGTH_LONG).show();
@@ -120,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         addUserToDatabase();
 
         hideProgressBar();
+
         //SavedPreferences.getInstance().writeLoginEmailandUsername(emailTxt.getText().toString().trim(), nameTxt.getText().toString().trim());
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);

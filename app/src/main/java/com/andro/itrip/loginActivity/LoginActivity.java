@@ -145,12 +145,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void displayError(int message) {
         progressBar.setVisibility(View.GONE);
+        enableViews(true);
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void loginSuccessful() {
         progressBar.setVisibility(View.GONE);
+        enableViews(true);
         //SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
@@ -194,10 +196,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     public void enableViews(boolean flag){
         emailTxt.setEnabled(flag);
-        emailTxt.setFocusable(flag);
+       // emailTxt.setFocusable(flag);
 
         passwordTxt.setEnabled(flag);
-        passwordTxt.setFocusable(flag);
+       // passwordTxt.setFocusable(flag);
     }
 
     private void hideSoftKeyboard() {
@@ -206,7 +208,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
-
 
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -249,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             String email = user.getEmail();
 
                             SavedPreferences.getInstance().writeUserID(userId);
-                            SavedPreferences.getInstance().writeLoginEmailandUsername(email, username);
+                          //  SavedPreferences.getInstance().writeLoginEmailandUsername(email, username);
 
                             progressBar.setVisibility(View.GONE);
                             enableViews(true);
@@ -264,10 +265,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             progressBar.setVisibility(View.GONE);
                             enableViews(true);
                             Toast.makeText(LoginActivity.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                            Log.w("tag", "signInWithCredential:failure", task.getException());
-                            //   Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            //updateUI(null);
+
                         }
                         // ...
                     }

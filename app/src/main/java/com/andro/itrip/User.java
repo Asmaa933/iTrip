@@ -6,15 +6,12 @@ public class User implements Serializable {
     private String userId;
     private String username;
     private String email;
-    private String password;
-
     public User(){};
 
-    public User(String userId, String username, String email, String password) {
+    public User(String userId, String username, String email ) {
         this.userId = userId;
         this.username = username;
         this.email = email;
-        this.password = password;
     }
 
     @Override
@@ -23,7 +20,6 @@ public class User implements Serializable {
                 "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 
@@ -51,11 +47,5 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

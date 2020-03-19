@@ -1,6 +1,7 @@
 package com.andro.itrip;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -92,50 +94,14 @@ public class AlertDialogService extends Service {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                AlarmManagerHandler.getInstance().cancelAlarm(trip);
-
-                double sourceLongitude = Double.parseDouble(trip.getStartLang());
-
-                double sourceLatitude = Double.parseDouble(trip.getStartLat());
-
-                double destinationLongitude = Double.parseDouble(trip.getDestinationLang());
-
-                double destinationLatitude = Double.parseDouble(trip.getDestinationLat());
-                String uri;
-                if (!isRound) {
-                    uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
-                    if (trip.getRepeat().equals(getString(R.string.once))) {
-                        trip.setTripAddedBefore(null);
-                        trip.setStatus(Utils.STATUS_DONE);
-                        UpcomingFragment.updateTripforAlert(trip);
-
-                    } else if (trip.getRepeat().equals(getString(R.string.daily))) {
-                        changeDateForRepeatTrips(1,Utils.STATUS_DONE);
-
+                if (Utils.checkPermissions()) {
+                    if (Utils.isLocationEnabled()) {
+                        startButtonPressed();
                     } else {
-                        changeDateForRepeatTrips(7,Utils.STATUS_DONE);
+                        Toast.makeText(GlobalApplication.getAppContext(), "Turn on location", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    uri = "http://maps.google.com/maps?daddr=" + sourceLatitude + "," + sourceLongitude;
-
                 }
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setPackage("com.google.android.apps.maps");
-
-                GlobalApplication.getAppContext().startActivity(intent);
-                UpcomingFragment.updateTripLists();
-
-
-
-                startChatHead();
-                stopNotification();
-                AlertReceiver.stopMedia();
-                if (alert != null) {
-                    windowManager.removeView(alert);
-                }
             }
         });
         snoozeBtn.setOnClickListener(new View.OnClickListener() {
@@ -222,5 +188,51 @@ public class AlertDialogService extends Service {
         UpcomingFragment.updateTripforAlert(trip);
 
     }
+   private void startButtonPressed(){
+       AlarmManagerHandler.getInstance().cancelAlarm(trip);
+
+       double sourceLongitude = Double.parseDouble(trip.getStartLang());
+
+       double sourceLatitude = Double.parseDouble(trip.getStartLat());
+
+       double destinationLongitude = Double.parseDouble(trip.getDestinationLang());
+
+       double destinationLatitude = Double.parseDouble(trip.getDestinationLat());
+       String uri;
+       if (!isRound) {
+           uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
+           if (trip.getRepeat().equals(getString(R.string.once))) {
+               trip.setTripAddedBefore(null);
+               trip.setStatus(Utils.STATUS_DONE);
+               UpcomingFragment.updateTripforAlert(trip);
+
+           } else if (trip.getRepeat().equals(getString(R.string.daily))) {
+               changeDateForRepeatTrips(1,Utils.STATUS_DONE);
+
+           } else {
+               changeDateForRepeatTrips(7,Utils.STATUS_DONE);
+           }
+       } else {
+           uri = "http://maps.google.com/maps?daddr=" + sourceLatitude + "," + sourceLongitude;
+
+       }
+
+       Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       intent.setPackage("com.google.android.apps.maps");
+
+       GlobalApplication.getAppContext().startActivity(intent);
+       UpcomingFragment.updateTripLists();
+
+
+
+       startChatHead();
+       stopNotification();
+       AlertReceiver.stopMedia();
+       if (alert != null) {
+           windowManager.removeView(alert);
+       }
+   }
+
 
 }

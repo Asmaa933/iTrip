@@ -10,7 +10,7 @@ public class SavedPreferences {
     public static final String USER_ID = "userID";
     public static final String USER_EMAIL = "userEmail";
     public static final String USER_NAME = "username";
-    public static final String FIRSTCREATE = "FIRSTCREATE";
+    public static final String USER_TABLE_ID = "USERTABLEID";
 
 
     private SavedPreferences(){}
@@ -43,7 +43,6 @@ public class SavedPreferences {
     public void resetSavedPreference(){
       writeUserID("");
       writeLoginEmailandUsername("","");
-      writeFirstCreate(false);
     }
 
     public void writeLoginEmailandUsername(String email, String username){
@@ -60,15 +59,17 @@ public class SavedPreferences {
         arr[1] = settings.getString(USER_NAME, "");
         return arr;
     }
-
-
-
-    public void writeFirstCreate(boolean isCreated){
+public String readUserTableId(){
+    SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
+    return settings.getString(USER_TABLE_ID, "");
+}
+    public void writeUserTableID(String userID) {
         SharedPreferences settings = GlobalApplication.getAppContext().getSharedPreferences(USER_DATA, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(FIRSTCREATE, isCreated);
+        editor.putString(USER_TABLE_ID, userID);
         editor.commit();
     }
+
 
 
 
