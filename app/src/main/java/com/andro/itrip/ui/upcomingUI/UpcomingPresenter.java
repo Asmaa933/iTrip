@@ -10,6 +10,7 @@ import java.util.List;
 public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
     private UpcomingContract.ViewInterface viewInterface;
     private static List<Trip> trips;
+    private static Trip selectedTripData;
 
 
     public UpcomingPresenter(UpcomingContract.ViewInterface viewInterface) {
@@ -20,8 +21,6 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
     public String addTrip(Trip trip) {
         return FireBaseHandler.getInstance().addTrip(trip);
     }
-
-
 
 
     @Override
@@ -56,7 +55,21 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
     }
 
 
+//    public void updateTripDate(Trip trip) {
+//        selectedTripData = new Trip(trip);
+//    }
 
+   // @Override
+//    public void getTripByID(String tripID) {
+//        FireBaseHandler.getInstance().getTripByID(this, tripID);
+//    }
+//    public  Trip getTripData() {
+//        return selectedTripData;
+//    }
+//    @Override
+//    public  Trip getTripfromFB() {
+//        return selectedTripData;
+//    }
 }
 
 

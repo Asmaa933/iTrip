@@ -30,15 +30,15 @@ public class Trip implements Serializable,Cloneable {
 
     private ArrayList<String> notesList;
     private int requestId;
-    private boolean isRepeated;
+    private String  tripAddedBefore;
+    private String  histotyTripID;
 
     public Trip() {
         requestId = FireBaseHandler.getInstance().getLastRequestID() + 2;
 
     }
 
-
-    public Trip(String tripTitle, String startDateTime, int status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String destinationLocation, String destinationLat, String destinationLang, ArrayList<String> notesList, boolean isRepeated) {
+    public Trip(String tripTitle, String startDateTime, int status, String tripType, String repeat, String roundDateTime, String startLocation, String startLat, String startLang, String startAddress, String destinationLocation, String destinationLat, String destinationLang, String destAddress, ArrayList<String> notesList, String tripAddedBefore,String historyTripID) {
         this.tripTitle = tripTitle;
         this.startDateTime = startDateTime;
         this.status = status;
@@ -48,16 +48,17 @@ public class Trip implements Serializable,Cloneable {
         this.startLocation = startLocation;
         this.startLat = startLat;
         this.startLang = startLang;
+        this.startAddress = startAddress;
         this.destinationLocation = destinationLocation;
         this.destinationLat = destinationLat;
         this.destinationLang = destinationLang;
+        this.destAddress = destAddress;
         this.notesList = notesList;
-        this.isRepeated = isRepeated;
-
-
-
-
+        this.tripAddedBefore = tripAddedBefore;
+        this.histotyTripID = historyTripID;
     }
+
+
     public Trip(Trip trip){
         this.tripTitle = trip.tripTitle;
         this.startDateTime = trip.startDateTime;
@@ -72,8 +73,10 @@ public class Trip implements Serializable,Cloneable {
         this.destinationLat = trip.destinationLat;
         this.destinationLang = trip.destinationLang;
         this.notesList = trip.notesList;
-        this.isRepeated = trip.isRepeated;
+        this.tripAddedBefore = trip.tripAddedBefore;
         this.requestId = trip.requestId;
+        this.startAddress = trip.startAddress;
+        this.destAddress = trip.destAddress;
 
     }
 
@@ -195,12 +198,12 @@ public class Trip implements Serializable,Cloneable {
         this.notesList = notesList;
     }
 
-    public boolean isRepeated() {
-        return isRepeated;
+    public String getTripAddedBefore() {
+        return tripAddedBefore;
     }
 
-    public void setIsRepeated(boolean repeated) {
-        isRepeated = repeated;
+    public void setTripAddedBefore(String tripAddedBefore) {
+        this.tripAddedBefore = tripAddedBefore;
     }
 
     public String getStartAddress() {
@@ -217,5 +220,13 @@ public class Trip implements Serializable,Cloneable {
 
     public void setDestAddress(String destAddress) {
         this.destAddress = destAddress;
+    }
+
+    public String getHistotyTripID() {
+        return histotyTripID;
+    }
+
+    public void setHistotyTripID(String histotyTripID) {
+        this.histotyTripID = histotyTripID;
     }
 }

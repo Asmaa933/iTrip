@@ -36,7 +36,7 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
 
     private static UpcomingContract.PresenterInterface upcomingPresenter;
     private RecyclerView recyclerView;
-    private static TripAdapter adapter;
+    private TripAdapter adapter;
     private LinearLayout emptyView;
 
 
@@ -134,9 +134,25 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         }
 
     }
-    public static void updateTripLists(){
+
+    public static void updateTripLists() {
         upcomingPresenter.getTripList();
     }
+
+    public static void addHistoryTrip(Trip trip) {
+        upcomingPresenter.addTrip(trip);
+    }
+
+    public static void updateTripforAlert(Trip trip) {
+        upcomingPresenter.onUpdate(trip);
+    }
+
+//    public static Trip getTripfromFB(String tripID) {
+//        upcomingPresenter.getTripByID(tripID);
+//        return UpcomingPresenter.getTripfromFB();
+//
+//    }
+
 
     @Override
     public void onResume() {

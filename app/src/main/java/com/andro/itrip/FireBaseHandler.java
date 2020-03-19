@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -28,7 +29,7 @@ public class FireBaseHandler {
     private DatabaseReference databaseTrips;
     private FirebaseAuth auth;
     private List<Trip> trips;
-
+   // private List<Trip> selectedTrip;
 
     private FireBaseHandler() {
         auth = FirebaseAuth.getInstance();
@@ -59,6 +60,12 @@ public class FireBaseHandler {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Trip trip = postSnapshot.getValue(Trip.class);
                     if (trip.getStatus() == Utils.STATUS_UPCOMING) {
+                        Calendar chosenSingleDate = HelpingMethods.convertToDate(trip.getStartDateTime());
+                        AlarmManagerHandler.getInstance().setAlarmManager(chosenSingleDate, trip, trip.getRequestId());
+                        if (trip.getTripType().equals(GlobalApplication.getAppContext().getString(R.string.round_trip))) {
+                            Calendar chosenRoundDate = HelpingMethods.convertToDate(trip.getRoundDateTime());
+                            AlarmManagerHandler.getInstance().setAlarmManager(chosenRoundDate, trip, trip.getRequestId() + 1);
+                        }
                         trips.add(trip);
                         presenterInterface.updateTripList(trips);
                     }
@@ -100,6 +107,32 @@ public class FireBaseHandler {
 
     }
 
+//    public void getTripByID(final UpcomingPresenter presenterInterface, final String tripID) {
+//        selectedTrip = new ArrayList<>();
+//        databaseTrips = FirebaseDatabase.getInstance().getReference("trips").child(SavedPreferences.getInstance().readUserID());
+//        databaseTrips.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                selectedTrip.clear();
+//                for (DataSnapshot item : dataSnapshot.getChildren()) {
+//                    if (item.getValue().equals(tripID)) {
+//                        Trip trip = dataSnapshot.getValue(Trip.class);
+//                        selectedTrip.add(trip);
+//                        presenterInterface.updateTripDate(selectedTrip.get(0));
+//                    }
+//                }
+//
+//            }
+
+
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
+//
+//
+//    }
+
     public String addTrip(Trip trip) {
         String tripId = databaseTrips.push().getKey();
         if (tripId != null) {
@@ -115,10 +148,6 @@ public class FireBaseHandler {
 
     }
 
-//    public void updateTripStatus(Trip trip) {
-//        databaseTrips.child(trip.getTripID()).setValue(trip);
-//
-//    }
 
     public void deleteTrip(String tripId) {
         databaseTrips.child(tripId).removeValue();

@@ -1,14 +1,10 @@
 package com.andro.itrip.addTripActivity;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,7 +20,6 @@ import android.widget.Toast;
 
 
 import com.andro.itrip.AlarmManagerHandler;
-import com.andro.itrip.AlertReceiver;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
 import com.andro.itrip.Trip;
@@ -55,13 +50,12 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
 
 public class AddTripActivity extends AppCompatActivity implements AddTripContract.ViewInterface {
 
     private EditText editTxtTripName, editTxtAddNote;
     private Spinner spinnerTripType, spinnerTripRepetition;
-    private TextView singleTxtViewDateTime, roundTxtViewDateTime, startDateError, roundDateError, startPointError, endPointError,nameError;
+    private TextView singleTxtViewDateTime, roundTxtViewDateTime, startDateError, roundDateError, startPointError, endPointError, nameError;
     private Button btnAddTrip;
     private ImageView imageViewAddNote;
     private LinearLayout roundTripTimeAndDate;
@@ -123,10 +117,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     } else {
                         addPresenter.addTrip(trip);
                     }
-                    AlarmManagerHandler.getInstance().setAlarmManager(chosenSingleDate, trip, trip.getRequestId());
-                    if (trip.getTripType().equals(getString(R.string.round_trip))) {
-                        AlarmManagerHandler.getInstance().setAlarmManager(chosenRoundDate, trip, trip.getRequestId() + 1);
-                    }
+
 
                     Intent intent = new Intent(AddTripActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -304,7 +295,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         if (trip.getNotesList() != null && !trip.getNotesList().isEmpty()) {
             notesList.setVisibility(View.VISIBLE);
             notesArrayList = trip.getNotesList();
-        }else {
+        } else {
             notesList.setVisibility(View.GONE);
 
         }
@@ -449,8 +440,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         if (editTxtTripName.getText().toString().isEmpty()) {
             nameError.setText(getString(R.string.title_error));
             validateFlag = false;
-        }
-        else {
+        } else {
             nameError.setText("");
         }
         if (trip.getRoundDateTime() == null && trip.getTripType().equals(getString(R.string.round_trip))) {
@@ -483,6 +473,14 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         } else {
             endPointError.setText("");
         }
+        if (chosenRoundDate!=null && trip.getTripType().equals(getString(R.string.round_trip))) {
+            if (chosenRoundDate.before(chosenSingleDate)) {
+                roundDateError.setText(R.string.round_before_error);
+                validateFlag = false;
+            }
+        }else {
+            roundDateError.setText("");
+        }
         return validateFlag;
     }
 
@@ -491,8 +489,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         finish();
         return true;
     }
-    public static void hideNoteList(){
-            notesList.setVisibility(View.GONE);
+
+    public static void hideNoteList() {
+        notesList.setVisibility(View.GONE);
     }
 
 

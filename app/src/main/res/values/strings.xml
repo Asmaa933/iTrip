@@ -109,6 +109,8 @@
     <string name="title_activity_history_map">Map</string>
     <string name="start_points">startPoints</string>
     <string name="end_points">endPoints</string>
-
-
+    <string name="round_before_error">Round time must be after start time</string>
+    <string name="cancel_trip_alert">"Do you want cancel trip?"</string>
+<string name="cancel_once">Cancel once</string>
+<string name="cancel_repeat">Cancel repeating trips</string>
 </resources>

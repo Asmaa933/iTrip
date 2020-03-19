@@ -92,8 +92,7 @@ public class AlertDialogService extends Service {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trip.setStatus(1);
-                FireBaseHandler.getInstance().updateTrip(trip);
+
                 AlarmManagerHandler.getInstance().cancelAlarm(trip);
 
                 double sourceLongitude = Double.parseDouble(trip.getStartLang());
@@ -106,7 +105,17 @@ public class AlertDialogService extends Service {
                 String uri;
                 if (!isRound) {
                     uri = "http://maps.google.com/maps?daddr=" + destinationLatitude + "," + destinationLongitude;
+                    if (trip.getRepeat().equals(getString(R.string.once))) {
+                        trip.setTripAddedBefore(null);
+                        trip.setStatus(Utils.STATUS_DONE);
+                        UpcomingFragment.updateTripforAlert(trip);
 
+                    } else if (trip.getRepeat().equals(getString(R.string.daily))) {
+                        changeDateForRepeatTrips(1,Utils.STATUS_DONE);
+
+                    } else {
+                        changeDateForRepeatTrips(7,Utils.STATUS_DONE);
+                    }
                 } else {
                     uri = "http://maps.google.com/maps?daddr=" + sourceLatitude + "," + sourceLongitude;
 
@@ -149,9 +158,20 @@ public class AlertDialogService extends Service {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trip.setStatus(0);
-                FireBaseHandler.getInstance().updateTrip(trip);
-                UpcomingFragment.updateTripLists();
+                if (trip.getRepeat().equals(getString(R.string.once))) {
+                   trip.setTripAddedBefore(null);
+                    trip.setStatus(Utils.STATUS_CANCELLED);
+                    UpcomingFragment.updateTripforAlert(trip);
+
+                } else if (trip.getRepeat().equals(getString(R.string.daily))) {
+                    changeDateForRepeatTrips(1,Utils.STATUS_CANCELLED);
+
+
+
+                } else {
+                    changeDateForRepeatTrips(7,Utils.STATUS_CANCELLED);
+                }
+
                 AlarmManagerHandler.getInstance().cancelAlarm(trip);
 
                 AlertReceiver.stopMedia();
@@ -184,6 +204,21 @@ public class AlertDialogService extends Service {
         Intent intent = new Intent(GlobalApplication.getAppContext(), ChatHeadService.class);
         intent.putStringArrayListExtra("notes", trip.getNotesList());
         startService(intent);
+    }
+    private void changeDateForRepeatTrips(int numbersOfDays,int status){
+
+        if (trip.getTripAddedBefore() == null || trip.getTripAddedBefore().isEmpty()) {
+            Trip oldTrip = new Trip(trip);
+            oldTrip.setStatus(status);
+            UpcomingFragment.addHistoryTrip(oldTrip);
+            trip.setHistotyTripID(oldTrip.getTripID());
+
+        }
+        String dateString = HelpingMethods.increaseDays(numbersOfDays,trip.getStartDateTime());
+        trip.setStartDateTime(dateString);
+        trip.setTripAddedBefore("yes");
+        UpcomingFragment.updateTripforAlert(trip);
+
     }
 
 }

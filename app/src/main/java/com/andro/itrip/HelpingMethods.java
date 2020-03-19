@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.provider.Settings;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,7 +21,8 @@ public class HelpingMethods {
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-    public static Calendar convertToDate (String dateInString) {
+
+    public static Calendar convertToDate(String dateInString) {
         Locale.setDefault(Locale.ENGLISH);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
@@ -35,6 +37,11 @@ public class HelpingMethods {
         return calendar;
     }
 
+    public static String increaseDays(int numberOfDays, String startDate) {
+        Calendar cal = HelpingMethods.convertToDate(startDate);
+        cal.add(Calendar.DATE, numberOfDays);
+        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(cal.getTime());
+    }
 
 
 }
