@@ -19,10 +19,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.HelpingMethods;
 import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
+import com.andro.itrip.User;
 import com.andro.itrip.addTripActivity.AddTripActivity;
 import com.andro.itrip.R;
 import com.andro.itrip.loginActivity.LoginContract;
@@ -71,8 +73,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+
+        TextView navUseremail = (TextView) headerView.findViewById(R.id.txtemail);
         TextView navUsername = (TextView) headerView.findViewById(R.id.txtName);
-        navUsername.setText(SavedPreferences.getInstance().readLoginEmail());
+
+        String[] userdata = SavedPreferences.getInstance().readLoginEmail();
+
+        navUseremail.setText(userdata[0]);
+        navUsername.setText(userdata[1]);
 
         UpcomingFragment upcomingFragment = new UpcomingFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, upcomingFragment).commit();
