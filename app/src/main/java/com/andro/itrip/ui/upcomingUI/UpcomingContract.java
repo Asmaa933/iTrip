@@ -17,10 +17,6 @@ public class UpcomingContract {
 
         String addTrip(Trip trip);
 
-//        void getTripByID(String tripID);
-//        Trip getTripfromFB() ;
-
-
 
         }
 

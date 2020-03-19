@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.R;
+import com.andro.itrip.User;
 
 public class RegisterPresenter implements RegisterContract.PresenterInterface {
     private RegisterContract.ViewInterface viewInterface;
@@ -24,5 +25,10 @@ public class RegisterPresenter implements RegisterContract.PresenterInterface {
         }else {
             viewInterface.displayError(R.string.unable_register);
         }
+    }
+
+    @Override
+    public void addUser(User user) {
+        FireBaseHandler.getInstance().addUser(user);
     }
 }

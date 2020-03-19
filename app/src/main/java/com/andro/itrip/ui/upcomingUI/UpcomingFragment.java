@@ -24,9 +24,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import androidx.lifecycle.ViewModelProviders;
 
+import com.andro.itrip.FireBaseHandler;
 import com.andro.itrip.GlobalApplication;
 import com.andro.itrip.R;
+import com.andro.itrip.SavedPreferences;
 import com.andro.itrip.Trip;
+import com.andro.itrip.User;
 import com.andro.itrip.Utils;
 import com.andro.itrip.headUI.ChatHeadService;
 
@@ -63,7 +66,9 @@ public class UpcomingFragment extends Fragment implements UpcomingContract.ViewI
         if (!Utils.canDrawOverlays(GlobalApplication.getAppContext())) {
             requestPermission(Utils.OVERLAY_PERMISSION_REQ_CODE_CHATHEAD);
         }
-
+        //Get user data and save it.
+        User user = FireBaseHandler.getInstance().getUser();
+        SavedPreferences.getInstance().writeLoginEmailandUsername(user.getEmail(),user.getUsername());
     }
 
 

@@ -114,10 +114,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                     presenterInterface.onUpdate(tripData.get(position));
 
                 } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
-                   changeDateForRepeatTrips(1,position,Utils.STATUS_DONE);
+                    changeDateForRepeatTrips(1, position, Utils.STATUS_DONE);
 
                 } else {
-                    changeDateForRepeatTrips(7,position,Utils.STATUS_DONE);
+                    changeDateForRepeatTrips(7, position, Utils.STATUS_DONE);
                 }
 
                 AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
@@ -182,7 +182,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 .setPositiveButton(R.string.card_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(tripData.get(position).getHistotyTripID()!= null){
+                        if (tripData.get(position).getHistotyTripID() != null) {
                             presenterInterface.onDelete(tripData.get(position).getHistotyTripID());
                         }
                         presenterInterface.onDelete(tripData.get(position).getTripID());
@@ -203,7 +203,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         AlertDialog alertDialog = Builder.create();
         alertDialog.show();
     }
-    private void showCancelAlert(final int position){
+
+    private void showCancelAlert(final int position) {
         AlertDialog.Builder Builder = new AlertDialog.Builder(context)
                 .setMessage(R.string.cancel_trip_alert)
                 .setCancelable(false)
@@ -216,12 +217,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                             presenterInterface.onUpdate(tripData.get(position));
 
                         } else if (tripData.get(position).getRepeat().equals(context.getString(R.string.daily))) {
-                            changeDateForRepeatTrips(1,position,Utils.STATUS_CANCELLED);
-
+                            changeDateForRepeatTrips(1, position, Utils.STATUS_CANCELLED);
 
 
                         } else {
-                            changeDateForRepeatTrips(7,position,Utils.STATUS_CANCELLED);
+                            changeDateForRepeatTrips(7, position, Utils.STATUS_CANCELLED);
                         }
 
                         AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
@@ -245,7 +245,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                         presenterInterface.onUpdate(tripData.get(position));
                         presenterInterface.getTripList();
                         AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
-                        if(tripData.get(position).getHistotyTripID()!= null){
+                        if (tripData.get(position).getHistotyTripID() != null) {
                             presenterInterface.onDelete(tripData.get(position).getHistotyTripID());
                         }
                     }
@@ -256,7 +256,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         alertDialog.show();
     }
 
-    private void changeDateForRepeatTrips(int numbersOfDays , int position,int status){
+    private void changeDateForRepeatTrips(int numbersOfDays, int position, int status) {
 
         if (tripData.get(position).getTripAddedBefore() == null || tripData.get(position).getTripAddedBefore().isEmpty()) {
             Trip oldTrip = new Trip(tripData.get(position));
@@ -265,14 +265,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             tripData.get(position).setHistotyTripID(oldTrip.getTripID());
 
         }
-//        else{
-//            presenterInterface.getTripByID(tripData.get(position).getHistotyTripID());
-//            Trip oldTrip = presenterInterface.getTripfromFB();
-//            String dateString = HelpingMethods.increaseDays(numbersOfDays, oldTrip.getStartDateTime());
-//            oldTrip.setStartDateTime(dateString);
-//            presenterInterface.onUpdate(oldTrip);
-//        }
-       String dateString = HelpingMethods.increaseDays(numbersOfDays,tripData.get(position).getStartDateTime());
+        String dateString = HelpingMethods.increaseDays(numbersOfDays, tripData.get(position).getStartDateTime());
         tripData.get(position).setStartDateTime(dateString);
         tripData.get(position).setTripAddedBefore("yes");
         presenterInterface.onUpdate(tripData.get(position));
@@ -281,5 +274,5 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
 
-    }
+}
 

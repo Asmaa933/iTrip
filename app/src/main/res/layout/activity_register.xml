@@ -110,8 +110,9 @@
         android:layout_marginEnd="-2dp"
         android:text="@string/haveAccount"
         android:textAllCaps="false"
-        android:background="@android:color/white"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:background="@drawable/shadow_button_layer_list"
+        />
 
     <Button
         android:id="@+id/signupButton"
@@ -125,8 +126,8 @@
         android:layout_marginEnd="16dp"
         android:text="@string/signup"
         android:textAllCaps="false"
-        android:background="@android:color/white"
         android:textColor="@android:color/black"
+        android:background="@drawable/shadow_button_layer_list"
         />
 
     <ImageView

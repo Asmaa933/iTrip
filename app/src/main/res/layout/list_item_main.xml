@@ -113,7 +113,8 @@
                     android:text="Title"
                     android:textColor="@color/Grey"
                     android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/time_list_item_main"

@@ -126,6 +126,8 @@ public class AlertDialogService extends Service {
                 intent.setPackage("com.google.android.apps.maps");
 
                 GlobalApplication.getAppContext().startActivity(intent);
+                UpcomingFragment.updateTripLists();
+
 
 
                 startChatHead();
@@ -173,7 +175,7 @@ public class AlertDialogService extends Service {
                 }
 
                 AlarmManagerHandler.getInstance().cancelAlarm(trip);
-
+                UpcomingFragment.updateTripLists();
                 AlertReceiver.stopMedia();
                 stopNotification();
 

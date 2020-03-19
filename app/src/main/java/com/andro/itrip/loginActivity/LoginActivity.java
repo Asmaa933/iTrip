@@ -120,9 +120,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                     if (validateEmail() & validatePassword()) {
                         loginPresenter.verifyCredentials(email, password, LoginActivity.this);
                         progressBar.setVisibility(View.VISIBLE);
+                        enableViews(false);
                     }
                     }
                 else {
+                    enableViews(true);
                     Toast.makeText(GlobalApplication.getAppContext(),getString(R.string.check_internet),Toast.LENGTH_LONG).show();
                 }
                 }
@@ -149,7 +151,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccessful() {
         progressBar.setVisibility(View.GONE);
-        SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
+        //SavedPreferences.getInstance().writeLoginEmail(emailTxt.getText().toString().trim());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -189,6 +191,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         }
         return isValidPassword;
     }
+
+    public void enableViews(boolean flag){
+        emailTxt.setEnabled(flag);
+        emailTxt.setFocusable(flag);
+
+        passwordTxt.setEnabled(flag);
+        passwordTxt.setFocusable(flag);
+    }
+
     private void hideSoftKeyboard() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
@@ -213,21 +224,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             if (result.isSuccess()){
 
                 GoogleSignInAccount account=result.getSignInAccount();
+                progressBar.setVisibility(View.VISIBLE);
+                enableViews(false);
                 firebaseAuthWithGoogle(account);
             }else {
-
+                enableViews(true);
                 // Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
-
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                // Google Sign In was successful, authenticate with Firebase
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account);
-//            } catch (ApiException e) {
-//                // Google Sign In failed, update UI appropriately
-//                Toast.makeText(this,"error here", Toast.LENGTH_SHORT).show(); // ...
-//                 }
         }
     }
 
@@ -239,12 +242,18 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            //  Toast.makeText(getActivity(), "trueeeeeeeee", Toast.LENGTH_SHORT).show();
-                            String userId=user.getUid();
+
+                            String userId = user.getUid();
+                            String username = user.getDisplayName();
+                            String email = user.getEmail();
+
                             SavedPreferences.getInstance().writeUserID(userId);
+                            SavedPreferences.getInstance().writeLoginEmailandUsername(email, username);
+
+                            progressBar.setVisibility(View.GONE);
+                            enableViews(true);
+
                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -252,7 +261,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Doesn`t bbLogged In", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            enableViews(true);
+                            Toast.makeText(LoginActivity.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
                             Log.w("tag", "signInWithCredential:failure", task.getException());
                             //   Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();

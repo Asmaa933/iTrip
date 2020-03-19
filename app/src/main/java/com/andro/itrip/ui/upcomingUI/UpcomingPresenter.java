@@ -54,22 +54,6 @@ public class UpcomingPresenter implements UpcomingContract.PresenterInterface {
         return trips;
     }
 
-
-//    public void updateTripDate(Trip trip) {
-//        selectedTripData = new Trip(trip);
-//    }
-
-   // @Override
-//    public void getTripByID(String tripID) {
-//        FireBaseHandler.getInstance().getTripByID(this, tripID);
-//    }
-//    public  Trip getTripData() {
-//        return selectedTripData;
-//    }
-//    @Override
-//    public  Trip getTripfromFB() {
-//        return selectedTripData;
-//    }
 }
 
 

@@ -50,7 +50,7 @@
                     android:src="@drawable/ic_img_default_img" />
 
                 <Space
-                    android:layout_width="15dp"
+                    android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -61,7 +61,7 @@
                     android:layout_marginBottom="3sp"
                     android:text="Title"
                     android:textColor="@color/Black"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text="1/7/1995      12.00 am"
                     android:textColor="@color/Black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
 
 
@@ -104,7 +104,7 @@
                 android:layout_marginBottom="3sp"
                 android:text=" From : Aswan"
                 android:textColor="@color/Black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_marginBottom="3sp"
                 android:text=" To : Alex"
                 android:textColor="@color/Black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
         <Space
