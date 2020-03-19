@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".GlobalApplication"
@@ -39,9 +39,14 @@
 
         <activity
             android:name=".HistoryMap"
-            android:label="@string/title_activity_history_map"/>
-        <activity android:name=".loginActivity.LoginActivity" />
-        <activity android:name=".registerActivity.RegisterActivity" />
+            android:label="@string/title_activity_history_map"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loginActivity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".registerActivity.RegisterActivity"
+            android:screenOrientation="portrait" />
 
 
         <meta-data
@@ -50,6 +55,7 @@
 
         <activity
             android:name=".SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,9 +63,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppIntroActivity" />
-        <activity android:name=".mainActivity.MainActivity" />
-        <activity android:name=".addTripActivity.AddTripActivity">
+        <activity
+            android:name=".AppIntroActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mainActivity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".addTripActivity.AddTripActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".mainActivity.MainActivity" />
@@ -67,9 +80,12 @@
         <activity
             android:name=".headUI.MyDialog"
             android:launchMode="singleTask" />
-        <activity android:name=".TakeLocationPermission"/>
+        <activity
+            android:name=".TakeLocationPermission"
+            android:screenOrientation="portrait" />
 
-        <receiver android:name=".AlertReceiver"
+        <receiver
+            android:name=".AlertReceiver"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

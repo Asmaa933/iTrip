@@ -26,54 +26,54 @@ public class GlobalApplication extends MultiDexApplication {
         appContext = getApplicationContext();
         createNotificationChannels();
 
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-
-            @Override
-            public void onActivityCreated(Activity activity,
-                                          Bundle savedInstanceState) {
-
-                // new activity created; force its orientation to portrait
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-            }
-
-            @Override
-            public void onActivityStarted(@NonNull Activity activity) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
-            @Override
-            public void onActivityResumed(@NonNull Activity activity) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
-            @Override
-            public void onActivityPaused(@NonNull Activity activity) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
-            @Override
-            public void onActivityStopped(@NonNull Activity activity) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
-            @Override
-            public void onActivityDestroyed(@NonNull Activity activity) {
-                activity.setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        });
+//        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+//
+//            @Override
+//            public void onActivityCreated(Activity activity,
+//                                          Bundle savedInstanceState) {
+//
+//                // new activity created; force its orientation to portrait
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//
+//            }
+//
+//            @Override
+//            public void onActivityStarted(@NonNull Activity activity) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//
+//            @Override
+//            public void onActivityResumed(@NonNull Activity activity) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//
+//            @Override
+//            public void onActivityPaused(@NonNull Activity activity) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//
+//            @Override
+//            public void onActivityStopped(@NonNull Activity activity) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//
+//            @Override
+//            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//
+//            @Override
+//            public void onActivityDestroyed(@NonNull Activity activity) {
+//                activity.setRequestedOrientation(
+//                        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            }
+//        });
     }
 
     public static Context getAppContext() {
