@@ -72,7 +72,9 @@ public class HistoryTripAdapter extends RecyclerView.Adapter<HistoryTripAdapter.
     @Override
         public void onBindViewHolder(@NonNull final HistoryTripAdapter.ViewHolder holder, final int position) {
             String imgURL = "https://maps.googleapis.com/maps/api/staticmap?size=500x250" +
-                    "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang() + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang() + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
+                    "&markers=color:blue|label:S|" + tripData.get(position).getStartLat() + "," + tripData.get(position).getStartLang()
+                  + "&markers=color:red|label:E|" + tripData.get(position).getDestinationLat() + "," + tripData.get(position).getDestinationLang()
+                  + "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
             Picasso.get()
                     .load(imgURL)
                     .placeholder(R.drawable.loadingindicator2)
