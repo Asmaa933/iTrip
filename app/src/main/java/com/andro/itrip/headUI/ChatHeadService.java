@@ -177,9 +177,6 @@ public class ChatHeadService extends Service {
 
                 @Override
                 public void run() {
-                    // TODO Auto-generated method stub
-                    Log.d(Utils.LogTag, "Into runnable_longClick");
-
                     isLongclick = true;
                     removeView.setVisibility(View.VISIBLE);
                     chathead_longclick();
@@ -313,7 +310,6 @@ public class ChatHeadService extends Service {
 
                         break;
                     default:
-                        Log.d(Utils.LogTag, "chatheadView.setOnTouchListener  -> event.getAction() : default");
                         break;
                 }
                 return true;
