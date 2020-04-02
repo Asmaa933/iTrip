@@ -46,10 +46,10 @@ public class AlarmManagerHandler {
         }
         PendingIntent pendingIntent = PendingIntent.getBroadcast(GlobalApplication.getAppContext(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (System.currentTimeMillis() > date.getTimeInMillis()) {
+        if (date.before(Calendar.getInstance())) {
             date.add(Calendar.DATE, 1);
         }
-        if (alarmManager != null) {
+        if (alarmManager != null && date.after(Calendar.getInstance())) {
             if (trip.getRepeat().equals(GlobalApplication.getAppContext().getString(R.string.once))) {
 
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);

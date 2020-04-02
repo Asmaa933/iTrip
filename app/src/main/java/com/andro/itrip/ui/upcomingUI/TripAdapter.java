@@ -202,7 +202,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                         } else {
                             changeDateForRepeatTrips(7, position, Utils.STATUS_CANCELLED);
                         }
-
+                        presenterInterface.getTripList();
                         AlarmManagerHandler.getInstance().cancelAlarm(tripData.get(position));
 
                     }
