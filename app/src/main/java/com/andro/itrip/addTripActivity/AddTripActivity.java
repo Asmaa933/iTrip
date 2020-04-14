@@ -213,7 +213,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
                     @Override
                     public void onError(@NonNull Status status) {
-                        Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         autocompleteSupportFragmentEnd.setOnPlaceSelectedListener(
@@ -232,7 +232,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
                     @Override
                     public void onError(Status status) {
-                        Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                   //     Toast.makeText(GlobalApplication.getAppContext(), "" + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
