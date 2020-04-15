@@ -4,7 +4,7 @@ Android Mobile Application(Java)
 <img src="https://user-images.githubusercontent.com/44899782/79292090-91a49080-7ed0-11ea-8e5c-9c0d79619121.png" >
 </div>
 
-
+## About Application
 ITrip offers you, a trip planner with a lot of options.
 - Add Trip: It provides you an easy way to add your trip to a schedule, to choose the type of your trip, to choose how many times you want to repeat your trip, add notes to your trip.
 - Upcoming: Shows a list of your upcoming trips with all the details you want to check before the time comes.
@@ -12,6 +12,7 @@ ITrip offers you, a trip planner with a lot of options.
 - History: Preview the list of your past trips with the app with a lot of cool features like a map of the trip.
 - Map: A Huge map to preview all of your trips with the application.
 - Floating Head: We provide a catchy icon to remember your notes during the trip.
+## Screenshots
 <div></div>
 <div>
 <img src="https://user-images.githubusercontent.com/44899782/79291458-01b21700-7ecf-11ea-87c2-50a063993803.png" width="80">
@@ -24,7 +25,7 @@ ITrip offers you, a trip planner with a lot of options.
 <img src="https://user-images.githubusercontent.com/44899782/79292424-62daea00-7ed1-11ea-9eed-18dade1711c7.png" width="80">
 </div>
 
-# Built With
+## Built With
 - Firebase: Store data online. 
 - Google Maps: Get direction for destination. 
 - Place Autocomplete: Search for places.  
