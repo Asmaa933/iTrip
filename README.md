@@ -26,6 +26,7 @@ ITrip offers you, a trip planner with a lot of options.
 </div>
 
 ## Built With
+- Java
 - Firebase: Store data online. 
 - Google Maps: Get direction for destination. 
 - Place Autocomplete: Search for places.  
