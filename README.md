@@ -12,6 +12,8 @@ ITrip offers you, a trip planner with a lot of options.
 - History: Preview the list of your past trips with the app with a lot of cool features like a map of the trip.
 - Map: A Huge map to preview all of your trips with the application.
 - Floating Head: We provide a catchy icon to remember your notes during the trip.
+## Play Store:
+URL: https://play.google.com/store/apps/details?id=com.andro.itrip
 ## Screenshots
 <div></div>
 <div>
