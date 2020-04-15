@@ -25,9 +25,10 @@ ITrip offers you, a trip planner with a lot of options.
 </div>
 
 # Built With
-- Store data in Firebase
-- Get direction for destination via Google Maps
-- Search for places via Place Autocomplete 
-- Sign in using Google Sign-In 
-- Schedule notification via Alarm Manager
-- Load image using Picasso
+- Firebase: Store data online. 
+- Google Maps: Get direction for destination. 
+- Place Autocomplete: Search for places.  
+- Google Sign-In: Social media sign in  
+- Alarm Manager: Schedule notification for trips 
+- Picasso: Load image by URL
+
